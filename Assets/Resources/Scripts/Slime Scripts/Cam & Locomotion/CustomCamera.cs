@@ -20,15 +20,14 @@ public class CustomCamera : MonoBehaviour
     private float currentY;
 
     private Vector3 newCamPos;
-    private Vector3 cameraMask;
     private Quaternion newCamRot;
-    private const float distance = 7.5f;
-    private float pushValue;
+    //private Vector3 cameraMask;
+    //private const float distance = 7.5f;
+    //private float pushValue;
 
     private void Update()
     {
         GetInput();
-        CheckObstructions();
     }
     private void LateUpdate()
     {
@@ -48,14 +47,15 @@ public class CustomCamera : MonoBehaviour
         newCamRot = Quaternion.Euler(currentY, currentX, 0);
 
         newCamPos = focusPoint.position + newCamRot * camOffset;
-        cameraMask = focusPoint.position + newCamRot * camOffset;
+        //cameraMask = focusPoint.position + newCamRot * camOffset;
 
-        CheckObstructions();
+        //CheckObstructions();
         transform.position = Vector3.Lerp(transform.position, newCamPos, damping * Time.deltaTime);
         transform.LookAt(focusPoint);
     }
 
-    private void CheckObstructions()
+    //Camera Collision before removed
+    /*private void CheckObstructions()
     {
         pushValue = distance / damping;
         RaycastHit hit;
@@ -64,5 +64,5 @@ public class CustomCamera : MonoBehaviour
             newCamPos = new Vector3(hit.point.x + hit.normal.x * distance, transform.position.y, hit.point.z + hit.normal.z * distance);
         }
         Debug.DrawLine(focusPoint.position, cameraMask);
-    }
+    }*/
 }
