@@ -8,6 +8,7 @@ public abstract class BaseAbility : ScriptableObject
     public string abilityName;
     public Sprite abilityIcon;
     public int abilityCost;
+    //add stat affinity for ability bonus
 
     public abstract void AbilityActivated();
     public abstract void AbilityUpdateMethod();
