@@ -8,7 +8,8 @@ public abstract class BaseAbility : ScriptableObject
     public string abilityName;
     public Sprite abilityIcon;
     public int abilityCost;
-    //add stat affinity for ability bonus
+    public enum AffinityBonus { Strength, Agility, Intellect, Endurance, Spirit }
+    public AffinityBonus affinityBonus;
 
     public abstract void AbilityActivated();
     public abstract void AbilityUpdateMethod();

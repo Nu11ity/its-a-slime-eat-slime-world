@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slime : MonoBehaviour
 {
+    #region Notes
     //further define variables and properies
     //further add to methods for procedural stat and affinity on slimes
 
@@ -56,8 +57,24 @@ public class Slime : MonoBehaviour
      Endurance(A^1) -> 10 + (1 * 10) + (37/2);
      Spirit -> (A^2) -> 10 + (2 * 10) + (40/2);
     */
+    #endregion
+
+    [Header("Level Mapping")]
+    public LevelMapping levelMapping;
+
+    [Header("Stat Mapping")]
+    public StatMapping statMapping;
+
+    [Header("------------\n")]
+    public SlimeType slimeType;
+    public enum SlimeType { Fire, Water, Nature }
 
     private void Awake()
+    {
+        levelMapping.LevelToExperience();
+    }
+
+    private void Update()
     {
         //-> (Fire -> Nature -> water)
         //set stat/ properties
@@ -68,15 +85,16 @@ public class Slime : MonoBehaviour
         //Spirit -> 
         //
     }
-    #region properties & variables
-    private bool isAlive;
-    public bool IsAlive
-    {
-        get { return isAlive; }
-    }
 
+    #region properties & variables
+    [SerializeField]
+    private bool isAlive;
+    public bool IsAlive { get { return isAlive; } }//read only
+
+    [Header("Health")]
     [SerializeField]
     private int currentHealth;
+    public int maxHealth;
     public int CurrentHealth
     {
         get { return currentHealth; }
@@ -86,35 +104,27 @@ public class Slime : MonoBehaviour
             currentHealth = value;
         }
     }
-    [SerializeField]
-    private int maxHealth;
-    public int MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
 
+    [Header("Energy")]
     [SerializeField]
     private int currentEnergy;
+    public int maxEnergy;
     public int CurrentEnergy
     {
         get { return currentEnergy; }
-        set { currentEnergy = value; }
-    }
-    [SerializeField]
-    private int maxEnergy;
-    public int MaxEnergy
-    {
-        get { return maxEnergy; }
-        set { maxEnergy = value; }
+        set
+        {
+            value = Mathf.Clamp(value, 0, maxEnergy);
+            currentEnergy = value;
+        }
     }
     #endregion
 
-    #region functions/methods
+    #region Health & Energy methods
     public void DrainEnergy(int _drainAmt)
     {
         CurrentEnergy -= _drainAmt;
-        Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
+        Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
     }
     public void TakeDamage(int _damage)
     {
@@ -125,7 +135,7 @@ public class Slime : MonoBehaviour
             Debug.Log("Play injured sfx");
 
         CurrentHealth -= _damage;
-        Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+        Mathf.Clamp(CurrentHealth, 0, maxHealth);
 
         if(CurrentHealth <= 0)
             Die();
@@ -133,7 +143,7 @@ public class Slime : MonoBehaviour
     public void HealDamage(int _heal)
     {
         CurrentHealth += _heal;
-        Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+        Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
     public void Die()
     {

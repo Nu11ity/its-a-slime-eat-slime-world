@@ -15,4 +15,5 @@ MonoBehaviour:
   abilityName: Flame Strike
   abilityIcon: {fileID: 0}
   abilityCost: 25
+  affinityBonus: 2
   globalCD: 4
