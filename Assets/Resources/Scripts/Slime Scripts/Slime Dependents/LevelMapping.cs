@@ -8,6 +8,9 @@ public class LevelMapping
 {    
     public int level;
 
+    [Tooltip("this '+' or '-' from the current level, used for stat gen")]
+    public int levelFlux;
+
     public int CurrentExperience { get; set; }
 
     private int trackedEXP;
@@ -17,9 +20,10 @@ public class LevelMapping
     private int xpDifference;
 
 
-    public void MapLevel(int _min, int _max)//set thru spawner
+    public void MapLevel(StatMapping _statMap, int _min, int _max)//set thru spawner
     {
-        level = Random.Range(_min, _max++);
+        //set out generation in spawner
+        level = Random.Range(_min, _max++);//set our level thru spawner
     }
     public void GainXP(int _experience)
     {
