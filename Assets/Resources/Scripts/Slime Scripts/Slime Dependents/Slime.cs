@@ -65,27 +65,16 @@ public class Slime : MonoBehaviour
     [Header("Stat Mapping")]
     public StatMapping statMapping;
 
-    [Header("------------\n")]
-    public SlimeType slimeType;
-    public enum SlimeType { Fire, Water, Nature }
+    [Header("\nSlime class specific\n")]
+    public Archetype archetype;
+    public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
 
-    private void Awake()
+    public void OnSpawnedToWorld()
     {
         levelMapping.LevelToExperience();
+        statMapping.GenerateStats(levelMapping.level, levelMapping.levelFlux);
     }
-
-    private void Update()
-    {
-        //-> (Fire -> Nature -> water)
-        //set stat/ properties
-        //Strength -> Physical (Flame Touch, Natures grasp, ocean lance)
-        //Agility -> Movement (Fire Step, Faery step, wave rider)
-        //Intellect -> Magical (Flame Strike, Insect swarm, crashing waves)
-        //Endurance -> 
-        //Spirit -> 
-        //
-    }
-
+    
     #region properties & variables
     [SerializeField]
     private bool isAlive;
