@@ -16,8 +16,8 @@ public class CustomCamera : MonoBehaviour
     public float yAngleMax;
     public Vector3 camOffset;
 
-    private float currentX;
-    private float currentY;
+    public float CurrentX { get; set; }
+    public float CurrentY { get; set; }
 
     private Vector3 newCamPos;
     private Quaternion newCamRot;
@@ -35,16 +35,16 @@ public class CustomCamera : MonoBehaviour
     }
     private void GetInput()
     {
-        currentX += Input.GetAxis("Mouse X") * sensitivity;
+        CurrentX += Input.GetAxis("Mouse X") * sensitivity;
         if(mouseState == MouseState.Inverted)
-            currentY += Input.GetAxis("Mouse Y") * sensitivity;
+            CurrentY += Input.GetAxis("Mouse Y") * sensitivity;
         else
-            currentY -= Input.GetAxis("Mouse Y") * sensitivity;
-        currentY = Mathf.Clamp(currentY, yAngleMin, yAngleMax);
+            CurrentY -= Input.GetAxis("Mouse Y") * sensitivity;
+        CurrentY = Mathf.Clamp(CurrentY, yAngleMin, yAngleMax);
     }
     private void UpdateCameraPosition()
     {
-        newCamRot = Quaternion.Euler(currentY, currentX, 0);
+        newCamRot = Quaternion.Euler(CurrentY, CurrentX, 0);
 
         newCamPos = focusPoint.position + newCamRot * camOffset;
         //cameraMask = focusPoint.position + newCamRot * camOffset;
