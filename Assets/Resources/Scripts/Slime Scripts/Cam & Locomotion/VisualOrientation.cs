@@ -5,31 +5,42 @@ using UnityEngine;
 public class VisualOrientation : MonoBehaviour
 {
     public Transform targetVisual;
+    public Transform slimeVisual;
     public float rotSpeed = 10f;
 
     private Camera cam;
+    private ThirdPersonLocomotion locomotion;
     private bool isRotating = false;
 
-    void Awake()
+    void Start()
     {
         cam = GetComponentInChildren<Camera>();
+        locomotion = GetComponent<ThirdPersonLocomotion>();
     }
     void Update()
     {
-        if (isRotating)
-            SetRotation(targetVisual, cam.gameObject);
-
-        if (targetVisual.rotation.eulerAngles.y == cam.transform.rotation.eulerAngles.y)
-            isRotating = false;
-        else
-            isRotating = true;
+        SetRotation(targetVisual);
     }
-    private void SetRotation(Transform visual, GameObject camera)
+
+    private void SetRotation(Transform visual)
     {
-        var lookPos = visual.position - cam.transform.position;
+        Vector3 lookPos = visual.position - cam.transform.position;
         lookPos.y = 0;
-        var rotation = Quaternion.LookRotation(lookPos);
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
         visual.rotation = Quaternion.Slerp(visual.rotation, rotation, Time.deltaTime * rotSpeed);
-        //visual.rotation = Quaternion.Lerp(visual.rotation, camera.transform.rotation, rotSpeed * Time.deltaTime);
+
+        if (locomotion.controller.velocity.magnitude > 0)
+        {
+            Vector3 newPos = slimeVisual.position - (locomotion.transform.position - locomotion.controller.velocity);
+            newPos.y = 0;
+            var slimeRot = Quaternion.LookRotation(newPos);
+            slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, slimeRot, Time.deltaTime * (rotSpeed / 2f));
+        }
+        else
+        {
+            //slimeVisual.rotation = slimeVisual.parent.transform.rotation;
+            Quaternion desiredRot = slimeVisual.parent.transform.rotation;
+            slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, desiredRot, Time.deltaTime * (rotSpeed / 2.5f));
+        } 
     }
 }

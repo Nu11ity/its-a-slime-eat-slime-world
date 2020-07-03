@@ -207,6 +207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetVisual: {fileID: 1635286571}
+  slimeVisual: {fileID: 1973069277}
+  locomotion: {fileID: 73637741}
+  customCamera: {fileID: 2063135648}
   rotSpeed: 15
 --- !u!114 &73637745
 MonoBehaviour:
@@ -222,18 +225,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelMapping:
     level: 1
+    levelFlux: 3
   statMapping:
-    baseStrength: 0
-    baseAgility: 0
-    baseIntellect: 0
-    baseEndurance: 0
-    baseSpirit: 0
-  xpGained: 0
-  level: 0
-  currentXP: 0
-  startingXP: 0
-  remainingXP: 0
-  difference: 0
+    strength:
+      currentStatValue: 0
+    agility:
+      currentStatValue: 0
+    intellect:
+      currentStatValue: 0
+    endurance:
+      currentStatValue: 0
+    spirit:
+      currentStatValue: 0
+    genMap:
+      generation: 0
+      gen01LevelCap: 40
+      gen02LevelCap: 60
+      gen03LevelCap: 80
+      gen04LevelCap: 100
+      gen05LevelCap: 120
+      gen06LevelCap: 140
+  archetype: 0
   isAlive: 0
   currentHealth: 250
   maxHealth: 250
@@ -452,6 +464,61 @@ Transform:
   m_Father: {fileID: 107717990}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &391272048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391272049}
+  - component: {fileID: 391272050}
+  m_Layer: 0
+  m_Name: Fake Slime Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391272049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391272048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.18, y: 0.650005, z: -15.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1722274696}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &391272050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391272048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e92068e99542014784de909c900e9ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySlimes:
+  - {fileID: 73637745}
+  spawnNodes:
+  - {fileID: 1722274696}
+  minLevelHere: 1
+  maxLevelHere: 10
+  rareSpawnChance: 0.25
+  commonGensInArea: 00000000
+  rareGensInArea: 0100000002000000
+  commonTypesInArea: 0100000003000000
+  rareTypesInArea: 06000000
 --- !u!1 &580473656
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +742,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1635286571}
+    m_TransformParent: {fileID: 1973069277}
     m_Modifications:
     - target: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
@@ -695,7 +762,7 @@ PrefabInstance:
     - target: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
@@ -705,7 +772,7 @@ PrefabInstance:
     - target: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
@@ -1108,7 +1175,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1903985784}
+  - {fileID: 1973069277}
   m_Father: {fileID: 73637743}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1177,6 +1244,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1722274695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1722274696}
+  m_Layer: 0
+  m_Name: Spawn Node 01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1722274696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722274695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 391272049}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792877753
 GameObject:
@@ -1475,6 +1572,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 48.58, y: -17.866001, z: -12.751}
+--- !u!1 &1973069276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1973069277}
+  m_Layer: 0
+  m_Name: Slime Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1973069277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973069276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1903985784}
+  m_Father: {fileID: 1635286571}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2063135642
 GameObject:
   m_ObjectHideFlags: 0
