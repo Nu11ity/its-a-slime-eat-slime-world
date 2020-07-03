@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &9070976589669262968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432083798582677333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d775ff1a0cd8be241aec3560c8719f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faceAnimator: {fileID: 9070976589669262970}
+  blinkAnim: {fileID: 11400000, guid: b102247fb9034de4a9ce327994f0cce7, type: 2}
+--- !u!114 &9070976589669262970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432083798582677333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9fb881308d9f445b82202245b5028b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTexture: {fileID: 2800000, guid: 4e1632b414ac90a48850023da116762f, type: 3}
+  animMaterial: {fileID: 2100000, guid: 7b5f4ab4f5be49c439e968c4e0897c6d, type: 2}
 --- !u!1 &8001569249364459379
 GameObject:
   m_ObjectHideFlags: 0
@@ -23,7 +51,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8001569249364459379}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -50,34 +78,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &9070976589669262970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432083798582677333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9fb881308d9f445b82202245b5028b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultTexture: {fileID: 2800000, guid: 4e1632b414ac90a48850023da116762f, type: 3}
-  animMaterial: {fileID: 2100000, guid: 7b5f4ab4f5be49c439e968c4e0897c6d, type: 2}
---- !u!114 &9070976589669262968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 432083798582677333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d775ff1a0cd8be241aec3560c8719f6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faceAnimator: {fileID: 9070976589669262970}
-  blinkAnim: {fileID: 11400000, guid: b102247fb9034de4a9ce327994f0cce7, type: 2}
 --- !u!1001 &9070976588271930388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4f97a99a8f2b8c94d9ccf5d2e5a81c04, type: 2}
+      objectReference: {fileID: 2100000, guid: 2647cd6f48b86cc45bc931aa8b78d622, type: 2}
     - target: {fileID: -2303766036817806467, guid: 1f077aea606e6404a88315ef6c834cc8,
         type: 3}
       propertyPath: m_LocalRotation.x
