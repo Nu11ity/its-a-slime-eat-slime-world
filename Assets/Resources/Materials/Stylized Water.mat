@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stylized Water
+  m_Shader: {fileID: -6465566751694194690, guid: c1980e0e1e9bc804c85b34441e879798,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_48C89D9B:
+        m_Texture: {fileID: 2800000, guid: 6e8360a4075ce7941b174045753fbe44, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_A686831:
+        m_Texture: {fileID: 2800000, guid: 5b8c939375fc578449af93756f146073, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_F1371FEC:
+        m_Texture: {fileID: 2800000, guid: 9108831ea57d95e41b8f787e93357d5d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FlowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1047081D: 0.5
+    - Vector1_3D64EE58: 0.05
+    - Vector1_642FC11F: 1
+    - Vector1_71E6A688: 100
+    - Vector1_833332ED: 1
+    - Vector1_C7A57688: 1
+    - Vector1_E6022874: 0.3
+    - Vector1_EB7AD178: 0.005
+    - Vector1_F63E786A: 100
+    - _Choppiness: 0.01
+    - _FlowSpeed: 0.01
+    - _FlowStrength: 0.0075
+    - _FoamDistance: 1.5
+    - _Opacity: 1
+    - _Size: 2
+    m_Colors:
+    - Color_108E21F6: {r: 0, g: 0.2887397, b: 1, a: 0.78431374}
+    - Color_387AF2D1: {r: 0, g: 0.43137255, b: 1, a: 1}
+    - Vector2_529D51B9: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_5BDF2029: {r: 0.025, g: 0.025, b: 0, a: 0}
+    - Vector2_C82DC272: {r: -0.05, g: 0.05, b: 0, a: 0}
+    - _DarkFoamColor: {r: 0.18123916, g: 0.5608159, b: 0.872, a: 1}
+    - _LightFoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WaterColor: {r: 0.20784307, g: 0.6431373, b: 1, a: 1}
