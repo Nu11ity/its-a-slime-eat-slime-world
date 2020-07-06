@@ -10,7 +10,6 @@ public class VisualOrientation : MonoBehaviour
 
     private Camera cam;
     private ThirdPersonLocomotion locomotion;
-    private bool isRotating = false;
 
     void Start()
     {

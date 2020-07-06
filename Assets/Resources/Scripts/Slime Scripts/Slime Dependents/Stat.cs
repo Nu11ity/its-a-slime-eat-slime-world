@@ -5,9 +5,30 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    public int BaseStatValue { get; set; }
+    private int baseStatValue;
+    public int BaseStatValue
+    {
+        get { return baseStatValue; }
+        set
+        {
+            value = Mathf.Clamp(value, 1, 1000);
+            baseStatValue = value;
+        }
+    }
+
+    public int GeneratedBaseStat { get; set; }
     public int StatAffinity { get; set; }
-    public int currentStatValue;
+
+    private int currentStatValue;
+    public int CurrentStatValue
+    {
+        get { return currentStatValue; }
+        set
+        {
+            currentStatValue = value;
+            Mathf.Clamp(currentStatValue, 1, Mathf.Infinity);
+        }
+    }
 
     private float affinityRNG = .25f;
     private int level;
@@ -27,13 +48,15 @@ public class Stat
 
     public void GenerateBaseStat()
     {
-        BaseStatValue = Random.Range(level - levelFlux, (level + levelFlux) + 1);
-        Mathf.Clamp(BaseStatValue, 1, maxLevel);
+        GeneratedBaseStat = Random.Range(level - levelFlux, (level + levelFlux) + 1);
+        Mathf.Clamp(GeneratedBaseStat, 1, 1000);
 
         AffinityCheck();
 
         if (gen != GenerationMapping.Generation.Gen01)
             ProcessGenData();
+
+        BaseStatValue = GeneratedBaseStat;
     }
     public void AffinityCheck()
     {
@@ -60,10 +83,12 @@ public class Stat
     }
     public void ProcessGenData()
     {
-        int inheritedBaseStat = (BaseStatValue / 2);
-        BaseStatValue += inheritedBaseStat;
+        int inheritedBaseStat = (GeneratedBaseStat / 2);
+        GeneratedBaseStat += inheritedBaseStat;
 
         int affinityModifier = level * StatAffinity;
-        BaseStatValue += affinityModifier;
+        GeneratedBaseStat += affinityModifier;
+
+        Mathf.Clamp(GeneratedBaseStat, 1, 1000);
     }
 }

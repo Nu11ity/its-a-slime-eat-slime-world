@@ -46,14 +46,18 @@ public class StatMapping
 
         SetStats();
     }
-    
+    public void SetStats(int _level)
+    {
+        currentLevel = _level;
+        SetStats();
+    }
     public void SetStats()
-    {//formula -> stat = baseStat + (affiinity * lvl)
-        strength.currentStatValue = strength.BaseStatValue + (strength.StatAffinity * currentLevel);
-        agility.currentStatValue = agility.BaseStatValue + (agility.StatAffinity * currentLevel);
-        intellect.currentStatValue = intellect.BaseStatValue + (intellect.StatAffinity * currentLevel);
-        endurance.currentStatValue = endurance.BaseStatValue + (endurance.StatAffinity * currentLevel);
-        spirit.currentStatValue = spirit.BaseStatValue + (spirit.StatAffinity * currentLevel);
+    {//formula -> stat = (baseStat + level) + (affiinity * lvl)
+        strength.CurrentStatValue = strength.BaseStatValue + (strength.StatAffinity * currentLevel);
+        agility.CurrentStatValue = agility.BaseStatValue + (agility.StatAffinity * currentLevel);
+        intellect.CurrentStatValue = intellect.BaseStatValue + (intellect.StatAffinity * currentLevel);
+        endurance.CurrentStatValue = endurance.BaseStatValue + (endurance.StatAffinity * currentLevel);
+        spirit.CurrentStatValue = spirit.BaseStatValue + (spirit.StatAffinity * currentLevel);
     }
     public int GenerationDefinedLevelCap()
     {

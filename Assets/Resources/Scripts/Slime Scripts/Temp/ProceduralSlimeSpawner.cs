@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FakeSlimeSpawner : MonoBehaviour
+public class ProceduralSlimeSpawner : MonoBehaviour
 {
     public List<Slime> mySlimes;
     public List<Transform> spawnNodes;
 
+    [Range(1, 140)]
     public int minLevelHere;
+    [Range(1, 140)]
     public int maxLevelHere;
 
+    [Tooltip("added to the random range call of lvl gen, for rare slimes")]
+    [Range(1, 140)]
+    public int rareLevelIncrease;
+
+    [Range(0, 1)]
     public float rareSpawnChance;
+
     public List<GenerationMapping.Generation> commonGensInArea;
     public List<GenerationMapping.Generation> rareGensInArea;
 
@@ -37,7 +45,7 @@ public class FakeSlimeSpawner : MonoBehaviour
 
         if (typeChance <= rareSpawnChance)
         {//rare spawn
-            _slime.levelMapping.level = Random.Range(maxLevelHere, maxLevelHere += 11);
+            _slime.levelMapping.level = Random.Range(maxLevelHere, maxLevelHere += rareLevelIncrease);
 
             for (int i = 0; i < rareTypesInArea.Count; i++)
                 _slime.archetype = rareTypesInArea[Random.Range(0, rareTypesInArea.Count)];
