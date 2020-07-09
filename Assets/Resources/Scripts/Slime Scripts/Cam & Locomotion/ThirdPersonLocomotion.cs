@@ -18,14 +18,19 @@ public class ThirdPersonLocomotion : MonoBehaviour
 
     public CharacterController controller { get; set; }
 
+    private SlimeInputMap slimeInputMap;
     private float moveScale = 1;
     private Vector3 moveThrottle = Vector3.zero;
     private float moveScaleMultiplier = 1.0f;
     private float simulationRate = 60;
 
+    [Tooltip("How many fixed speeds to use with linear movement? 0=linear control")]
+    private int FixedSpeedSteps = 0;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        slimeInputMap = GetComponent<SlimeInputMap>();
     }
 
     void Update()
@@ -37,7 +42,7 @@ public class ThirdPersonLocomotion : MonoBehaviour
     {
         UpdateMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (slimeInputMap.Jump)
             Jump();
 
         Vector3 moveDirection = Vector3.zero;
@@ -68,10 +73,10 @@ public class ThirdPersonLocomotion : MonoBehaviour
     {
         if(enableMovement)
         {
-            bool moveForward = Input.GetKey(KeyCode.W);
-            bool moveLeft = Input.GetKey(KeyCode.A);
-            bool moveRight = Input.GetKey(KeyCode.D);
-            bool moveBack = Input.GetKey(KeyCode.S);
+            bool moveForward = slimeInputMap.SlimeInput.locomotion.move.triggered;
+            bool moveLeft = slimeInputMap.SlimeInput.locomotion.move.triggered;
+            bool moveRight = slimeInputMap.SlimeInput.locomotion.move.triggered;
+            bool moveBack = slimeInputMap.SlimeInput.locomotion.move.triggered;
 
             moveScale = 1f;
 
@@ -101,6 +106,30 @@ public class ThirdPersonLocomotion : MonoBehaviour
                 moveThrottle += ort * (transform.lossyScale.x * moveInfluence * backAndSideDampen * Vector3.right);
 
             moveInfluence = acceleration * 0.1f * moveScale * moveScaleMultiplier;
+
+            //analog
+            Vector2 primaryAxis = slimeInputMap.MoveData;
+
+            if (FixedSpeedSteps > 0)
+            {
+                primaryAxis.y = Mathf.Round(primaryAxis.y * FixedSpeedSteps) / FixedSpeedSteps;
+                primaryAxis.x = Mathf.Round(primaryAxis.x * FixedSpeedSteps) / FixedSpeedSteps;
+            }
+
+            if (primaryAxis.y > 0.0f)
+                moveThrottle += ort * (primaryAxis.y * transform.lossyScale.z * moveInfluence * Vector3.forward);
+
+            if (primaryAxis.y < 0.0f)
+                moveThrottle += ort * (Mathf.Abs(primaryAxis.y) * transform.lossyScale.z * moveInfluence *
+                                       backAndSideDampen * Vector3.back);
+
+            if (primaryAxis.x < 0.0f)
+                moveThrottle += ort * (Mathf.Abs(primaryAxis.x) * transform.lossyScale.x * moveInfluence *
+                                       backAndSideDampen * Vector3.left);
+
+            if (primaryAxis.x > 0.0f)
+                moveThrottle += ort * (primaryAxis.x * transform.lossyScale.x * moveInfluence * backAndSideDampen *
+                                       Vector3.right);
         }
     }
 
