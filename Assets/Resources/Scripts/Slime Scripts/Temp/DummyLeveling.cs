@@ -10,7 +10,7 @@ public class DummyLeveling : MonoBehaviour
 
     void Update()
     {
-        if(TempInputManager.instance.F_Key)
+        if(TempInputManager.Instance.F_Key)
         {
             testSlime.levelMapping.GainXP(300);
             testSlime.levelMapping.SetExperienceVisuals(expBar);

@@ -9,7 +9,7 @@ public class SlimeFaceTestScript : MonoBehaviour
 
     private void Update()
     {
-        if (TempInputManager.instance.Space_Key)
+        if (TempInputManager.Instance.Space_Key)
             faceAnimator.animateTextureSheet(blinkAnim);
     }
 }

@@ -4,7 +4,29 @@ using UnityEngine;
 
 public class TempInputManager : MonoBehaviour
 {
-    public static TempInputManager instance;
+    #region singleton
+    private static TempInputManager instance;
+    public static TempInputManager Instance
+    {
+        get
+        {
+            if (instance)
+                return instance;
+            else
+                instance = Create();
+
+            return instance;
+        }
+    }
+    private static TempInputManager Create()
+    {
+        GameObject newObj = new GameObject("Temp-Input Manager");
+        TempInputManager newTIM = newObj.AddComponent<TempInputManager>();
+
+        return newTIM;
+    }
+    #endregion
+
     public TempInputs TempInput { get; set; }
 
     public float OnActionHit { get; set; }//left click/right trigger
@@ -38,12 +60,14 @@ public class TempInputManager : MonoBehaviour
     void Awake()
     {
         TempInput = new TempInputs();
-
-        if (instance == null)
-            instance = this;
-        if (instance != this)
-            this.enabled = false;
-
+    }
+    void OnEnable()
+    {
+        TempInput.Enable();
+    }
+    void OnDisable()
+    {
+        TempInput.Disable();
     }
     void Update()
     {

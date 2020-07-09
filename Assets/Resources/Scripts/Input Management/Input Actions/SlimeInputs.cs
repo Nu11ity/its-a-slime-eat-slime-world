@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Resources/Scripts/Input Management/SlimeInputs.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Resources/Scripts/Input Management/Input Actions/SlimeInputs.inputactions'
 
 using System;
 using System.Collections;
