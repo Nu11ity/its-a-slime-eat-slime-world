@@ -11,8 +11,13 @@ public class DummyLeveling : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            testSlime.levelMapping.GainXP(10);
+            testSlime.levelMapping.GainXP(300);
             testSlime.levelMapping.SetExperienceVisuals(expBar);
+
+            testSlime.TakeDamage(10);
+            testSlime.DrainEnergy(1);
+
+            testSlime.OnCombatEnd();
         }
     }
 }

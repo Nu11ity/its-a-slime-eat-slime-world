@@ -59,45 +59,53 @@ public class Slime : MonoBehaviour
     */
     #endregion
 
+    #region properties & variables
+    [Header("Slime Type")]
+    [SerializeField]
+    private bool isAlive;
+    public bool IsAlive { get { return isAlive; } }//read only
+    public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
+    public Archetype archetype;
+
+
     [Header("Level Mapping")]
     public LevelMapping levelMapping;
+    private int trackedLevel;
 
     [Header("Stat Mapping")]
     public StatMapping statMapping;
 
-    [Header("\nSlime class specific\n")]
-    public Archetype archetype;
-    public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
+    [Header("Health Mapping")]
+    public FillMeter healthMeter;
+    public int hpMultiplier;
 
-    public void OnSpawnedToWorld()
-    {
-        levelMapping.LevelToExperience();
-        statMapping.GenerateStats(levelMapping.level, levelMapping.levelFlux);
+    public int MaxHealth
+    {//read only
+        get
+        {
+            return statMapping.endurance.CurrentStatValue * hpMultiplier;
+        }
     }
-    
-    #region properties & variables
-    [SerializeField]
-    private bool isAlive;
-    public bool IsAlive { get { return isAlive; } }//read only
 
-    [Header("Health")]
     [SerializeField]
     private int currentHealth;
-    public int maxHealth;
     public int CurrentHealth
     {
         get { return currentHealth; }
         set
         {
-            value = Mathf.Clamp(value, 0, maxHealth);
+            value = Mathf.Clamp(value, 0, MaxHealth);
             currentHealth = value;
+            healthMeter.SetFillMeter(currentHealth, MaxHealth);
         }
     }
 
-    [Header("Energy")]
+    [Header("Energy Mapping")]
+    public FillMeter energyMeter;
+    public int maxEnergy;
+
     [SerializeField]
     private int currentEnergy;
-    public int maxEnergy;
     public int CurrentEnergy
     {
         get { return currentEnergy; }
@@ -105,6 +113,39 @@ public class Slime : MonoBehaviour
         {
             value = Mathf.Clamp(value, 0, maxEnergy);
             currentEnergy = value;
+            energyMeter.SetFillMeter(currentEnergy, maxEnergy);
+        }
+    }
+    #endregion
+
+
+    #region Initalize Slime methods
+    public void OnCombatEnd()
+    {
+        UpdateSlimeCheck();
+        //restore health?
+        //restore energy?
+        //etc....
+    }
+    public void OnSpawnedToWorld()
+    {
+        isAlive = true;
+        levelMapping.LevelToExperience();
+        statMapping.GenerateStats(levelMapping.level, levelMapping.levelFlux);
+        trackedLevel = levelMapping.level;
+        CurrentHealth = MaxHealth;
+    }
+    public void UpdateSlimeCheck()
+    {
+        if(trackedLevel != levelMapping.level)
+        {
+            trackedLevel = levelMapping.level;
+            statMapping.strength.BaseStatValue++;
+            statMapping.agility.BaseStatValue++;
+            statMapping.intellect.BaseStatValue++;
+            statMapping.endurance.BaseStatValue++;
+            statMapping.spirit.BaseStatValue++;
+            statMapping.SetStats(levelMapping.level);
         }
     }
     #endregion
@@ -124,7 +165,6 @@ public class Slime : MonoBehaviour
             Debug.Log("Play injured sfx");
 
         CurrentHealth -= _damage;
-        Mathf.Clamp(CurrentHealth, 0, maxHealth);
 
         if(CurrentHealth <= 0)
             Die();
@@ -132,7 +172,7 @@ public class Slime : MonoBehaviour
     public void HealDamage(int _heal)
     {
         CurrentHealth += _heal;
-        Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        Mathf.Clamp(CurrentHealth, 0, MaxHealth);
     }
     public void Die()
     {
