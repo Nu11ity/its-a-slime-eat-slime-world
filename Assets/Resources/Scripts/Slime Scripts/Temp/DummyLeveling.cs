@@ -7,9 +7,10 @@ public class DummyLeveling : MonoBehaviour
 {
     public Slime testSlime;
     public Slider expBar;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if(TempInputManager.Instance.F_Key)
         {
             testSlime.levelMapping.GainXP(300);
             testSlime.levelMapping.SetExperienceVisuals(expBar);

@@ -8,7 +8,6 @@ public class CustomCamera : MonoBehaviour
     public enum MouseState { Standard, Inverted }
     public MouseState mouseState;
     public Transform focusPoint;
-    [Range(1, 10)]
     public float sensitivity;
     [Range(1, 5)]
     public float damping;//1.5, 3, 5
@@ -19,12 +18,17 @@ public class CustomCamera : MonoBehaviour
     public float CurrentX { get; set; }
     public float CurrentY { get; set; }
 
+    private SlimeInputMap slimeInputMap;
     private Vector3 newCamPos;
     private Quaternion newCamRot;
     //private Vector3 cameraMask;
     //private const float distance = 7.5f;
     //private float pushValue;
 
+    void Awake()
+    {
+        slimeInputMap = GetComponentInParent<SlimeInputMap>();
+    }
     private void Update()
     {
         GetInput();
@@ -35,11 +39,11 @@ public class CustomCamera : MonoBehaviour
     }
     private void GetInput()
     {
-        CurrentX += Input.GetAxis("Mouse X") * sensitivity;
+        CurrentX += slimeInputMap.LookData.x * sensitivity;
         if(mouseState == MouseState.Inverted)
-            CurrentY += Input.GetAxis("Mouse Y") * sensitivity;
+            CurrentY += slimeInputMap.LookData.y * sensitivity;
         else
-            CurrentY -= Input.GetAxis("Mouse Y") * sensitivity;
+            CurrentY -= slimeInputMap.LookData.y * sensitivity;
         CurrentY = Mathf.Clamp(CurrentY, yAngleMin, yAngleMax);
     }
     private void UpdateCameraPosition()
