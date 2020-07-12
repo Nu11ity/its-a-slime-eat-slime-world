@@ -44,12 +44,12 @@ Material:
     - Vector1_1047081D: 0.5
     - Vector1_3D64EE58: 0.05
     - Vector1_642FC11F: 1
-    - Vector1_71E6A688: 100
+    - Vector1_71E6A688: 5
     - Vector1_833332ED: 1
     - Vector1_C7A57688: 1
     - Vector1_E6022874: 0.3
     - Vector1_EB7AD178: 0.005
-    - Vector1_F63E786A: 100
+    - Vector1_F63E786A: 1
     - _Choppiness: 0.01
     - _FlowSpeed: 0.01
     - _FlowStrength: 0.0075
