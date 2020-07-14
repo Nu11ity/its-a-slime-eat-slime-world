@@ -8,8 +8,13 @@ public abstract class BaseAbility : ScriptableObject
     public string abilityName;
     public Sprite abilityIcon;
     public int abilityCost;
-    public enum AffinityBonus { Strength, Agility, Intellect, Endurance, Spirit }
+    public enum AffinityBonus { None, Strength, Agility, Intellect, Endurance, Spirit }
     public AffinityBonus affinityBonus;
+    public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
+    public Forecast forecast;
+    public Vector3 forecastScaler;
+    public bool OnCooldown { get; set; }
+
 
     public abstract void AbilityActivated();
     public abstract void AbilityUpdateMethod();

@@ -3,26 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ability", menuName = "Abilities/FireType/FlameStrike")]
-public class FlameStrike : BaseAbility
+[CreateAssetMenu(fileName = "ability", menuName = "Abilities/FireType/Calamity")]
+public class Calamity : BaseAbility
 {
     public float globalCD;
-    private bool onCooldown;
     private float cooldownTimer;
 
     public override void AbilityActivated()
     {
-        
+        if (OnCooldown)
+            return;
+
+        OnCooldown = true;
+        Debug.LogError("Used Calamity");
+        //AOE based meteor storm
     }
     public override void AbilityUpdateMethod()
     {
-        if(onCooldown)
+        if (OnCooldown)
         {
             cooldownTimer += Time.deltaTime;
 
-            if(cooldownTimer >= globalCD)
+            if (cooldownTimer >= globalCD)
             {
-                onCooldown = false;
+                OnCooldown = false;
                 cooldownTimer = 0;
             }
         }
