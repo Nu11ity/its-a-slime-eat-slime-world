@@ -21,7 +21,7 @@ public class AbilityManager : MonoBehaviour
     } 
     private static AbilityManager CreateAbilityManager()
     {
-        GameObject newAM = new GameObject("Ability Manager");
+        GameObject newAM = new GameObject("AbilityTimer Manager");
         AbilityManager newAbilityManager = newAM.AddComponent<AbilityManager>();
 
         return newAbilityManager;
@@ -29,5 +29,6 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Pool Management and delegation
+
     #endregion
 }

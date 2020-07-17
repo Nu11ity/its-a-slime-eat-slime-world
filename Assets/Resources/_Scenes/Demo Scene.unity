@@ -225,6 +225,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 1
   archetype: 0
+  basicAttack: {fileID: 11400000, guid: 925f52c4075743b4580f051fe21d6459, type: 2}
+  abilities:
+  - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
+  - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
+  - {fileID: 11400000, guid: 0baca4708eab1b244b20c67ab141dcac, type: 2}
+  abilityTimer: []
   levelMapping:
     level: 1
     levelFlux: 3
@@ -267,11 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6aa80f2bc2cc18468726a75a364d528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAttack: {fileID: 11400000, guid: 925f52c4075743b4580f051fe21d6459, type: 2}
-  myAbilities:
-  - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
-  - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
-  - {fileID: 11400000, guid: 0baca4708eab1b244b20c67ab141dcac, type: 2}
   abilityForecasts:
   - {fileID: 1143825894}
   - {fileID: 1651504105}
@@ -2036,49 +2037,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 107717990}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1177060140
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1177060142}
-  - component: {fileID: 1177060141}
-  m_Layer: 0
-  m_Name: Ability Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1177060141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177060140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1be15f44f68d132459cbc3181ef15f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1177060142
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177060140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5151873, y: 1.8298347, z: -12.634792}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1181994342
 GameObject:

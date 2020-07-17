@@ -67,6 +67,12 @@ public class Slime : MonoBehaviour
     public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
     public Archetype archetype;
 
+    public BaseAbility basicAttack;
+    public AbilityTimer BasicAttackTimer { get; set; }
+
+    public List<BaseAbility> abilities = new List<BaseAbility>();
+    public List<AbilityTimer> AbilityTimers { get; set; }
+
 
     [Header("Level Mapping")]
     public LevelMapping levelMapping;
@@ -118,8 +124,28 @@ public class Slime : MonoBehaviour
     }
     #endregion
 
+    #region Generic Methods
+    void Awake()
+    {
+        InitializeAbilities();
+    }
+    #endregion
 
     #region Initalize Slime methods
+    private void InitializeAbilities()
+    {
+        AbilityTimers = new List<AbilityTimer>();
+        for (int i = 0; i < abilities.Count; i++)
+        {
+            AbilityTimers.Add(new AbilityTimer());
+        }
+
+        BasicAttackTimer = new AbilityTimer();
+        BasicAttackTimer.GlobalCD = basicAttack.globalCD;
+
+        for (int i = 0; i < AbilityTimers.Count; i++)
+            AbilityTimers[i].GlobalCD = abilities[i].globalCD;
+    }
     public void OnCombatEnd()
     {
         UpdateSlimeCheck();

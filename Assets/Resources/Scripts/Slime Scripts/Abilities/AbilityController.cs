@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class AbilityController : MonoBehaviour
 {
-    public BaseAbility basicAttack;
-    public List<BaseAbility> myAbilities = new List<BaseAbility>();
+    public Slime SlimeData { get; set; }
 
-    private BaseAbility currentAbility;
-    public BaseAbility CurrentAbility
+    private int currentIndex;
+    public int CurrentIndex
     {
-        get { return currentAbility; }
+        get { return currentIndex; }
         set
         {
-            if (value == null)
+            if (value < 0)
                 AbilityToggled = false;
             else
-                currentAbility = value;
+                currentIndex = value;
         }
     }
 
@@ -31,15 +30,16 @@ public class AbilityController : MonoBehaviour
     private void Awake()
     {
         slimeInputMap = GetComponent<SlimeInputMap>();
+        SlimeData = GetComponent<Slime>();
 
         for (int i = 0; i < abilityForecasts.Count; i++)
             abilityForecasts[i].Initialize();
     }
     private void AbilityUpdater()
     {
-        basicAttack.AbilityUpdateMethod();
-        for (int i = 0; i < myAbilities.Count; i++)
-            myAbilities[i].AbilityUpdateMethod();
+        SlimeData.BasicAttackTimer.UpdateMethod();
+        for (int i = 0; i < SlimeData.AbilityTimers.Count; i++)
+            SlimeData.AbilityTimers[i].UpdateMethod();
     }
     void Update()
     {
@@ -68,23 +68,26 @@ public class AbilityController : MonoBehaviour
         AbilityToggled = true;
         return true;
     }
-    private void CheckAbilityInput(bool _input, BaseAbility _ability)
+    private void CheckAbilityInput(bool _input, int _index)
     {
-        if(_input && !_ability.OnCooldown)
+        if(_input && !SlimeData.AbilityTimers[_index].OnCooldown)
         {
-            CurrentAbility = _ability;
+            CurrentIndex = _index;
 
-            if (GetForecast(_ability))
+            if (GetForecast(SlimeData.abilities[_index]))
             {
                 //uses projection before cast
-                CurrentForcast.EnableVisual(true, _ability.forecastScaler);
+                CurrentForcast.EnableVisual(true, SlimeData.abilities[_index].forecastScaler);
             }
             else
             {
                 //instant cast
-                CurrentAbility.AbilityActivated();
-                CurrentAbility = null;
-                //activate global cd
+                if(SlimeData.AbilityTimers[_index].ActivationCheck())
+                {
+                    SlimeData.abilities[_index].AbilityActivated();
+                    CurrentIndex = -1;
+                    SlimeData.BasicAttackTimer.Timeout = true;
+                }
             }
         }
     }
@@ -92,29 +95,33 @@ public class AbilityController : MonoBehaviour
     {
         if(!AbilityToggled)
         {
-            CheckAbilityInput(slimeInputMap.Ability01Hit, myAbilities[0]);
-            CheckAbilityInput(slimeInputMap.Ability02Hit, myAbilities[1]);
-            CheckAbilityInput(slimeInputMap.Ability03Hit, myAbilities[2]);
+            CheckAbilityInput(slimeInputMap.Ability01Hit, 0);
+            CheckAbilityInput(slimeInputMap.Ability02Hit, 1);
+            CheckAbilityInput(slimeInputMap.Ability03Hit, 2);
         }     
 
         if (slimeInputMap.OnActionHit > 0.35f)
         {
-            if(AbilityToggled)
+            if(AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
             {//use ability | Read->(l-click/r-trigger hit)
-                CurrentAbility.AbilityActivated();
-                CurrentAbility = null;
+                SlimeData.abilities[currentIndex].AbilityActivated();
+                CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
+                SlimeData.BasicAttackTimer.Timeout = true;
             }
             else
             {//basic attack
-                basicAttack.AbilityActivated();
+                if(SlimeData.BasicAttackTimer.ActivationCheck())
+                {
+                    SlimeData.basicAttack.AbilityActivated();
+                }
             }
         }
         if (slimeInputMap.OnCancelHit > 0.35f)
         {
             if(AbilityToggled)
             {//cancel abil | Read->(r-click/l-trigger hit)
-                CurrentAbility = null;
+                CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
             }          
             else

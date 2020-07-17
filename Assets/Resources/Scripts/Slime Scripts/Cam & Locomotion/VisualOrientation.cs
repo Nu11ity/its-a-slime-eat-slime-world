@@ -28,18 +28,21 @@ public class VisualOrientation : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         visual.rotation = Quaternion.Slerp(visual.rotation, rotation, Time.deltaTime * rotSpeed);
 
-        if (locomotion.controller.velocity.magnitude > 0)
-        {
-            Vector3 newPos = slimeVisual.position - (locomotion.transform.position - locomotion.controller.velocity);
-            newPos.y = 0;
-            var slimeRot = Quaternion.LookRotation(newPos);
-            slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, slimeRot, Time.deltaTime * (rotSpeed / 2f));
-        }
-        else
-        {
-            //slimeVisual.rotation = slimeVisual.parent.transform.rotation;
-            Quaternion desiredRot = slimeVisual.parent.transform.rotation;
-            slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, desiredRot, Time.deltaTime * (rotSpeed / 2.5f));
-        } 
+        if(locomotion.controller.isGrounded)
+        {//fixed looking away on jump(above)
+            if (locomotion.controller.velocity.magnitude > 0)
+            {
+                Vector3 newPos = slimeVisual.position - (locomotion.transform.position - locomotion.controller.velocity);
+                newPos.y = 0;
+                var slimeRot = Quaternion.LookRotation(newPos);
+                slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, slimeRot, Time.deltaTime * (rotSpeed / 2f));
+            }
+            else
+            {
+                //slimeVisual.rotation = slimeVisual.parent.transform.rotation;
+                Quaternion desiredRot = slimeVisual.parent.transform.rotation;
+                slimeVisual.rotation = Quaternion.Slerp(slimeVisual.rotation, desiredRot, Time.deltaTime * (rotSpeed / 2.5f));
+            }
+        }      
     }
 }
