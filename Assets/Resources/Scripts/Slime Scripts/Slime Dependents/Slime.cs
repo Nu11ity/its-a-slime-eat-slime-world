@@ -127,7 +127,7 @@ public class Slime : MonoBehaviour
     #region Generic Methods
     void Awake()
     {
-        InitializeAbilities();
+        
     }
     #endregion
 
@@ -160,6 +160,11 @@ public class Slime : MonoBehaviour
         statMapping.GenerateStats(levelMapping.level, levelMapping.levelFlux);
         trackedLevel = levelMapping.level;
         CurrentHealth = MaxHealth;
+
+        //Ability Mapping
+        for (int i = 0; i < 3; i++)
+            abilities.Add(AbilityManager.Instance.AbilityMap(this));
+        InitializeAbilities();
     }
     public void UpdateSlimeCheck()
     {

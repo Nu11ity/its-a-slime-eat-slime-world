@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ability", menuName = "Abilities/FireType/Wall Of Stone")]
+[CreateAssetMenu(fileName = "ability", menuName = "Abilities/NatureType/Wall Of Stone")]
 public class WallOfStone : BaseAbility
 {
     public override void AbilityActivated()

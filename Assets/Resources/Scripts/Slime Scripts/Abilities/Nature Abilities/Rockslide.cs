@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ability", menuName = "Abilities/FireType/Rockslide")]
+[CreateAssetMenu(fileName = "ability", menuName = "Abilities/NatureType/Rockslide")]
 public class Rockslide : BaseAbility
 {
     public override void AbilityActivated()
