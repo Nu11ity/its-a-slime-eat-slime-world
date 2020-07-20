@@ -13,7 +13,7 @@ public abstract class BaseAbility : ScriptableObject
     public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
     public Forecast forecast;
     public Vector3 forecastScaler;
-    //public bool OnCooldown { get; set; }
+    public float freeCircleReach;
     public float globalCD;
 
     public abstract void AbilityActivated();

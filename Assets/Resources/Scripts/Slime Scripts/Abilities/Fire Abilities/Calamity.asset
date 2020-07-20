@@ -17,5 +17,6 @@ MonoBehaviour:
   abilityCost: 100
   affinityBonus: 4
   forecast: 2
-  forecastScaler: {x: 3, y: 1, z: 3}
+  forecastScaler: {x: 2, y: 1, z: 2}
+  freeCircleReach: 10
   globalCD: 12

@@ -8,7 +8,7 @@ public class BoulderToss : BaseAbility
 {
     public override void AbilityActivated()
     {
-        Debug.LogError("Used Boulder Toss");
+        Debug.Log("Used Boulder Toss");
         //toss boulder at free move circle position
     }
 }

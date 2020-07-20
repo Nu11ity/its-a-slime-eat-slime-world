@@ -47,9 +47,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
   - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
   - {fileID: 11400000, guid: 0baca4708eab1b244b20c67ab141dcac, type: 2}
-  - {fileID: 11400000, guid: b4aaf86c5b342ec4dbde7579e5fbab01, type: 2}
-  - {fileID: 11400000, guid: 97d9702f8ac14ac498866ae64122d6b8, type: 2}
-  - {fileID: 11400000, guid: 8b5ecbb624909ce4cb93d1d7c2868ced, type: 2}
   natureAbilities:
   - {fileID: 11400000, guid: b400098bf2eb81f4288837e4db5e5dd9, type: 2}
   - {fileID: 11400000, guid: 1292e955728210c45addd83e61124dbf, type: 2}

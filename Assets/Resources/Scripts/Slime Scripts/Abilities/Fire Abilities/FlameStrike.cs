@@ -8,7 +8,7 @@ public class FlameStrike : BaseAbility
 {
     public override void AbilityActivated()
     {        
-        Debug.LogError("Used FlameStrike");
+        Debug.Log("Used FlameStrike");
         //cone based fire blast
     }
 }

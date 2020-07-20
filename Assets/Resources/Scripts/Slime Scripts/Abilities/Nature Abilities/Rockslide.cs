@@ -8,7 +8,7 @@ public class Rockslide : BaseAbility
 {
     public override void AbilityActivated()
     {
-        Debug.LogError("Used Rockslide");
+        Debug.Log("Used Rockslide");
         //Lane based, wide, short length. Rocks push forward
     }
 }

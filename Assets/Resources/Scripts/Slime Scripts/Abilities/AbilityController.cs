@@ -25,12 +25,13 @@ public class AbilityController : MonoBehaviour
     public bool AbilityToggled { get; set; }
 
     private SlimeInputMap slimeInputMap;
-
+    private FreeMoveAbility freeMoveAbility;
 
     private void Awake()
     {
         slimeInputMap = GetComponent<SlimeInputMap>();
         SlimeData = GetComponent<Slime>();
+        freeMoveAbility = abilityForecasts[2].GetComponent<FreeMoveAbility>();
 
         for (int i = 0; i < abilityForecasts.Count; i++)
             abilityForecasts[i].Initialize();
@@ -47,7 +48,6 @@ public class AbilityController : MonoBehaviour
         //
         TempInputCalls();
     }
-     
     private bool GetForecast(BaseAbility _ability)
     {
         if(_ability.forecast == BaseAbility.Forecast.Instant)
@@ -61,7 +61,10 @@ public class AbilityController : MonoBehaviour
         else if (_ability.forecast == BaseAbility.Forecast.Lane)
             CurrentForcast = abilityForecasts[1];
         else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+        {
             CurrentForcast = abilityForecasts[2];
+            freeMoveAbility.Reach = _ability.freeCircleReach;
+        }
         else if (_ability.forecast == BaseAbility.Forecast.BoundCircle)
             CurrentForcast = abilityForecasts[3];
 
