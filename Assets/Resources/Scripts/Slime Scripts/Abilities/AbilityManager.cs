@@ -31,10 +31,15 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Pool Management and delegation
+    //[Header("Ability Prefabs, /w Pools")]
+    //each ability needs a prefab for spawn reference.
+    //each ability also needs a pool, so not wasting resources.
+    //rinse and repeat for all skills
+
+    [Header("Slime BaseAbility Pools")]
     public List<BaseAbility> fireAbilities;
     public List<BaseAbility> natureAbilities;
     public List<BaseAbility> waterAbilities;
-
     public List<BaseAbility> natureFireAbilities;
     public List<BaseAbility> waterNatureAbilities;
     public List<BaseAbility> fireWaterAbilities;

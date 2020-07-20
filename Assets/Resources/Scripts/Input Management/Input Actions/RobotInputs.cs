@@ -41,6 +41,14 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7c35173-0fbd-4009-85e8-6cdc02a97cd3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -153,6 +161,28 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                     ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dba1b317-7176-41c3-9e10-d80a6ac9f78f"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7823ec1a-0fd4-483c-89c3-374e61b5f863"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -191,6 +221,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         m_locomotion_move = m_locomotion.FindAction("move", throwIfNotFound: true);
         m_locomotion_look = m_locomotion.FindAction("look", throwIfNotFound: true);
         m_locomotion_jump = m_locomotion.FindAction("jump", throwIfNotFound: true);
+        m_locomotion_sprint = m_locomotion.FindAction("sprint", throwIfNotFound: true);
         // interaction
         m_interaction = asset.FindActionMap("interaction", throwIfNotFound: true);
         m_interaction_Newaction = m_interaction.FindAction("New action", throwIfNotFound: true);
@@ -246,6 +277,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_locomotion_move;
     private readonly InputAction m_locomotion_look;
     private readonly InputAction m_locomotion_jump;
+    private readonly InputAction m_locomotion_sprint;
     public struct LocomotionActions
     {
         private @RobotInputs m_Wrapper;
@@ -253,6 +285,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         public InputAction @move => m_Wrapper.m_locomotion_move;
         public InputAction @look => m_Wrapper.m_locomotion_look;
         public InputAction @jump => m_Wrapper.m_locomotion_jump;
+        public InputAction @sprint => m_Wrapper.m_locomotion_sprint;
         public InputActionMap Get() { return m_Wrapper.m_locomotion; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -271,6 +304,9 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                 @jump.started -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnJump;
+                @sprint.started -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnSprint;
+                @sprint.performed -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnSprint;
+                @sprint.canceled -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_LocomotionActionsCallbackInterface = instance;
             if (instance != null)
@@ -284,6 +320,9 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
+                @sprint.started += instance.OnSprint;
+                @sprint.performed += instance.OnSprint;
+                @sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -326,6 +365,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
     public interface IInteractionActions
     {
