@@ -79,7 +79,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                     ""id"": ""8afff8e6-4cc5-4151-a6cb-06d54dbf7cad"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=0)"",
                     ""groups"": """",
                     ""action"": ""move"",
                     ""isComposite"": false,

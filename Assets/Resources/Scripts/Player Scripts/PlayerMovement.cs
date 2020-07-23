@@ -7,9 +7,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Space(10), Header("Look Stats")]
+    public Camera playerCam;
+    public float sensitivity;
+
+    [Space(10),Header("Move Stats")]
     public float speed;
-    [Range(20f, 50f)]
-    public float acceleration = 0.25f;
+    public float acceleration;
     public float gravity;
     public float jumpHeight;
 
@@ -17,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _isGrounded;
     private PlayerInputMap _input;
     private CharacterController _myController;
-    public Vector3 _moveDir;
 
     public bool CanMove
     {
@@ -25,39 +28,77 @@ public class PlayerMovement : MonoBehaviour
         set { _canMove = value; }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _input = GetComponent<PlayerInputMap>();
         _myController = GetComponent<CharacterController>();
         _canMove = true;
-    }
 
-    // Update is called once per frame
-    void Update()
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    private void Update()
     {
         if (CanMove)
         {
+            calculateLookDir();
             calculateMove();
             _myController.Move(_moveDir);
         }
     }
 
+    private float _xRot;
+    private float _yRot;
+    private void calculateLookDir()
+    {
+        _xRot -= _input.LookData.y * sensitivity * Time.deltaTime;
+        _xRot = Mathf.Clamp(_xRot, -60f, 60f);
+        _yRot = _input.LookData.x * sensitivity * Time.deltaTime;
+
+        playerCam.transform.localRotation = Quaternion.Euler(_xRot, 0f, 0f);
+        transform.Rotate(Vector3.up * _yRot);
+    }
+
+    private float _targetXDir;
+    private float _targetZDir;
+    private Vector3 _moveDir;
     private void calculateMove()
     {
-        //Ground movemnt Calc
-        _moveDir.x = Mathf.Lerp(_moveDir.x, _input.MoveData.x * speed * Time.deltaTime, acceleration * Time.deltaTime);
-        _moveDir.z = Mathf.Lerp(_moveDir.z, _input.MoveData.y * speed * Time.deltaTime, acceleration * Time.deltaTime);
+        _isGrounded = groundCheck();
+
+        if (_isGrounded)
+        {
+            //Ground input
+            _targetXDir = Mathf.Lerp(_targetXDir, _input.MoveData.x, acceleration * Time.deltaTime);
+            _targetZDir = Mathf.Lerp(_targetZDir, _input.MoveData.y, acceleration * Time.deltaTime);
+        }
+        else
+        {
+            //Air input
+            _targetXDir = Mathf.Lerp(_targetXDir, _input.MoveData.x, acceleration/7 * Time.deltaTime);
+            _targetZDir = Mathf.Lerp(_targetZDir, _input.MoveData.y, acceleration/7 * Time.deltaTime);
+        }
+
+        if (Mathf.Abs(_targetXDir) < 0.001f)
+            _targetXDir = 0;
+        if (Mathf.Abs(_targetZDir) < 0.001f)
+            _targetZDir = 0;
+
+        _moveDir.x = _targetXDir * speed * Time.deltaTime;
+        _moveDir.z = _targetZDir * speed * Time.deltaTime;
+        _moveDir = transform.TransformDirection(_moveDir);
 
         //Gravity Calc
-        _isGrounded = groundCheck();
         if (!_isGrounded)
-            _moveDir.y -= gravity;
+            _moveDir.y -= gravity * Time.deltaTime;
         else if (_input.Jump)
-            _moveDir.y = jumpHeight;
+            _moveDir.y = jumpHeight * 0.05f;
+        else
+            _moveDir.y = 0;
     }
+
     private bool groundCheck()
     {
-        return true;
+        //Redo this function so that it acounts for width of character
+        return Physics.Raycast(transform.position, Vector3.down, 1.01f);
     }
 }
