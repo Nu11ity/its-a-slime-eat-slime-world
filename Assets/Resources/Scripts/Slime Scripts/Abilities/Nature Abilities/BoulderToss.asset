@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BoulderToss
   m_EditorClassIdentifier: 
   abilityName: Boulder Toss
-  abilityIcon: {fileID: 0}
+  abilityIcon: {fileID: 21300000, guid: 4867db53aa592a64a851c36645423699, type: 3}
   abilityCost: 45
   affinityBonus: 1
   forecast: 2

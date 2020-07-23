@@ -26,11 +26,13 @@ public class AbilityController : MonoBehaviour
 
     private SlimeInputMap slimeInputMap;
     private FreeMoveAbility freeMoveAbility;
+    private SlimeCombatCanvas canvas;
 
     private void Awake()
     {
         slimeInputMap = GetComponent<SlimeInputMap>();
         SlimeData = GetComponent<Slime>();
+        canvas = SlimeData.myCombatCanvas;
         freeMoveAbility = abilityForecasts[2].GetComponent<FreeMoveAbility>();
 
         for (int i = 0; i < abilityForecasts.Count; i++)
@@ -42,11 +44,31 @@ public class AbilityController : MonoBehaviour
         for (int i = 0; i < SlimeData.AbilityTimers.Count; i++)
             SlimeData.AbilityTimers[i].UpdateMethod();
     }
+    private void CheckRadialTimer(float _current, float _desired, float _max, int _index)
+    {
+        if(_current != _desired)
+        {
+            _current = _desired;
+            canvas.SetAbilityFillMeter(_current, _max, _index);
+        }
+
+        if(SlimeData.AbilityTimers[_index].OnCooldown || SlimeData.AbilityTimers[_index].Timeout)
+            canvas.SetAbilityMask(_index, true);
+        else
+            canvas.SetAbilityMask(_index, false);
+    }
+    private void AbilityCDVisuals()
+    {
+        CheckRadialTimer(canvas.AbilityTimer01, SlimeData.AbilityTimers[0].CooldownTimer, SlimeData.AbilityTimers[0].GlobalCD, 0);
+        CheckRadialTimer(canvas.AbilityTimer02, SlimeData.AbilityTimers[1].CooldownTimer, SlimeData.AbilityTimers[1].GlobalCD, 1);
+        CheckRadialTimer(canvas.AbilityTimer03, SlimeData.AbilityTimers[2].CooldownTimer, SlimeData.AbilityTimers[2].GlobalCD, 2);
+    }
     void Update()
     {
         AbilityUpdater();
-        //
-        TempInputCalls();
+        AbilityCDVisuals();
+        SlimeData.PassiveEnergyRegen();
+        AbilityInputsCheck();
     }
     private bool GetForecast(BaseAbility _ability)
     {
@@ -75,26 +97,29 @@ public class AbilityController : MonoBehaviour
     {
         if(_input && !SlimeData.AbilityTimers[_index].OnCooldown)
         {
-            CurrentIndex = _index;
+            if (SlimeData.CurrentEnergy < SlimeData.abilities[_index].abilityCost)
+                return;//checks to make sure we have enough energy for ability to be toggled.
 
+            CurrentIndex = _index;
+            
             if (GetForecast(SlimeData.abilities[_index]))
             {
                 //uses projection before cast
                 CurrentForcast.EnableVisual(true, SlimeData.abilities[_index].forecastScaler);
             }
             else
-            {
-                //instant cast
+            {                
                 if(SlimeData.AbilityTimers[_index].ActivationCheck())
-                {
-                    SlimeData.abilities[_index].AbilityActivated();
+                {//instant cast
+                    SlimeData.abilities[_index].AbilityActivated();//drain energy too!!!
+                    SlimeData.DrainEnergy(SlimeData.abilities[_index].abilityCost);
                     CurrentIndex = -1;
                     SlimeData.BasicAttackTimer.Timeout = true;
                 }
             }
         }
     }
-    private void TempInputCalls()
+    private void AbilityInputsCheck()
     {
         if(!AbilityToggled)
         {
@@ -106,8 +131,9 @@ public class AbilityController : MonoBehaviour
         if (slimeInputMap.OnActionHit > 0.35f)
         {
             if(AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
-            {//use ability | Read->(l-click/r-trigger hit)
-                SlimeData.abilities[currentIndex].AbilityActivated();
+            {//cast ability | Read->(l-click/r-trigger hit)
+                SlimeData.abilities[currentIndex].AbilityActivated();//drain energy too!!!
+                SlimeData.DrainEnergy(SlimeData.abilities[currentIndex].abilityCost);
                 CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
                 SlimeData.BasicAttackTimer.Timeout = true;
@@ -115,7 +141,7 @@ public class AbilityController : MonoBehaviour
             else
             {//basic attack
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
-                {
+                {//requires no energy drain
                     SlimeData.basicAttack.AbilityActivated();
                 }
             }
@@ -123,7 +149,7 @@ public class AbilityController : MonoBehaviour
         if (slimeInputMap.OnCancelHit > 0.35f)
         {
             if(AbilityToggled)
-            {//cancel abil | Read->(r-click/l-trigger hit)
+            {//cancel ability | Read->(r-click/l-trigger hit)
                 CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
             }          

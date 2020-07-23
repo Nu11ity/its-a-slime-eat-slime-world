@@ -9,6 +9,10 @@ public class FillMeter: MonoBehaviour
 
     public void SetFillMeter(int _value, int _max)
     {
-        image.fillAmount = ((float)_value / (float)_max);
+        image.fillAmount = (_value / _max);
+    }
+    public void SetFillMeter(float _value, float _max)
+    {
+        image.fillAmount = (_value / _max);
     }
 }

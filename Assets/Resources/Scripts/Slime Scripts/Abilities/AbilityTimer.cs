@@ -7,7 +7,7 @@ public class AbilityTimer
 {
     public bool OnCooldown { get; set; }
     public float GlobalCD { get; set; }
-    private float cooldownTimer;
+    public float CooldownTimer { get; set; }
 
     public bool Timeout { get; set; }
     private float timeoutTracker;
@@ -21,22 +21,22 @@ public class AbilityTimer
         return true;
     }
     public void UpdateMethod()
-    {
+    {//update ability meter, and mask enable states
         if (OnCooldown)
         {
-            cooldownTimer += Time.deltaTime;
+            CooldownTimer += Time.deltaTime;
 
-            if (cooldownTimer >= GlobalCD)
+            if (CooldownTimer >= GlobalCD)
             {
                 OnCooldown = false;
-                cooldownTimer = 0;
+                CooldownTimer = 0;
             }
         }
         if(Timeout)
         {//adds a delay to basic attacks after skill use
             timeoutTracker += Time.deltaTime;
-
-            if(timeoutTracker >= .25f)
+            
+            if (timeoutTracker >= .25f)
             {
                 Timeout = false;
                 timeoutTracker = 0;

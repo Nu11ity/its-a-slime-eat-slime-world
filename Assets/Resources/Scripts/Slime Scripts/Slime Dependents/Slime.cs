@@ -67,12 +67,15 @@ public class Slime : MonoBehaviour
     public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
     public Archetype archetype;
 
+    //UI for ability icons, their slot point, and reference for fill bars
+
     public BaseAbility basicAttack;
     public AbilityTimer BasicAttackTimer { get; set; }
 
     public List<BaseAbility> abilities = new List<BaseAbility>();
     public List<AbilityTimer> AbilityTimers { get; set; }
 
+    public SlimeCombatCanvas myCombatCanvas;//Null
 
     [Header("Level Mapping")]
     public LevelMapping levelMapping;
@@ -82,7 +85,6 @@ public class Slime : MonoBehaviour
     public StatMapping statMapping;
 
     [Header("Health Mapping")]
-    public FillMeter healthMeter;
     public int hpMultiplier;
 
     public int MaxHealth
@@ -96,38 +98,31 @@ public class Slime : MonoBehaviour
     [SerializeField]
     private int currentHealth;
     public int CurrentHealth
-    {
+    {//Might need to be float for smoother Fill Meter
         get { return currentHealth; }
         set
         {
             value = Mathf.Clamp(value, 0, MaxHealth);
             currentHealth = value;
-            healthMeter.SetFillMeter(currentHealth, MaxHealth);
+            myCombatCanvas.SetHealthFillMeter(currentHealth, MaxHealth);
         }
     }
 
     [Header("Energy Mapping")]
-    public FillMeter energyMeter;
+    public float energyRegenSpeed;
     public int maxEnergy;
 
     [SerializeField]
-    private int currentEnergy;
-    public int CurrentEnergy
+    private float currentEnergy;
+    public float CurrentEnergy
     {
         get { return currentEnergy; }
         set
         {
-            value = Mathf.Clamp(value, 0, maxEnergy);
             currentEnergy = value;
-            energyMeter.SetFillMeter(currentEnergy, maxEnergy);
+            currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
+            myCombatCanvas.SetEnergyFillMeter(currentEnergy, maxEnergy);
         }
-    }
-    #endregion
-
-    #region Generic Methods
-    void Awake()
-    {
-        
     }
     #endregion
 
@@ -138,6 +133,7 @@ public class Slime : MonoBehaviour
         for (int i = 0; i < abilities.Count; i++)
         {
             AbilityTimers.Add(new AbilityTimer());
+            myCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
         }
 
         BasicAttackTimer = new AbilityTimer();
@@ -182,6 +178,12 @@ public class Slime : MonoBehaviour
     #endregion
 
     #region Health & Energy methods
+    //add method for the regen of energy passively
+    public void PassiveEnergyRegen()
+    {
+        if(CurrentEnergy < maxEnergy)
+            CurrentEnergy += Time.deltaTime * energyRegenSpeed;
+    }
     public void DrainEnergy(int _drainAmt)
     {
         CurrentEnergy -= _drainAmt;
