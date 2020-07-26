@@ -317,13 +317,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49455880}
-  m_LocalRotation: {x: 0.086005926, y: -0.91064465, z: 0.3229948, w: 0.24290691}
-  m_LocalPosition: {x: -39, y: 17.9, z: -66.8}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 213, y: 22, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &58614307
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,12 +383,12 @@ MonoBehaviour:
     mainTex: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
     mainUVs: {x: 1, y: 1, z: 0, w: 0}
     main: {x: 0.8490566, y: 0.5865944, z: 0.47659308, w: 1}
-    winter: {x: 0.27205858, y: 0.27205858, z: 0.27205858, w: 1}
+    winter: {x: 0.27205852, y: 0.27205852, z: 0.27205852, w: 1}
     spring: {x: 0.57794106, y: 0.6397059, z: 0, w: 1}
-    summer: {x: 0.19082126, y: 0.5220588, z: 0, w: 1}
-    autumn: {x: 0.7205882, y: 0.40253517, z: 0, w: 1}
+    summer: {x: 0.19082123, y: 0.5220588, z: 0, w: 1}
+    autumn: {x: 0.7205882, y: 0.40253514, z: 0, w: 1}
     priority: 0
-  material: {fileID: 549567908}
+  material: {fileID: 237209536}
   isCustom: 0
 --- !u!23 &58614310
 MeshRenderer:
@@ -408,7 +408,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 549567908}
+  - {fileID: 237209536}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -437,76 +437,260 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58614307}
   m_Mesh: {fileID: 4300000, guid: bd3c4cc11cf625340a7d1c0d21eed312, type: 3}
---- !u!84 &211063384
-RenderTexture:
+--- !u!21 &98623774
+Material:
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TVE Motion Tex
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 3
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 0
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_Dimension: 2
-  m_VolumeDepth: 1
---- !u!84 &216741479
-RenderTexture:
+  m_Name: Element
+  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdvancedCat: 1
+    - _AlphaCutoff: 0.5
+    - _Banner: 0
+    - _ElementCat: 0
+    - _ElementIntensity: 1
+    - _ElementMode: 1
+    - _Intensity: 1
+    - _IsColorsShader: 1
+    - _IsTVEElement: 1
+    - _IsTVEShader: 1
+    - _IsUniversalPipeline: 1
+    - _IsVersion: 130
+    - _Message1: 0
+    - _SeasonMode: 0
+    - _SeasonMode_Seasons: 0
+    - _SeasonMode_Simple: 0
+    - _TessEdgeLength: 16
+    - _TessMax: 25
+    - _TessMaxDisp: 25
+    - _TessMin: 10
+    - _TessPhongStrength: 0.5
+    - _TessValue: 16
+    - _render_priority: 0
+    m_Colors:
+    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
+    - _AutumnColor: {r: 0.8584906, g: 0.6090072, b: 0.41709656, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 1, g: 0, b: 0, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
+    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
+    - _SpringColor: {r: 0.59477, g: 0.62264144, b: 0.3495014, a: 1}
+    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
+    - _SummerColor: {r: 0.43253165, g: 0.53773564, b: 0.36779076, a: 1}
+    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
+    - _WinterColor: {r: 0.6886792, g: 0.5764483, b: 0.4905215, a: 1}
+--- !u!21 &171998994
+Material:
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TVE Motion Tex
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 3
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 0
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_Dimension: 2
-  m_VolumeDepth: 1
+  m_Name: Element
+  m_Shader: {fileID: 4800000, guid: b3820571eb3f04f4f855cc7161c165d7, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdvancedCat: 1
+    - _AlphaCutoff: 0.5
+    - _Autumn: 1
+    - _AutumnValue: 0
+    - _Banner1: 0
+    - _ElementCat: 0
+    - _ElementIntensity: 1
+    - _ElementMode: 1
+    - _Intensity: 1
+    - _IsExtrasShader: 1
+    - _IsTVEElement: 1
+    - _IsTVEShader: 1
+    - _IsUniversalPipeline: 1
+    - _IsVersion: 130
+    - _MainValue: 0
+    - _Message1: 0
+    - _SeasonMode: 0
+    - _SeasonMode_Seasons: 0
+    - _SeasonMode_Simple: 0
+    - _Simple: 1
+    - _Spring: 1
+    - _SpringValue: 0
+    - _Summer: 1
+    - _SummerValue: 0
+    - _TessEdgeLength: 16
+    - _TessMax: 25
+    - _TessMaxDisp: 25
+    - _TessMin: 10
+    - _TessPhongStrength: 0.5
+    - _TessValue: 16
+    - _Winter: 1
+    - _WinterValue: 1
+    - _render_priority: 0
+    m_Colors:
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
+--- !u!1001 &202253238
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 677713351937125750, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass_Medium (TVE Backup)
+      objectReference: {fileID: 0}
+    - target: {fileID: 677713351937125750, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575874078753697570, guid: b190c9099f3f14a408c9f2f5bd65d640,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b190c9099f3f14a408c9f2f5bd65d640, type: 3}
+--- !u!21 &237209536
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Element
+  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdvancedCat: 1
+    - _AlphaCutoff: 0.5
+    - _Banner: 0
+    - _ElementCat: 0
+    - _ElementIntensity: 0.599
+    - _ElementMode: 0
+    - _Intensity: 1
+    - _IsColorsShader: 1
+    - _IsTVEElement: 1
+    - _IsTVEShader: 1
+    - _IsUniversalPipeline: 1
+    - _IsVersion: 130
+    - _Message1: 0
+    - _SeasonMode: 0
+    - _SeasonMode_Seasons: 0
+    - _SeasonMode_Simple: 0
+    - _TessEdgeLength: 16
+    - _TessMax: 25
+    - _TessMaxDisp: 25
+    - _TessMin: 10
+    - _TessPhongStrength: 0.5
+    - _TessValue: 16
+    - _render_priority: 0
+    m_Colors:
+    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
+    - _AutumnColor: {r: 0.7205882, g: 0.40253514, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.8490566, g: 0.5865944, b: 0.47659308, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
+    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
+    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
+    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
+    - _SummerColor: {r: 0.19082123, g: 0.5220588, b: 0, a: 1}
+    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
+    - _WinterColor: {r: 0.27205852, g: 0.27205852, b: 0.27205852, a: 1}
 --- !u!1 &284126555
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,11 +751,11 @@ MonoBehaviour:
     mainUVs: {x: 1, y: 1, z: 0, w: 0}
     main: {x: 1, y: 0, z: 0, w: 1}
     winter: {x: 0.6886792, y: 0.5764483, z: 0.4905215, w: 1}
-    spring: {x: 0.59477, y: 0.62264144, z: 0.34950143, w: 1}
-    summer: {x: 0.43253168, y: 0.53773564, z: 0.3677908, w: 1}
-    autumn: {x: 0.8584906, y: 0.6090072, z: 0.41709659, w: 1}
+    spring: {x: 0.59477, y: 0.62264144, z: 0.3495014, w: 1}
+    summer: {x: 0.43253165, y: 0.53773564, z: 0.36779076, w: 1}
+    autumn: {x: 0.8584906, y: 0.6090072, z: 0.41709656, w: 1}
     priority: 0
-  material: {fileID: 747514411}
+  material: {fileID: 98623774}
   isCustom: 0
 --- !u!23 &284126558
 MeshRenderer:
@@ -591,7 +775,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 747514411}
+  - {fileID: 98623774}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -620,42 +804,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284126555}
   m_Mesh: {fileID: 4300000, guid: bd3c4cc11cf625340a7d1c0d21eed312, type: 3}
---- !u!84 &485294154
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: TVE Colors Tex
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  serializedVersion: 3
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 0
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_Dimension: 2
-  m_VolumeDepth: 1
---- !u!21 &549567908
+--- !u!21 &342272016
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -663,7 +812,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Element
-  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
+  m_Shader: {fileID: 4800000, guid: e68004b4b70c8b6489eccf0e2485db3e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -675,46 +824,46 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AdvancedCat: 1
     - _AlphaCutoff: 0.5
+    - _Autumn: 1
+    - _AutumnValue: 0.5
     - _Banner: 0
     - _ElementCat: 0
-    - _ElementIntensity: 0.599
-    - _ElementMode: 0
+    - _ElementIntensity: 1
+    - _ElementMode: 1
     - _Intensity: 1
     - _IsColorsShader: 1
     - _IsTVEElement: 1
     - _IsTVEShader: 1
     - _IsUniversalPipeline: 1
     - _IsVersion: 130
-    - _Message1: 0
+    - _MainValue: 0
+    - _Message: 0
     - _SeasonMode: 0
     - _SeasonMode_Seasons: 0
     - _SeasonMode_Simple: 0
+    - _Simple: 1
+    - _Spring: 1
+    - _SpringValue: 1
+    - _Summer: 1
+    - _SummerValue: 1
     - _TessEdgeLength: 16
     - _TessMax: 25
     - _TessMaxDisp: 25
     - _TessMin: 10
     - _TessPhongStrength: 0.5
     - _TessValue: 16
+    - _Winter: 1
+    - _WinterValue: 0.5
     - _render_priority: 0
     m_Colors:
-    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
-    - _AutumnColor: {r: 0.7205882, g: 0.40253517, b: 0, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0.8490566, g: 0.5865944, b: 0.47659308, a: 1}
     - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
-    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
-    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
-    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
-    - _SummerColor: {r: 0.19082126, g: 0.5220588, b: 0, a: 1}
-    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
-    - _WinterColor: {r: 0.27205858, g: 0.27205858, b: 0.27205858, a: 1}
 --- !u!1 &578371824
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,66 +957,6 @@ Transform:
   m_Father: {fileID: 1654611349}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &747514411
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Element
-  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _AdvancedCat: 1
-    - _AlphaCutoff: 0.5
-    - _Banner: 0
-    - _ElementCat: 0
-    - _ElementIntensity: 1
-    - _ElementMode: 1
-    - _Intensity: 1
-    - _IsColorsShader: 1
-    - _IsTVEElement: 1
-    - _IsTVEShader: 1
-    - _IsUniversalPipeline: 1
-    - _IsVersion: 130
-    - _Message1: 0
-    - _SeasonMode: 0
-    - _SeasonMode_Seasons: 0
-    - _SeasonMode_Simple: 0
-    - _TessEdgeLength: 16
-    - _TessMax: 25
-    - _TessMaxDisp: 25
-    - _TessMin: 10
-    - _TessPhongStrength: 0.5
-    - _TessValue: 16
-    - _render_priority: 0
-    m_Colors:
-    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
-    - _AutumnColor: {r: 0.8584906, g: 0.6090072, b: 0.41709659, a: 1}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 1, g: 0, b: 0, a: 1}
-    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
-    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
-    - _SpringColor: {r: 0.59477, g: 0.62264144, b: 0.34950143, a: 1}
-    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
-    - _SummerColor: {r: 0.43253168, g: 0.53773564, b: 0.3677908, a: 1}
-    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
-    - _WinterColor: {r: 0.6886792, g: 0.5764483, b: 0.4905215, a: 1}
 --- !u!1 &760146591
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,7 +1053,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 485294154}
+  m_TargetTexture: {fileID: 1921006256}
   m_TargetDisplay: 0
   m_TargetEye: 0
   m_HDR: 0
@@ -974,66 +1063,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!21 &979501402
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Element
-  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _AdvancedCat: 1
-    - _AlphaCutoff: 0.5
-    - _Banner: 0
-    - _ElementCat: 0
-    - _ElementIntensity: 0.696
-    - _ElementMode: 0
-    - _Intensity: 1
-    - _IsColorsShader: 1
-    - _IsTVEElement: 1
-    - _IsTVEShader: 1
-    - _IsUniversalPipeline: 1
-    - _IsVersion: 130
-    - _Message1: 0
-    - _SeasonMode: 0
-    - _SeasonMode_Seasons: 0
-    - _SeasonMode_Simple: 0
-    - _TessEdgeLength: 16
-    - _TessMax: 25
-    - _TessMaxDisp: 25
-    - _TessMin: 10
-    - _TessPhongStrength: 0.5
-    - _TessValue: 16
-    - _render_priority: 0
-    m_Colors:
-    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
-    - _AutumnColor: {r: 0.7205882, g: 0.40253505, b: 0, a: 1}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0.4585259, g: 0.6037736, b: 0.5483935, a: 1}
-    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
-    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
-    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
-    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
-    - _SummerColor: {r: 0.19082114, g: 0.5220588, b: 0, a: 1}
-    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
-    - _WinterColor: {r: 0.27205843, g: 0.27205843, b: 0.27205843, a: 1}
 --- !u!1 &998139619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1199,7 @@ MonoBehaviour:
   renderWrapMode: 0
   renderWrapModeOld: 0
   renderEdgeFade: 0
-  previewTex: {fileID: 216741479}
+  previewTex: {fileID: 1800126938}
   styledSpace0: 0
   camGO: {fileID: 1222964112}
   edgeGO: {fileID: 1377710627}
@@ -1493,7 +1522,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 16
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 216741479}
+  m_TargetTexture: {fileID: 1800126938}
   m_TargetDisplay: 0
   m_TargetEye: 0
   m_HDR: 0
@@ -1546,6 +1575,7 @@ Transform:
   m_Children:
   - {fileID: 1722516521}
   - {fileID: 1148533159}
+  - {fileID: 1738008120}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1837,12 +1867,12 @@ MonoBehaviour:
     mainTex: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
     mainUVs: {x: 1, y: 1, z: 0, w: 0}
     main: {x: 0.4585259, y: 0.6037736, z: 0.5483935, w: 1}
-    winter: {x: 0.27205843, y: 0.27205843, z: 0.27205843, w: 1}
+    winter: {x: 0.2720584, y: 0.2720584, z: 0.2720584, w: 1}
     spring: {x: 0.57794106, y: 0.6397059, z: 0, w: 1}
-    summer: {x: 0.19082114, y: 0.5220588, z: 0, w: 1}
-    autumn: {x: 0.7205882, y: 0.40253505, z: 0, w: 1}
+    summer: {x: 0.19082111, y: 0.5220588, z: 0, w: 1}
+    autumn: {x: 0.7205882, y: 0.40253502, z: 0, w: 1}
     priority: 0
-  material: {fileID: 979501402}
+  material: {fileID: 1849016251}
   isCustom: 0
 --- !u!23 &1438808811
 MeshRenderer:
@@ -1862,7 +1892,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 979501402}
+  - {fileID: 1849016251}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1987,7 +2017,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 2
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 211063384}
+  m_TargetTexture: {fileID: 1903102730}
   m_TargetDisplay: 0
   m_TargetEye: 0
   m_HDR: 0
@@ -2061,7 +2091,7 @@ MonoBehaviour:
     summer: {x: 0, y: 0, z: 0, w: 1}
     autumn: {x: 0, y: 0, z: 0, w: 0.5}
     priority: 0
-  material: {fileID: 1602380460}
+  material: {fileID: 342272016}
   isCustom: 0
 --- !u!23 &1553250308
 MeshRenderer:
@@ -2081,7 +2111,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1602380460}
+  - {fileID: 342272016}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2110,126 +2140,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553250305}
   m_Mesh: {fileID: 4300000, guid: bd3c4cc11cf625340a7d1c0d21eed312, type: 3}
---- !u!21 &1602380460
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Element
-  m_Shader: {fileID: 4800000, guid: e68004b4b70c8b6489eccf0e2485db3e, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _AdvancedCat: 1
-    - _AlphaCutoff: 0.5
-    - _Autumn: 1
-    - _AutumnValue: 0.5
-    - _Banner: 0
-    - _ElementCat: 0
-    - _ElementIntensity: 1
-    - _ElementMode: 1
-    - _Intensity: 1
-    - _IsColorsShader: 1
-    - _IsTVEElement: 1
-    - _IsTVEShader: 1
-    - _IsUniversalPipeline: 1
-    - _IsVersion: 130
-    - _MainValue: 0
-    - _Message: 0
-    - _SeasonMode: 0
-    - _SeasonMode_Seasons: 0
-    - _SeasonMode_Simple: 0
-    - _Simple: 1
-    - _Spring: 1
-    - _SpringValue: 1
-    - _Summer: 1
-    - _SummerValue: 1
-    - _TessEdgeLength: 16
-    - _TessMax: 25
-    - _TessMaxDisp: 25
-    - _TessMin: 10
-    - _TessPhongStrength: 0.5
-    - _TessValue: 16
-    - _Winter: 1
-    - _WinterValue: 0.5
-    - _render_priority: 0
-    m_Colors:
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
---- !u!21 &1614382144
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Element
-  m_Shader: {fileID: 4800000, guid: b3820571eb3f04f4f855cc7161c165d7, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _AdvancedCat: 1
-    - _AlphaCutoff: 0.5
-    - _Autumn: 1
-    - _AutumnValue: 0
-    - _Banner1: 0
-    - _ElementCat: 0
-    - _ElementIntensity: 1
-    - _ElementMode: 1
-    - _Intensity: 1
-    - _IsExtrasShader: 1
-    - _IsTVEElement: 1
-    - _IsTVEShader: 1
-    - _IsUniversalPipeline: 1
-    - _IsVersion: 130
-    - _MainValue: 0
-    - _Message1: 0
-    - _SeasonMode: 0
-    - _SeasonMode_Seasons: 0
-    - _SeasonMode_Simple: 0
-    - _Simple: 1
-    - _Spring: 1
-    - _SpringValue: 0
-    - _Summer: 1
-    - _SummerValue: 0
-    - _TessEdgeLength: 16
-    - _TessMax: 25
-    - _TessMaxDisp: 25
-    - _TessMin: 10
-    - _TessPhongStrength: 0.5
-    - _TessValue: 16
-    - _Winter: 1
-    - _WinterValue: 1
-    - _render_priority: 0
-    m_Colors:
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
 --- !u!1 &1650235069
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,7 +2185,7 @@ MonoBehaviour:
   renderEdgeFade: 0
   renderHDRColors: 0
   renderHDRColorsOld: 0
-  previewTex: {fileID: 485294154}
+  previewTex: {fileID: 1921006256}
   styledSpace0: 0
   camGO: {fileID: 760146591}
   edgeGO: {fileID: 2047010765}
@@ -2525,6 +2435,151 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50.000004, y: -300, z: 0}
+--- !u!1 &1738008119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1738008120}
+  - component: {fileID: 1738008122}
+  - component: {fileID: 1738008121}
+  m_Layer: 0
+  m_Name: Island_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1738008120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738008119}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -500, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1227949270}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!154 &1738008121
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738008119}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: e8262b7be7c194c4d8b323b57c311880, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &1738008122
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738008119}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: e8262b7be7c194c4d8b323b57c311880, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 1
+  m_DrawTreesAndFoliage: 1
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0512
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!1001 &1752503561
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299807616551752170, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426513216771347982, guid: 98adacb6341127c44997ab4b8a1cde9e,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass_Big (TVE Backup)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 98adacb6341127c44997ab4b8a1cde9e, type: 3}
 --- !u!1 &1757942940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,12 +2705,12 @@ MonoBehaviour:
     mainTex: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
     mainUVs: {x: 1, y: 1, z: 0, w: 0}
     main: {x: 0.7239179, y: 0.764151, z: 0.5154415, w: 1}
-    winter: {x: 0.27205858, y: 0.27205858, z: 0.27205858, w: 1}
+    winter: {x: 0.27205852, y: 0.27205852, z: 0.27205852, w: 1}
     spring: {x: 0.57794106, y: 0.6397059, z: 0, w: 1}
-    summer: {x: 0.19082126, y: 0.5220588, z: 0, w: 1}
-    autumn: {x: 0.7205882, y: 0.40253517, z: 0, w: 1}
+    summer: {x: 0.19082123, y: 0.5220588, z: 0, w: 1}
+    autumn: {x: 0.7205882, y: 0.40253514, z: 0, w: 1}
     priority: 0
-  material: {fileID: 1992398244}
+  material: {fileID: 2054349435}
   isCustom: 0
 --- !u!23 &1784765530
 MeshRenderer:
@@ -2675,7 +2730,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1992398244}
+  - {fileID: 2054349435}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2704,6 +2759,101 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784765527}
   m_Mesh: {fileID: 4300000, guid: bd3c4cc11cf625340a7d1c0d21eed312, type: 3}
+--- !u!84 &1800126938
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TVE Motion Tex
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 3
+  m_Width: 512
+  m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthFormat: 0
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_Dimension: 2
+  m_VolumeDepth: 1
+--- !u!21 &1849016251
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Element
+  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdvancedCat: 1
+    - _AlphaCutoff: 0.5
+    - _Banner: 0
+    - _ElementCat: 0
+    - _ElementIntensity: 0.696
+    - _ElementMode: 0
+    - _Intensity: 1
+    - _IsColorsShader: 1
+    - _IsTVEElement: 1
+    - _IsTVEShader: 1
+    - _IsUniversalPipeline: 1
+    - _IsVersion: 130
+    - _Message1: 0
+    - _SeasonMode: 0
+    - _SeasonMode_Seasons: 0
+    - _SeasonMode_Simple: 0
+    - _TessEdgeLength: 16
+    - _TessMax: 25
+    - _TessMaxDisp: 25
+    - _TessMin: 10
+    - _TessPhongStrength: 0.5
+    - _TessValue: 16
+    - _render_priority: 0
+    m_Colors:
+    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
+    - _AutumnColor: {r: 0.7205882, g: 0.40253502, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.4585259, g: 0.6037736, b: 0.5483935, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
+    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
+    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
+    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
+    - _SummerColor: {r: 0.19082111, g: 0.5220588, b: 0, a: 1}
+    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
+    - _WinterColor: {r: 0.2720584, g: 0.2720584, b: 0.2720584, a: 1}
 --- !u!1 &1863885984
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,6 +2899,76 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1903102730
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TVE Motion Tex
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 3
+  m_Width: 512
+  m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthFormat: 0
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_Dimension: 2
+  m_VolumeDepth: 1
+--- !u!84 &1921006256
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TVE Colors Tex
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  serializedVersion: 3
+  m_Width: 512
+  m_Height: 512
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthFormat: 0
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1948475919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2813,7 +3033,7 @@ MonoBehaviour:
     summer: {x: 0, y: 0, z: 0, w: 0}
     autumn: {x: 0, y: 0, z: 0, w: 0}
     priority: 0
-  material: {fileID: 1614382144}
+  material: {fileID: 171998994}
   isCustom: 0
 --- !u!23 &1948475922
 MeshRenderer:
@@ -2833,7 +3053,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1614382144}
+  - {fileID: 171998994}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2905,7 +3125,7 @@ MonoBehaviour:
   renderWrapMode: 0
   renderWrapModeOld: 0
   renderEdgeFade: 0
-  previewTex: {fileID: 211063384}
+  previewTex: {fileID: 1903102730}
   styledSpace0: 0
   globalMotion: {fileID: 2067647810}
   camGO: {fileID: 1493019791}
@@ -2928,66 +3148,6 @@ Transform:
   m_Father: {fileID: 1654611349}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1992398244
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Element
-  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _AdvancedCat: 1
-    - _AlphaCutoff: 0.5
-    - _Banner: 0
-    - _ElementCat: 0
-    - _ElementIntensity: 0.519
-    - _ElementMode: 0
-    - _Intensity: 1
-    - _IsColorsShader: 1
-    - _IsTVEElement: 1
-    - _IsTVEShader: 1
-    - _IsUniversalPipeline: 1
-    - _IsVersion: 130
-    - _Message1: 0
-    - _SeasonMode: 0
-    - _SeasonMode_Seasons: 0
-    - _SeasonMode_Simple: 0
-    - _TessEdgeLength: 16
-    - _TessMax: 25
-    - _TessMaxDisp: 25
-    - _TessMin: 10
-    - _TessPhongStrength: 0.5
-    - _TessValue: 16
-    - _render_priority: 0
-    m_Colors:
-    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
-    - _AutumnColor: {r: 0.7205882, g: 0.40253517, b: 0, a: 1}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainColor: {r: 0.7239179, g: 0.764151, b: 0.5154415, a: 1}
-    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
-    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
-    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
-    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
-    - _SummerColor: {r: 0.19082126, g: 0.5220588, b: 0, a: 1}
-    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
-    - _WinterColor: {r: 0.27205858, g: 0.27205858, b: 0.27205858, a: 1}
 --- !u!1 &2047010765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3227,66 @@ Transform:
   m_Father: {fileID: 1650235071}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &2054349435
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Element
+  m_Shader: {fileID: 4800000, guid: 853be43322d350648a82ec17b27de5cf, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 9ba96de1d1f95c14a994715665da0304, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AdvancedCat: 1
+    - _AlphaCutoff: 0.5
+    - _Banner: 0
+    - _ElementCat: 0
+    - _ElementIntensity: 0.519
+    - _ElementMode: 0
+    - _Intensity: 1
+    - _IsColorsShader: 1
+    - _IsTVEElement: 1
+    - _IsTVEShader: 1
+    - _IsUniversalPipeline: 1
+    - _IsVersion: 130
+    - _Message1: 0
+    - _SeasonMode: 0
+    - _SeasonMode_Seasons: 0
+    - _SeasonMode_Simple: 0
+    - _TessEdgeLength: 16
+    - _TessMax: 25
+    - _TessMaxDisp: 25
+    - _TessMin: 10
+    - _TessPhongStrength: 0.5
+    - _TessValue: 16
+    - _render_priority: 0
+    m_Colors:
+    - _Autumn: {r: 0.7205882, g: 0.40253538, b: 0, a: 1}
+    - _AutumnColor: {r: 0.7205882, g: 0.40253514, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.7239179, g: 0.764151, b: 0.5154415, a: 1}
+    - _MainUVs: {r: 1, g: 1, b: 0, a: 0}
+    - _Simple: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Spring: {r: 0.5779411, g: 0.6397059, b: 0, a: 1}
+    - _SpringColor: {r: 0.57794106, g: 0.6397059, b: 0, a: 1}
+    - _Summer: {r: 0.19082147, g: 0.5220588, b: 0, a: 1}
+    - _SummerColor: {r: 0.19082123, g: 0.5220588, b: 0, a: 1}
+    - _Winter: {r: 0.27205878, g: 0.27205878, b: 0.27205878, a: 1}
+    - _WinterColor: {r: 0.27205852, g: 0.27205852, b: 0.27205852, a: 1}
 --- !u!1 &2067647810
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,7 +3380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   styledBanner: 0
-  windPower: 0.496136
+  windPower: 0.49008763
   noiseTexture: {fileID: 2800000, guid: cd7343b39333d7d479a82b4f750ec325, type: 3}
   noiseSpeed: 1
   noiseSize: 50
@@ -3195,3 +3415,141 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4964051104520991397
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740894853162283691, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7977754674025546283, guid: 32a3a6b195180a741b764516b2d1c6ac,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass_Big_Base
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 32a3a6b195180a741b764516b2d1c6ac, type: 3}
+--- !u!1001 &7685148465112845901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1830813423411870320, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_Name
+      value: Grass_Big_00
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.7819028
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.09851102
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279945840475637986, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ea1f8f3e11bffbd41a1b83b4c3c0a982, type: 3}
