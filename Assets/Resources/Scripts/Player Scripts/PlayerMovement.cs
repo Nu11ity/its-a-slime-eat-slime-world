@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight;
 
     private bool _canMove;
-    private bool _isGrounded;
     private PlayerInputMap _input;
     private CharacterController _myController;
 
@@ -63,9 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveDir;
     private void calculateMove()
     {
-        _isGrounded = groundCheck();
-
-        if (_isGrounded)
+        if (_myController.isGrounded)
         {
             //Ground input
             _targetXDir = Mathf.Lerp(_targetXDir, _input.MoveData.x, acceleration * Time.deltaTime);
@@ -88,17 +85,11 @@ public class PlayerMovement : MonoBehaviour
         _moveDir = transform.TransformDirection(_moveDir);
 
         //Gravity Calc
-        if (!_isGrounded)
+        if (_myController.isGrounded)
             _moveDir.y -= gravity * Time.deltaTime;
         else if (_input.Jump)
             _moveDir.y = jumpHeight * 0.05f;
         else
             _moveDir.y = 0;
-    }
-
-    private bool groundCheck()
-    {
-        //Redo this function so that it acounts for width of character
-        return Physics.Raycast(transform.position, Vector3.down, 1.01f);
     }
 }
