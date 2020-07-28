@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792050168127301467}
-  m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 1.0587911e-23}
   m_LocalScale: {x: 2.54, y: 2.54, z: 2.54}
   m_Children: []
@@ -39,7 +39,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792050168127301467}
-  m_Mesh: {fileID: 4300002, guid: e0b50a503cc1eb743a6a0082426b3b26, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 48cc60ae7ed00594f8ccc02bc37f20f5, type: 2}
 --- !u!23 &7231720003014851056
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -54,10 +54,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e6c8880c93bcd44e95c88f5e1a4c624, type: 2}
+  - {fileID: 2100000, guid: 58d5a75ee742e864ca8b254137cee5de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -65,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -87,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2595037124193220788}
   - component: {fileID: 8211874122556879054}
+  - component: {fileID: 7883247826288038876}
   m_Layer: 0
   m_Name: Sword Fern
   m_TagString: Untagged
@@ -133,6 +136,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7231720003014851056}
   m_Enabled: 1
+--- !u!114 &7883247826288038876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977933106756030222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089e7123bacb77a429df24ec08d2d672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  styledBanner: 0
+  storedPrefabBackup: {fileID: 977933106756030222, guid: 12a7d64bddad6184ea7392aaf01f5433,
+    type: 3}
+  storedMaxBoundsInfo: {x: 1.283344, y: 1.1603345, z: 1.283344, w: 0}
+  storedPresetPath: Assets/Plugins/BOXOPHOBIC/The Vegetation Engine/Demo/Presets/Vegetation
+    Assets - The Vegetation Engine - Sword Fern (Demo Scene).tveconverter
 --- !u!1 &3522293051094553902
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +179,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3522293051094553902}
-  m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 1.0587911e-23}
   m_LocalScale: {x: 2.54, y: 2.54, z: 2.54}
   m_Children: []
@@ -172,7 +193,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3522293051094553902}
-  m_Mesh: {fileID: 4300000, guid: e0b50a503cc1eb743a6a0082426b3b26, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 7ac05a4d58a3645438b5647712b7bdd7, type: 2}
 --- !u!23 &7407971805388785545
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -187,10 +208,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e6c8880c93bcd44e95c88f5e1a4c624, type: 2}
+  - {fileID: 2100000, guid: 58d5a75ee742e864ca8b254137cee5de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -198,6 +220,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
