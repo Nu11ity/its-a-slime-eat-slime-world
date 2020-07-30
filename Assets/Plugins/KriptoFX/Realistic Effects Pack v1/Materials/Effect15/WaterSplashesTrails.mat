@@ -70,7 +70,7 @@ Material:
     - _BumpAmt: -1000
     - _ColorIntensity: 1
     - _CubeMapOpacity: 0.14285715
-    - _CullMode: 2
+    - _CullMode: 0
     - _Cutoff: 1
     - _Cutout: 1
     - _CutoutThreshold: 0.015

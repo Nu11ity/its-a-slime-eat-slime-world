@@ -7,14 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ExplosionCore
-  m_Shader: {fileID: 4800000, guid: 4775e5a8f344d6348adf934e722da85d, type: 3}
-  m_ShaderKeywords: BlendAlpha Clip_ON FrameBlend_ON FresnelFade_ON SoftParticles_OFF
-    VertLight_OFF
-  m_LightmapFlags: 1
+  m_Name: Mesh_MeshEffect 1
+  m_Shader: {fileID: 4800000, guid: f8f24f9fc62964844b4623f583f9aef6, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -41,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 982d4b126145bc34eb422dedc12a77f5, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: eb784ff7732ea454391ecc0520613258, type: 3}
+        m_Scale: {x: 63.3, y: 72.29}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -57,32 +56,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - CullMode: 0
-    - DstMode: 10
-    - SrcMode: 5
-    - _BumpAmt: 10
     - _BumpScale: 1
-    - _ColorStrength: 1
     - _Cutoff: 0.5
-    - _Cutout: 0.25
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FresnelStr: 3
-    - _GlossMapScale: 1
     - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _InvFade: 3
+    - _GradientStrength: 0.2
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _Scale: 0.5
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _BorderScale: {r: 0.15, g: 0.1, b: 0, a: 1.5}
+    - _Color: {r: 3, g: 1.5517249, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Tiling: {r: 800, g: 800, b: 8, a: 8}
-    - _TintColor: {r: 0.7958113, g: 3.9999995, b: 1.0303884, a: 1}
+    - _TimeScale: {r: 3, g: -6, b: -8, a: -5}
+    - _TintColor: {r: 0, g: 1.1486983, b: 0.17440955, a: 0.8156863}

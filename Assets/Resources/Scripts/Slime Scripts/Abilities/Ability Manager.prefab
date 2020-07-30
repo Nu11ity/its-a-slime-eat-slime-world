@@ -43,6 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be15f44f68d132459cbc3181ef15f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireBasicAttack: {fileID: 4722156749841547703, guid: 60a9abd733223e748a5e5e2868546b5f,
+    type: 3}
+  waterBasicAttack: {fileID: 176287616280015543, guid: a2ee69ba6be76004faeb92bf96fafd7e,
+    type: 3}
+  natureBasicAttack: {fileID: 992168432038693247, guid: 77a9a2808c6ddaa4d9459ea9e0084b1b,
+    type: 3}
+  fireBasicAttackPool: []
+  waterBasicAttackPool: []
+  natureBasicAttackPool: []
   fireAbilities:
   - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
   - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}

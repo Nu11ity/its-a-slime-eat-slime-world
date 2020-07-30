@@ -20,6 +20,7 @@ public class AbilityController : MonoBehaviour
         }
     }
 
+    public Transform basicAttackSpawn;
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
     public bool AbilityToggled { get; set; }
@@ -143,6 +144,8 @@ public class AbilityController : MonoBehaviour
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
                 {//requires no energy drain
                     SlimeData.basicAttack.AbilityActivated();
+                    AbilityManager.Instance.RequestBasicAttack(basicAttackSpawn, SlimeData);//temp
+                    GetComponent<SlimeAnimator>().PlayAnimEvent("Melee Basic Attack");//temp
                 }
             }
         }

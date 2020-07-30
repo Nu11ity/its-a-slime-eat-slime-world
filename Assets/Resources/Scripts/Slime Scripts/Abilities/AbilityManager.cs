@@ -36,6 +36,88 @@ public class AbilityManager : MonoBehaviour
     //each ability also needs a pool, so not wasting resources.
     //rinse and repeat for all skills
 
+    [Header("Slime Basic Attack Prefabs")]
+    public GameObject fireBasicAttack;
+    public GameObject waterBasicAttack;
+    public GameObject natureBasicAttack;
+
+    public List<AbilityProjectile> fireBasicAttackPool = new List<AbilityProjectile>();
+    public List<AbilityProjectile> waterBasicAttackPool = new List<AbilityProjectile>();
+    public List<AbilityProjectile> natureBasicAttackPool = new List<AbilityProjectile>();
+
+    public void DelegateBasicAttackPool(AbilityProjectile _projectile)
+    {
+        if (_projectile.path == AbilityProjectile.Path.Fire)
+        {
+            if(!fireBasicAttackPool.Contains(_projectile))
+                fireBasicAttackPool.Add(_projectile);
+        }
+        else if(_projectile.path == AbilityProjectile.Path.Water)
+        {
+            if(!waterBasicAttackPool.Contains(_projectile))
+                waterBasicAttackPool.Add(_projectile);
+        }
+        else if (_projectile.path == AbilityProjectile.Path.Nature)
+        {
+            if(!natureBasicAttackPool.Contains(_projectile))
+                natureBasicAttackPool.Add(_projectile);
+        }
+    }
+    public List<AbilityProjectile> DetermineBasicAttackPool(Slime _requester)
+    {
+        if (_requester.archetype == Slime.Archetype.Fire)
+            return fireBasicAttackPool;
+        else if (_requester.archetype == Slime.Archetype.Water)
+            return waterBasicAttackPool;
+        else
+            return natureBasicAttackPool;
+    }
+    public void BasicAttackPath(Transform _castPoint, Slime _caller)
+    {
+        GameObject _newPooledObj = null;
+
+        if (_caller.archetype == Slime.Archetype.Fire)
+            _newPooledObj = Instantiate(fireBasicAttack, _castPoint.position, _castPoint.rotation);
+        else if(_caller.archetype == Slime.Archetype.Water)
+            _newPooledObj = Instantiate(waterBasicAttack, _castPoint.position, _castPoint.rotation);
+        else
+            _newPooledObj = Instantiate(natureBasicAttack, _castPoint.position, _castPoint.rotation);
+
+        _newPooledObj.SetActive(true);
+        _newPooledObj.GetComponent<AbilityProjectile>().Initialize(_caller);
+    }
+    public void RequestBasicAttack(Transform _castPoint, Slime _caller)//temp, change to modular version after testing
+    {
+        bool requestComplete = false;
+
+        if(DetermineBasicAttackPool(_caller).Count > 0)
+        {
+            for (int i = 0; i < DetermineBasicAttackPool(_caller).Count; i++)
+            {
+                if(!DetermineBasicAttackPool(_caller)[i].gameObject.activeSelf)
+                {
+                    requestComplete = true;
+                    DetermineBasicAttackPool(_caller)[i].transform.parent = _castPoint;
+                    DetermineBasicAttackPool(_caller)[i].transform.position = _castPoint.position;
+                    DetermineBasicAttackPool(_caller)[i].transform.rotation = _castPoint.rotation;
+                    DetermineBasicAttackPool(_caller)[i].transform.parent = null;
+                    DetermineBasicAttackPool(_caller)[i].gameObject.SetActive(true);
+                    return;
+                }
+            }
+            if (!requestComplete)
+            {
+                BasicAttackPath(_castPoint, _caller);
+            }
+        }
+        else
+        {
+            BasicAttackPath(_castPoint, _caller);
+        }
+    }
+    #endregion
+
+    #region BaseAbility Mapping
     [Header("Slime BaseAbility Pools")]
     public List<BaseAbility> fireAbilities;
     public List<BaseAbility> natureAbilities;
