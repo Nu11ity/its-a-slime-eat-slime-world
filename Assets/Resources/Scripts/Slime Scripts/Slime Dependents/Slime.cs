@@ -64,7 +64,7 @@ public class Slime : MonoBehaviour
     [SerializeField]
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }//read only
-    public enum Archetype { Undefined, Fire, Water, Nature, FireWater, WaterNature, NatureFire }
+    public enum Archetype { Undefined, Fire, Water, Nature }
     public Archetype archetype;
 
     //UI for ability icons, their slot point, and reference for fill bars
@@ -159,7 +159,7 @@ public class Slime : MonoBehaviour
 
         //Ability Mapping
         for (int i = 0; i < 3; i++)
-            abilities.Add(AbilityManager.Instance.AbilityMap(this));
+            abilities.Add(AbilityManager.Instance.AbilityMapRequest(this));
         InitializeAbilities();
     }
     public void UpdateSlimeCheck()

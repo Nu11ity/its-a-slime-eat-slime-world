@@ -28,9 +28,11 @@ public class AbilityController : MonoBehaviour
     private SlimeInputMap slimeInputMap;
     private FreeMoveAbility freeMoveAbility;
     private SlimeCombatCanvas canvas;
+    private SlimeAnimator animator;
 
     private void Awake()
     {
+        animator = GetComponent<SlimeAnimator>();
         slimeInputMap = GetComponent<SlimeInputMap>();
         SlimeData = GetComponent<Slime>();
         canvas = SlimeData.myCombatCanvas;
@@ -144,8 +146,8 @@ public class AbilityController : MonoBehaviour
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
                 {//requires no energy drain
                     SlimeData.basicAttack.AbilityActivated();
-                    AbilityManager.Instance.RequestBasicAttack(basicAttackSpawn, SlimeData);//temp
-                    GetComponent<SlimeAnimator>().PlayAnimEvent("Melee Basic Attack");//temp
+                    AbilityManager.Instance.RegisterBasicAttack(basicAttackSpawn, SlimeData);//temp
+                    animator.PlayAnimEvent("Melee Basic Attack");//temp
                 }
             }
         }

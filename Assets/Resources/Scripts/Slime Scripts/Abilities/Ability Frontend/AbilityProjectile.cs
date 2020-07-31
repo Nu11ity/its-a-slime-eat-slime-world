@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AbilityProjectile : MonoBehaviour
 {
+    public PooledImpactObject impactObject;
     public bool allowCasting;
     public float lifeTime;
     public float speed;
     public enum Path { Fire, Water, Nature}
     public Path path;
     public LayerMask desiredLayers;
+    public int slimeLayer;
     public int damage;
     public float damageRadius;
     public List<GameObject> disableOnImpact;
@@ -22,7 +24,7 @@ public class AbilityProjectile : MonoBehaviour
     public void Initialize(Slime _caller)
     {
         MySlime = _caller;
-        AbilityManager.Instance.DelegateBasicAttackPool(this);
+        AbilityManager.Instance.RegisterItemToPool(this);
     }
     public void Update()
     {
@@ -60,21 +62,20 @@ public class AbilityProjectile : MonoBehaviour
             {
                 if(targets[i].gameObject != MySlime.gameObject)
                 {
-                    targets[i].GetComponent<Slime>().TakeDamage(damage);
+                    if(targets[i].gameObject.layer == slimeLayer)
+                        targets[i].GetComponent<Slime>().TakeDamage(damage);
+
                     OnImpact();
                     FadeOut();
-                }           
+                }   
             }
         }
     }
     private void OnImpact()
     {
-
+        impactObject.transform.parent = null;
+        impactObject.gameObject.SetActive(true);
     }
-    private void OnEnable()
-    {
-
-    } 
     private void OnDisable()
     {
         currentLife = 0;
