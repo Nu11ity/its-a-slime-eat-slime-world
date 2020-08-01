@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         _xRot = Mathf.Clamp(_xRot, -60f, 60f);
         _yRot = _input.LookData.x * sensitivity * Time.deltaTime;
 
-        playerCam.transform.localRotation = Quaternion.Euler(_xRot, 0f, 0f);
+        playerCam.transform.localRotation = Quaternion.Euler(_xRot, -180f, 0f);
         transform.Rotate(Vector3.up * _yRot);
     }
 
@@ -85,11 +85,11 @@ public class PlayerMovement : MonoBehaviour
         _moveDir = transform.TransformDirection(_moveDir);
 
         //Gravity Calc
-        if (_myController.isGrounded)
+        if (!_myController.isGrounded)
             _moveDir.y -= gravity * Time.deltaTime;
         else if (_input.Jump)
             _moveDir.y = jumpHeight * 0.05f;
         else
-            _moveDir.y = 0;
+            _moveDir.y = -0.01f;
     }
 }
