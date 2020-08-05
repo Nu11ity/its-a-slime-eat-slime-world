@@ -6,9 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ability", menuName = "Abilities/FireType/Calamity")]
 public class Calamity : BaseAbility
 {
-    public override void AbilityActivated()
-    {
-        Debug.Log("Used Calamity");
-        //free move circle that deals massive direct damage on impact only.
-    }
+    public override void AbilityActivated(Transform _castPoint, Slime _slime) { Debug.Log("Calamity"); }
+    public override void AbilityActivated(Slime _slime) { Debug.Log("Calamity"); }
+    public override void AbilityActivated() { Debug.Log("Calamity"); }    
 }

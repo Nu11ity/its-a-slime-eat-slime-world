@@ -23,6 +23,8 @@ public class ThirdPersonLocomotion : MonoBehaviour
     private Vector3 moveThrottle = Vector3.zero;
     private float moveScaleMultiplier = 1.0f;
     private float simulationRate = 60;
+    private Vector3 impact = Vector3.zero;
+    private float mass = 3f;
 
     [Tooltip("How many fixed speeds to use with linear movement? 0=linear control")]
     private int FixedSpeedSteps = 0;
@@ -37,10 +39,10 @@ public class ThirdPersonLocomotion : MonoBehaviour
     {
         UpdateController();
     }
-
     public void UpdateController()
     {
         UpdateMovement();
+        UpdateImpactData();
 
         if (slimeInputMap.Jump)
             Jump();
@@ -140,6 +142,29 @@ public class ThirdPersonLocomotion : MonoBehaviour
 
         moveThrottle.y += Mathf.Sqrt(jumpForce);
         return true;
+    }
+    
+    private void UpdateImpactData()
+    {
+        if (impact.magnitude > .2f)
+            controller.Move(impact * Time.deltaTime);
+
+        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+    }
+    public void AddImpact(Vector3 _dir, float _force)
+    {
+        _dir.Normalize();
+
+        if (_dir.y < 0)
+            _dir.y = -_dir.y;
+
+        Stop();
+        impact += _dir.normalized * _force / mass;
+        moveThrottle.y += Mathf.Sqrt(jumpForce / 3);
+    }
+    public void AddSlow(float _duration, float _slowPwr)
+    {
+        //during duration, speed / slow amt
     }
     public void Stop()
     {

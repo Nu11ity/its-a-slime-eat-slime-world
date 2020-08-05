@@ -6,9 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ability", menuName = "Abilities/WaterType/Tideless Waves")]
 public class TidelessWaves : BaseAbility
 {
-    public override void AbilityActivated()
+    public override void AbilityActivated(Transform _castPoint, Slime _slime)
     {
-        Debug.Log("Used Tideless Waves");
-        //wave pushes forward in lane, short width, long range
+        Debug.Log("Tideless Waves");
+        AbilityManager.Instance.pathOfWater.RequestAbilityProjectile(_castPoint, _slime, AbilityManager.Instance.pathOfWater.tidelessWaves);
     }
+    public override void AbilityActivated(Slime _slime) { Debug.Log("Tideless Waves"); }
+    public override void AbilityActivated() { Debug.Log("Tideless Waves"); }
 }

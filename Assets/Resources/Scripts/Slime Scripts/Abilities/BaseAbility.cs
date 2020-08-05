@@ -12,9 +12,12 @@ public abstract class BaseAbility : ScriptableObject
     public AffinityBonus affinityBonus;
     public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
     public Forecast forecast;
+    public bool anchored;
     public Vector3 forecastScaler;
     public float freeCircleReach;
     public float globalCD;
 
     public abstract void AbilityActivated();
+    public abstract void AbilityActivated(Slime _slime);
+    public abstract void AbilityActivated(Transform _castPoint, Slime _slime);
 }

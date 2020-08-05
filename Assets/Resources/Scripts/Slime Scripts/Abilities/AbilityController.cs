@@ -135,7 +135,8 @@ public class AbilityController : MonoBehaviour
         {
             if(AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
             {//cast ability | Read->(l-click/r-trigger hit)
-                SlimeData.abilities[currentIndex].AbilityActivated();//drain energy too!!!
+
+                SlimeData.abilities[currentIndex].AbilityActivated(basicAttackSpawn, SlimeData);//drain energy too!!!
                 SlimeData.DrainEnergy(SlimeData.abilities[currentIndex].abilityCost);
                 CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
@@ -145,8 +146,11 @@ public class AbilityController : MonoBehaviour
             {//basic attack
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
                 {//requires no energy drain
-                    SlimeData.basicAttack.AbilityActivated();
-                    AbilityManager.Instance.RegisterBasicAttack(basicAttackSpawn, SlimeData);//temp
+                    //->
+                    //AbilityManager.Instance.RegisterBasicAttack(basicAttackSpawn, SlimeData);
+                    //or
+                    SlimeData.basicAttack.AbilityActivated(basicAttackSpawn, SlimeData);
+                    //<-
                     animator.PlayAnimEvent("Melee Basic Attack");//temp
                 }
             }

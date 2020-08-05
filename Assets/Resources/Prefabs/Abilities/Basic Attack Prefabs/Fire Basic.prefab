@@ -4542,7 +4542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4727162303680948319}
-  - component: {fileID: 2372636330805392858}
+  - component: {fileID: 8485503977839685529}
   m_Layer: 0
   m_Name: Fire Basic
   m_TagString: Untagged
@@ -4567,7 +4567,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &2372636330805392858
+--- !u!114 &8485503977839685529
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4588,8 +4588,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   slimeLayer: 9
-  damage: 25
-  damageRadius: 0.5
+  damage: 10
+  radius: 1
   disableOnImpact:
   - {fileID: 4723834908533675217}
   - {fileID: 4723848004863559509}
