@@ -6,9 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ability", menuName = "Abilities/WaterType/Tempest")]
 public class Tempest : BaseAbility
 {
-    public override void AbilityActivated()
-    {
-        Debug.Log("Used Tempest");
-        //instant cast self buff
-    }
+    public override void AbilityActivated(Transform _castPoint, Slime _slime) { Debug.Log("Tempest"); }
+    public override void AbilityActivated(Slime _slime) { Debug.Log("Tempest"); }
+    public override void AbilityActivated() { Debug.Log("Tempest"); }
 }

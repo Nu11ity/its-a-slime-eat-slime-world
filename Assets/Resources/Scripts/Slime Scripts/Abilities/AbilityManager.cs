@@ -23,7 +23,7 @@ public class AbilityManager : MonoBehaviour
     {
         //GameObject newAM = new GameObject("AbilityTimer Manager");
         //AbilityManager newAbilityManager = newAM.AddComponent<AbilityManager>();
-        GameObject newAM = GameObject.Instantiate(Resources.Load("Scripts/Slime Scripts/Abilities/Ability Manager") as GameObject);
+        GameObject newAM = GameObject.Instantiate(Resources.Load("Prefabs/Abilities/Ability Manager") as GameObject);
         AbilityManager newAbilityManager = newAM.GetComponent<AbilityManager>();
 
         return newAbilityManager;
@@ -31,17 +31,17 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Path Management
-    public PathDelegation pathOfFire;
-    public PathDelegation pathOfWater;
-    public PathDelegation pathOfNature;
+    public PathOfFire pathOfFire;
+    public PathOfWater pathOfWater;
+    public PathOfNature pathOfNature;
 
-    public void RegisterItemToPool(AbilityProjectile _projectile)
+    public void RegisterItemToPool(BaseProjectile _projectile)
     {
-        if (_projectile.path == AbilityProjectile.Path.Fire)
+        if (_projectile.path == BaseProjectile.Path.Fire)
             pathOfFire.RegisterItem(_projectile);
-        else if (_projectile.path == AbilityProjectile.Path.Water)
+        else if (_projectile.path == BaseProjectile.Path.Water)
             pathOfWater.RegisterItem(_projectile);
-        else if (_projectile.path == AbilityProjectile.Path.Nature)
+        else if (_projectile.path == BaseProjectile.Path.Nature)
             pathOfNature.RegisterItem(_projectile);
     } 
     public void RegisterBasicAttack(Transform _castPoint, Slime _caller)

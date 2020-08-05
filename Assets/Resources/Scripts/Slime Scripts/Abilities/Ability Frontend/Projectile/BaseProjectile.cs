@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityProjectile : MonoBehaviour
+public class BaseProjectile : MonoBehaviour
 {
     public PooledImpactObject impactObject;
     public bool allowCasting;
@@ -13,17 +13,23 @@ public class AbilityProjectile : MonoBehaviour
     public LayerMask desiredLayers;
     public int slimeLayer;
     public int damage;
-    public float damageRadius;
+    public float radius;
     public List<GameObject> disableOnImpact;
 
-    private Slime MySlime { get; set; }
-    private float currentLife;
-    private bool begunFadeout;
-    private Collider[] targets;
+    protected Slime MySlime { get; set; }
+    protected float currentLife;
+    protected bool begunFadeout;
+    protected Collider[] targets;
+    public Transform MyParent { get; set; }
 
-    public void Initialize(Slime _caller)
+    //Add a update MySlime method to counter bug where MySlime only set at spawn
+    public virtual void DefineCaller(Slime _caller)
     {
         MySlime = _caller;
+    }
+    public virtual void Initialize(Slime _caller)
+    {
+        DefineCaller(_caller);
         AbilityManager.Instance.RegisterItemToPool(this);
     }
     public void Update()
@@ -41,7 +47,7 @@ public class AbilityProjectile : MonoBehaviour
             DamageCast();
         }      
     }
-    private void FadeOut()
+    protected virtual void FadeOut()
     {
         begunFadeout = true;
         allowCasting = false;
@@ -49,41 +55,40 @@ public class AbilityProjectile : MonoBehaviour
             disableOnImpact[j].SetActive(false);
         Invoke("ResetToPool", 1.2f);
     }
-    private void ResetToPool()
+    protected virtual void ResetToPool()
     {
+        transform.parent = MyParent;
         gameObject.SetActive(false);
     }
-    private void DamageCast()
+    public virtual void DamageCast()
     {
-        targets = Physics.OverlapSphere(transform.position, damageRadius, desiredLayers);
-        if(targets.Length > 0)
+        targets = Physics.OverlapSphere(transform.position, radius, desiredLayers);
+        if (targets.Length > 0)
         {
             for (int i = 0; i < targets.Length; i++)
             {
-                if(targets[i].gameObject != MySlime.gameObject)
+                if (targets[i].gameObject != MySlime.gameObject)
                 {
-                    if(targets[i].gameObject.layer == slimeLayer)
+                    if (targets[i].gameObject.layer == slimeLayer)
                         targets[i].GetComponent<Slime>().TakeDamage(damage);
 
                     OnImpact();
                     FadeOut();
-                }   
+                }
             }
         }
     }
-    private void OnImpact()
+    public virtual void OnImpact()
     {
         impactObject.transform.parent = null;
         impactObject.gameObject.SetActive(true);
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         currentLife = 0;
         begunFadeout = false;
         allowCasting = true;
         for (int j = 0; j < disableOnImpact.Count; j++)
             disableOnImpact[j].SetActive(true);
-        //reset parent and position
-        //reset to pool
     }
 }

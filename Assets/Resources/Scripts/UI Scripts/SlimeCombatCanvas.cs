@@ -16,6 +16,7 @@ public class SlimeCombatCanvas : MonoBehaviour
     public float AbilityTimer02 { get; set; }
     public float AbilityTimer03 { get; set; }
 
+    //
     public void SetAbilityFillMeter(int _value, int _max, int _index)
     {
         abilityMeters[_index].fillAmount = (_value / _max);
@@ -32,8 +33,8 @@ public class SlimeCombatCanvas : MonoBehaviour
     {
         abilityIcons[_index].sprite = _sprite;
     }
-
-    public void SetHealthFillMeter(int _value, int _max)
+    //
+    public void SetHealthFillMeter(float _value, float _max)
     {
         healthBarMeter.fillAmount = (_value / _max);
     }
