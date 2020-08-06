@@ -2,36 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseProjectile : MonoBehaviour
+public class BaseProjectile : PooledAbilityObject
 {
     public PooledImpactObject impactObject;
     public bool allowCasting;
     public float lifeTime;
     public float speed;
-    public enum Path { Fire, Water, Nature}
-    public Path path;
     public LayerMask desiredLayers;
     public int slimeLayer;
     public int damage;
     public float radius;
     public List<GameObject> disableOnImpact;
 
-    protected Slime MySlime { get; set; }
     protected float currentLife;
     protected bool begunFadeout;
     protected Collider[] targets;
-    public Transform MyParent { get; set; }
 
-    //Add a update MySlime method to counter bug where MySlime only set at spawn
-    public virtual void DefineCaller(Slime _caller)
-    {
-        MySlime = _caller;
-    }
-    public virtual void Initialize(Slime _caller)
-    {
-        DefineCaller(_caller);
-        AbilityManager.Instance.RegisterItemToPool(this);
-    }
+
     public void Update()
     {
         if (begunFadeout)

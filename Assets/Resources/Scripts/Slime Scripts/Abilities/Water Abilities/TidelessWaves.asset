@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c418f3b68acc09d49859af0e63b5850c, type: 3}
   m_Name: TidelessWaves
   m_EditorClassIdentifier: 
+  indexID: 1
   abilityName: Tideless Waves
   abilityIcon: {fileID: 21300000, guid: db24189abde247144b83fb23e63c9464, type: 3}
   abilityCost: 20

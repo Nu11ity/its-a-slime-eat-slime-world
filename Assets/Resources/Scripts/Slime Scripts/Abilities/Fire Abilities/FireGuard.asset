@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6384f03a7b25b41b4e70b44b6f8894, type: 3}
   m_Name: FireGuard
   m_EditorClassIdentifier: 
+  indexID: 3
   abilityName: Fire Guard
   abilityIcon: {fileID: 21300000, guid: 9c2654c6e93b84e4391bd17cb4054e60, type: 3}
   abilityCost: 40

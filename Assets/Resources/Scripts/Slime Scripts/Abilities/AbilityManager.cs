@@ -31,27 +31,36 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Path Management
-    public PathOfFire pathOfFire;
-    public PathOfWater pathOfWater;
-    public PathOfNature pathOfNature;
+    public PathDelegation pathOfFire;
+    public PathDelegation pathOfWater;
+    public PathDelegation pathOfNature;
 
-    public void RegisterItemToPool(BaseProjectile _projectile)
+    public void RegisterItemToPool(PooledAbilityObject _object)
     {
-        if (_projectile.path == BaseProjectile.Path.Fire)
-            pathOfFire.RegisterItem(_projectile);
-        else if (_projectile.path == BaseProjectile.Path.Water)
-            pathOfWater.RegisterItem(_projectile);
-        else if (_projectile.path == BaseProjectile.Path.Nature)
-            pathOfNature.RegisterItem(_projectile);
-    } 
-    public void RegisterBasicAttack(Transform _castPoint, Slime _caller)
+        if (_object.path == PooledAbilityObject.Path.Fire)
+            pathOfFire.CheckAbilityPoolRegistration(pathOfFire.AbilityObjects[_object.id], _object);
+        else if(_object.path == PooledAbilityObject.Path.Water)
+            pathOfWater.CheckAbilityPoolRegistration(pathOfWater.AbilityObjects[_object.id], _object);
+        else if (_object.path == PooledAbilityObject.Path.Nature)
+            pathOfNature.CheckAbilityPoolRegistration(pathOfNature.AbilityObjects[_object.id], _object);
+    }
+    public void RequestBasicAttack(Transform _castPoint, Slime _caller)
     {
         if (_caller.archetype == Slime.Archetype.Fire)
-            pathOfFire.RequestBasicAttack(_castPoint, _caller);
+            pathOfFire.RequestAbilityProjectile(_castPoint, _caller, pathOfFire.AbilityObjects[0]);
         else if (_caller.archetype == Slime.Archetype.Water)
-            pathOfWater.RequestBasicAttack(_castPoint, _caller);
+            pathOfWater.RequestAbilityProjectile(_castPoint, _caller, pathOfWater.AbilityObjects[0]);
         else if (_caller.archetype == Slime.Archetype.Nature)
-            pathOfNature.RequestBasicAttack(_castPoint, _caller);
+            pathOfNature.RequestAbilityProjectile(_castPoint, _caller, pathOfNature.AbilityObjects[0]);
+    }
+    public void RequestAbilityAttack(Transform _castPoint, Slime _caller, int _id)
+    {
+        if (_caller.archetype == Slime.Archetype.Fire)
+            pathOfFire.RequestAbilityProjectile(_castPoint, _caller, pathOfFire.AbilityObjects[_id]);
+        else if (_caller.archetype == Slime.Archetype.Water)
+            pathOfWater.RequestAbilityProjectile(_castPoint, _caller, pathOfWater.AbilityObjects[_id]);
+        else if (_caller.archetype == Slime.Archetype.Nature)
+            pathOfNature.RequestAbilityProjectile(_castPoint, _caller, pathOfNature.AbilityObjects[_id]);
     }
     public BaseAbility AbilityMapRequest(Slime _slime)
     {

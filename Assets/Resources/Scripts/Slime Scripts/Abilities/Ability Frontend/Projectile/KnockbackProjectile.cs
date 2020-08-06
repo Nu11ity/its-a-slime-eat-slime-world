@@ -5,16 +5,9 @@ using UnityEngine;
 public class KnockbackProjectile : BaseProjectile
 {
     [Header("Inherit Dependents")]
-    public int id;
     public float knockbackForce;
     private float mass;
 
-
-    public override void Initialize(Slime _caller)
-    {
-        DefineCaller(_caller);
-        AbilityManager.Instance.pathOfWater.RegisterProjectileAbility(this, id);//change this!!!
-    }
     public override void DamageCast()
     {
         Vector3 offset = transform.position - transform.forward * radius;
