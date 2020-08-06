@@ -27650,11 +27650,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1b91f031087174fad0c6d65d8145d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: 1
+  id: 1
   impactObject: {fileID: 4341873305072970102}
   allowCasting: 1
   lifeTime: 3
   speed: 14
-  path: 1
   desiredLayers:
     serializedVersion: 2
     m_Bits: 513

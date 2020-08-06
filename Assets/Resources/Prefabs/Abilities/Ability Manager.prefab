@@ -155,17 +155,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolParent: {fileID: 131680180}
-  basicAttack: {fileID: 4722156749841547703, guid: 60a9abd733223e748a5e5e2868546b5f,
-    type: 3}
+  AbilityObjects:
+  - prefabObj: {fileID: 4722156749841547703, guid: 60a9abd733223e748a5e5e2868546b5f,
+      type: 3}
+    objectPool: []
+  - prefabObj: {fileID: 5495742129090760898, guid: 6667f5f254316d049b1118524bc059d5,
+      type: 3}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
   abilitiesPool:
   - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
   - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
   - {fileID: 11400000, guid: 0baca4708eab1b244b20c67ab141dcac, type: 2}
-  infernalBreathe:
-    abilityState: 0
-    prefabObj: {fileID: 5495742129090760898, guid: 6667f5f254316d049b1118524bc059d5,
-      type: 3}
-    objectPool: []
 --- !u!114 &594135943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,16 +183,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolParent: {fileID: 964887437}
-  basicAttack: {fileID: 176287616280015543, guid: a2ee69ba6be76004faeb92bf96fafd7e,
-    type: 3}
+  AbilityObjects:
+  - prefabObj: {fileID: 176287616280015543, guid: a2ee69ba6be76004faeb92bf96fafd7e,
+      type: 3}
+    objectPool: []
+  - prefabObj: {fileID: 5620424798127034662, guid: 55f495dda478d0d40997871dec06566c,
+      type: 3}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
   abilitiesPool:
   - {fileID: 11400000, guid: 4f5e071b953e34446a01a8edf4253d5b, type: 2}
   - {fileID: 11400000, guid: 1ca87887df3f5cc4ba185a4fab030497, type: 2}
   - {fileID: 11400000, guid: 6317c32c2f0bdf8459c0d81075cc6c6e, type: 2}
-  tidelessWaves:
-    prefabObj: {fileID: 5620424798127034662, guid: 55f495dda478d0d40997871dec06566c,
-      type: 3}
-    objectPool: []
 --- !u!114 &594135942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,8 +211,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolParent: {fileID: 266816735}
-  basicAttack: {fileID: 992168432038693247, guid: 77a9a2808c6ddaa4d9459ea9e0084b1b,
-    type: 3}
+  AbilityObjects:
+  - prefabObj: {fileID: 992168432038693247, guid: 77a9a2808c6ddaa4d9459ea9e0084b1b,
+      type: 3}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
+  - prefabObj: {fileID: 0}
+    objectPool: []
   abilitiesPool:
   - {fileID: 11400000, guid: 1292e955728210c45addd83e61124dbf, type: 2}
   - {fileID: 11400000, guid: b400098bf2eb81f4288837e4db5e5dd9, type: 2}

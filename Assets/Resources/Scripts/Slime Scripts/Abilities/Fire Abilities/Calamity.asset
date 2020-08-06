@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905266ef9d6d4a8439d6bca79272a298, type: 3}
   m_Name: Calamity
   m_EditorClassIdentifier: 
+  indexID: 2
   abilityName: Calamity
   abilityIcon: {fileID: 21300000, guid: 9f922002032136c4687b8dced9bc624c, type: 3}
   abilityCost: 100

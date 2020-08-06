@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class BaseAbility : ScriptableObject
 {
     [Header("ability data")]
+    public int indexID;
     public string abilityName;
     public Sprite abilityIcon;
     public int abilityCost;
@@ -12,7 +13,6 @@ public abstract class BaseAbility : ScriptableObject
     public AffinityBonus affinityBonus;
     public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
     public Forecast forecast;
-    public bool anchored;
     public Vector3 forecastScaler;
     public float freeCircleReach;
     public float globalCD;

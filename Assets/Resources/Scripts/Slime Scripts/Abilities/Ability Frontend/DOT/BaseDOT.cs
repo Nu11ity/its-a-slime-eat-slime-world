@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseDOT : MonoBehaviour
+public class BaseDOT : PooledAbilityObject
 {
     public List<Transform> castPositions;
     public LayerMask desiredLayers;
@@ -14,17 +14,11 @@ public class BaseDOT : MonoBehaviour
     public int psIndex;
 
     public List<ParticleSystem> ps;
-    protected Slime MySlime { get; set; }
 
-    public Transform MyParent { get; set; }
     private float durationValue;
     private float tickValue;
     private ParticleSystem.MainModule mainModule;
 
-    public virtual void DefineCaller(Slime _caller)
-    {
-        MySlime = _caller;
-    }
     void Update()
     {    
         if (ps[psIndex].isPlaying)

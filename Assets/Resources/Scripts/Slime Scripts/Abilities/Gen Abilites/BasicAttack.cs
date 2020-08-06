@@ -9,7 +9,7 @@ public class BasicAttack : BaseAbility
     public override void AbilityActivated(Transform _castPoint, Slime _slime)
     {
         Debug.Log("Basic Attack");
-        AbilityManager.Instance.RegisterBasicAttack(_castPoint, _slime);
+        AbilityManager.Instance.RequestBasicAttack(_castPoint, _slime);
     }
     public override void AbilityActivated(Slime _slime) { Debug.Log("Basic Attack"); }
     public override void AbilityActivated() { Debug.Log("Basic Attack"); }
