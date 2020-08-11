@@ -20,7 +20,9 @@ public class AbilityController : MonoBehaviour
         }
     }
 
-    public Transform basicAttackSpawn;
+    public Transform laneSpawn;
+    public Transform coneSpawn;
+
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
     public bool AbilityToggled { get; set; }
@@ -122,6 +124,15 @@ public class AbilityController : MonoBehaviour
             }
         }
     }
+    private Transform AssignCastPoint(BaseAbility _ability)
+    {
+        if (_ability.castPoint == BaseAbility.CastPoint.Free)
+            return laneSpawn;
+        else if (_ability.castPoint == BaseAbility.CastPoint.Anchored)
+            return coneSpawn;
+
+        return transform;
+    }
     private void AbilityInputsCheck()
     {
         if(!AbilityToggled)
@@ -135,8 +146,7 @@ public class AbilityController : MonoBehaviour
         {
             if(AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
             {//cast ability | Read->(l-click/r-trigger hit)
-
-                SlimeData.abilities[currentIndex].AbilityActivated(basicAttackSpawn, SlimeData);//drain energy too!!!
+                SlimeData.abilities[currentIndex].AbilityActivated(AssignCastPoint(SlimeData.abilities[currentIndex]), SlimeData);//drain energy too!!!
                 SlimeData.DrainEnergy(SlimeData.abilities[currentIndex].abilityCost);
                 CurrentIndex = -1;
                 CurrentForcast.EnableVisual(false);
@@ -145,13 +155,10 @@ public class AbilityController : MonoBehaviour
             else
             {//basic attack
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
-                {//requires no energy drain
-                    //->
-                    //AbilityManager.Instance.RegisterBasicAttack(basicAttackSpawn, SlimeData);
-                    //or
-                    SlimeData.basicAttack.AbilityActivated(basicAttackSpawn, SlimeData);
-                    //<-
-                    animator.PlayAnimEvent("Melee Basic Attack");//temp
+                {
+                    SlimeData.basicAttack.AbilityActivated(laneSpawn, SlimeData);
+                    animator.PlayAnimEvent("Ranged Attack Basic");//temp
+                    //animator.PlayAnimEvent("Melee Basic Attack");//temp
                 }
             }
         }

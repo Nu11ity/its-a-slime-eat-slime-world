@@ -27652,6 +27652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: 1
   id: 1
+  anchor: 0
   impactObject: {fileID: 4341873305072970102}
   allowCasting: 1
   lifeTime: 3
@@ -27665,6 +27666,7 @@ MonoBehaviour:
   disableOnImpact:
   - {fileID: 9064878134070739767}
   knockbackForce: 120
+  castOffset: 1.7
 --- !u!1 &5620424798180503243
 GameObject:
   m_ObjectHideFlags: 0

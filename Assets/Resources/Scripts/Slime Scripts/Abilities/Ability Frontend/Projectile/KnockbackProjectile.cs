@@ -6,11 +6,14 @@ public class KnockbackProjectile : BaseProjectile
 {
     [Header("Inherit Dependents")]
     public float knockbackForce;
-    private float mass;
+    public float castOffset;
+    private float mass = 3;
+
+    public bool showGizmos;
 
     public override void DamageCast()
     {
-        Vector3 offset = transform.position - transform.forward * radius;
+        Vector3 offset = transform.position - transform.forward * castOffset;
         targets = Physics.OverlapSphere(offset, radius, desiredLayers);
         if (targets.Length > 0)
         {
@@ -33,7 +36,10 @@ public class KnockbackProjectile : BaseProjectile
     }
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position - transform.forward * radius, radius);
+        if(showGizmos)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position - transform.forward * castOffset, radius);
+        }       
     }
 }

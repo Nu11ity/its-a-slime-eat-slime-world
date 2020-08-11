@@ -9,6 +9,9 @@ public class PooledAbilityObject : MonoBehaviour
     //make initialize instead be awake, and set to pool their
     //ability based objects use this, so baseprojectile and baseDOT
 
+    public enum RegisterMethod { registered, unregistered }
+    public RegisterMethod registerMethod;
+
     public enum Path { Fire, Water, Nature }
     public Path path;//know path so can know parent
 
@@ -17,13 +20,14 @@ public class PooledAbilityObject : MonoBehaviour
     public Transform MyParent { get; set; }
     public Slime MySlime { get; set; }
 
-    public void SetSlime(Slime _caller)
+    public virtual void SetSlime(Slime _caller)
     {
         MySlime = _caller;
     }
     public void Awake()//register to pool on creation
     {
-        AbilityManager.Instance.RegisterItemToPool(this);       
+        if(registerMethod == RegisterMethod.registered)
+            AbilityManager.Instance.RegisterItemToPool(this);       
     }
 
 }

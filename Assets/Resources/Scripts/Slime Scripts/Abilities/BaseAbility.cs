@@ -13,6 +13,8 @@ public abstract class BaseAbility : ScriptableObject
     public AffinityBonus affinityBonus;
     public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
     public Forecast forecast;
+    public enum CastPoint { Free, Anchored }
+    public CastPoint castPoint;
     public Vector3 forecastScaler;
     public float freeCircleReach;
     public float globalCD;
