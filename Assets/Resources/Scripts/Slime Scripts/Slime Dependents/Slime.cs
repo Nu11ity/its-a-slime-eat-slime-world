@@ -96,14 +96,14 @@ public class Slime : MonoBehaviour
     }
 
     [SerializeField]
-    private int currentHealth;
-    public int CurrentHealth
+    private float currentHealth;
+    public float CurrentHealth
     {//Might need to be float for smoother Fill Meter
         get { return currentHealth; }
         set
         {
-            value = Mathf.Clamp(value, 0, MaxHealth);
             currentHealth = value;
+            currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
             myCombatCanvas.SetHealthFillMeter(currentHealth, MaxHealth);
         }
     }

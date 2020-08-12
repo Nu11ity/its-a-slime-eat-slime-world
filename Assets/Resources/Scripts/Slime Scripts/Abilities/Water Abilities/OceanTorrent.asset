@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b2c0fea0ed0b34082ee9a759853959, type: 3}
   m_Name: OceanTorrent
   m_EditorClassIdentifier: 
+  indexID: 3
   abilityName: Ocean Torrent
   abilityIcon: {fileID: 21300000, guid: fccc7156f5a20d847b6f18880c73d76d, type: 3}
   abilityCost: 45
   affinityBonus: 3
   forecast: 4
+  castPoint: 0
   forecastScaler: {x: 1.5, y: 1, z: 1.5}
   freeCircleReach: 0
   globalCD: 7

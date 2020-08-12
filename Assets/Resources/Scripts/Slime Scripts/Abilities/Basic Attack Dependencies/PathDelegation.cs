@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class PathDelegation : MonoBehaviour
 {
-    public GameObject basicAttack;
-
-    private List<AbilityProjectile> basicAttackPool = new List<AbilityProjectile>();
+    public Transform poolParent;
+    public List<AbilityPoolContainer> AbilityObjects;
     public List<BaseAbility> abilitiesPool;
-
-    public virtual void DependentBehavior() { }//for unique behavior in descendants
 
     #region ability methods
     public BaseAbility AbilityMap(Slime _slime)
@@ -31,45 +28,57 @@ public class PathDelegation : MonoBehaviour
     #endregion
 
     #region basicAttack methods
-    public void RegisterItem(AbilityProjectile _projectile)
+    public void CheckAbilityPoolRegistration(AbilityPoolContainer _pool, PooledAbilityObject _object)
     {
-        if (!basicAttackPool.Contains(_projectile))
-            basicAttackPool.Add(_projectile);
+        if (_pool.ContainCheck(_object) == false)
+        {
+            _pool.objectPool.Add(_object);
+            _object.MyParent = poolParent;
+        }
     }
-    public void BasicAttackPath(Transform _castPoint, Slime _caller)
+    public void CheckAbilityObjSpawn(GameObject _object, Transform _castPoint, Slime _caller)
     {
-        GameObject _newPooledObj = Instantiate(basicAttack, _castPoint.position, _castPoint.rotation);
-        _newPooledObj.SetActive(true);
-        _newPooledObj.GetComponent<AbilityProjectile>().Initialize(_caller);
+        GameObject _newPoolObj = Instantiate(_object, _castPoint.position, _castPoint.rotation);
+        PooledAbilityObject pooledAbilityObject = _newPoolObj.GetComponent<PooledAbilityObject>();
+
+        pooledAbilityObject.SetSlime(_caller);
+        if (pooledAbilityObject.anchor)
+            pooledAbilityObject.transform.parent = _castPoint;
+
+        _newPoolObj.SetActive(true);
     }
-    public void RequestBasicAttack(Transform _castPoint, Slime _caller)//temp, change to modular version after testing
+    public void RequestAbilityProjectile(Transform _castPoint, Slime _caller, AbilityPoolContainer _abilityPool)
     {
         bool requestComplete = false;
 
-        if (basicAttackPool.Count > 0)
+        if (_abilityPool.objectPool.Count > 0)
         {
-            for (int i = 0; i < basicAttackPool.Count; i++)
+            for (int i = 0; i < _abilityPool.objectPool.Count; i++)
             {
-                if (!basicAttackPool[i].gameObject.activeSelf 
-                    && !basicAttackPool[i].impactObject.gameObject.activeSelf)
+                if (!_abilityPool.objectPool[i].gameObject.activeSelf
+                    && _abilityPool.objectPool[i].transform.parent != null)
                 {
                     requestComplete = true;
-                    basicAttackPool[i].transform.parent = _castPoint;
-                    basicAttackPool[i].transform.position = _castPoint.position;
-                    basicAttackPool[i].transform.rotation = _castPoint.rotation;
-                    basicAttackPool[i].transform.parent = null;
-                    basicAttackPool[i].gameObject.SetActive(true);
+                    _abilityPool.objectPool[i].SetSlime(_caller);
+                    _abilityPool.objectPool[i].transform.parent = _castPoint;
+                    _abilityPool.objectPool[i].transform.position = _castPoint.position;
+                    _abilityPool.objectPool[i].transform.rotation = _castPoint.rotation;
+
+                    if(!_abilityPool.objectPool[i].anchor)
+                        _abilityPool.objectPool[i].transform.parent = null;
+
+                    _abilityPool.objectPool[i].gameObject.SetActive(true);
                     return;
                 }
             }
             if (!requestComplete)
             {
-                BasicAttackPath(_castPoint, _caller);
+                CheckAbilityObjSpawn(_abilityPool.prefabObj, _castPoint, _caller);
             }
         }
         else
         {
-            BasicAttackPath(_castPoint, _caller);
+            CheckAbilityObjSpawn(_abilityPool.prefabObj, _castPoint, _caller);
         }
     }
     #endregion
