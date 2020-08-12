@@ -22,6 +22,8 @@ public class AbilityController : MonoBehaviour
 
     public Transform laneSpawn;
     public Transform coneSpawn;
+    public Transform boundCircleSpawn;
+    public Transform freeCircleSpawn;
 
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
@@ -126,10 +128,14 @@ public class AbilityController : MonoBehaviour
     }
     private Transform AssignCastPoint(BaseAbility _ability)
     {
-        if (_ability.castPoint == BaseAbility.CastPoint.Free)
+        if (_ability.forecast == BaseAbility.Forecast.Lane)
             return laneSpawn;
-        else if (_ability.castPoint == BaseAbility.CastPoint.Anchored)
+        else if (_ability.forecast == BaseAbility.Forecast.Cone)
             return coneSpawn;
+        else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+            return freeCircleSpawn;
+        else if (_ability.forecast == BaseAbility.Forecast.BoundCircle || _ability.forecast == BaseAbility.Forecast.Instant)
+            return boundCircleSpawn;
 
         return transform;
     }
