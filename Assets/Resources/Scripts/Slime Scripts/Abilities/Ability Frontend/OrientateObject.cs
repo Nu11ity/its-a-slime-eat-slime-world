@@ -13,14 +13,14 @@ public class OrientateObject : MonoBehaviour
 
     private Vector3 currentRot;
 
-    public void Initialize()
+    public void Awake()
     {
         if (simSpace == SimSpace.World)
             currentRot = transform.rotation.eulerAngles;
         else
             currentRot = transform.localEulerAngles;
     }
-    public void RotateObject()
+    public void Update()
     {
         if(enableRotation)
         {

@@ -16,16 +16,16 @@ public class BlossomingBlades : MonoBehaviour
 
     void Awake()
     {
-        for (int i = 0; i < pivotVisuals.Count; i++)
-            pivotVisuals[i].Initialize();
+        //for (int i = 0; i < pivotVisuals.Count; i++)
+        //    pivotVisuals[i].Initialize();
     }
 
     void Update()
     {
         DamageCasts();
 
-        for (int i = 0; i < pivotVisuals.Count; i++)
-            pivotVisuals[i].RotateObject();
+        //for (int i = 0; i < pivotVisuals.Count; i++)
+        //    pivotVisuals[i].RotateObject();
     }
 
     private void DamageCasts()

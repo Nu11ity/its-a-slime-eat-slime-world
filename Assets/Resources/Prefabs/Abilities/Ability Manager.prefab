@@ -165,12 +165,13 @@ MonoBehaviour:
   - prefabObj: {fileID: 5223227617386255806, guid: c3322ce8c1d622b4bb4b72e821bda635,
       type: 3}
     objectPool: []
-  - prefabObj: {fileID: 0}
+  - prefabObj: {fileID: 5076154057674649410, guid: b83e9eb6ab82172448b7d6edd2907606,
+      type: 3}
     objectPool: []
   abilitiesPool:
   - {fileID: 11400000, guid: c72031f6531feaf48b645111be538aa5, type: 2}
-  - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
   - {fileID: 11400000, guid: 0baca4708eab1b244b20c67ab141dcac, type: 2}
+  - {fileID: 11400000, guid: 5e8dba2d21a972046926c298cb3d8a0a, type: 2}
 --- !u!114 &594135943
 MonoBehaviour:
   m_ObjectHideFlags: 0
