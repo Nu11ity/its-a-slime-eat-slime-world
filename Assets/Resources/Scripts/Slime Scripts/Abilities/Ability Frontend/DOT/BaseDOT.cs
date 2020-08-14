@@ -14,9 +14,10 @@ public class BaseDOT : PooledAbilityObject
     public int psIndex;
 
     public List<ParticleSystem> ps;
+    public bool showGizmos;
 
     private float durationValue;
-    private float tickValue;
+    protected float tickValue;
     private ParticleSystem.MainModule mainModule;
 
     void Update()
@@ -52,7 +53,7 @@ public class BaseDOT : PooledAbilityObject
         durationValue = 0;
         MySlime = null;
     }
-    private void TickDamageCast()
+    public virtual void TickDamageCast()
     {
         tickValue += Time.deltaTime;
         if(tickValue >= tickDelay)
@@ -71,5 +72,17 @@ public class BaseDOT : PooledAbilityObject
             }
             tickValue = 0;
         }    
+    }
+    void OnDrawGizmos()
+    {
+        if (showGizmos)
+        {
+            if (castPositions.Count > 0)
+            {
+                Gizmos.color = Color.yellow;
+                for (int i = 0; i < castPositions.Count; i++)
+                    Gizmos.DrawSphere(castPositions[i].position, radius);
+            }
+        }
     }
 }
