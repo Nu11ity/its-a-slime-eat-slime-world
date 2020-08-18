@@ -13,12 +13,21 @@ public class BaseProjectile : PooledAbilityObject
     public int damage;
     public float radius;
     public List<GameObject> disableOnImpact;
+    public bool showGizmos;
+    public float castOffset;
 
     protected float currentLife;
     protected bool begunFadeout;
     protected Collider[] targets;
 
-
+    void OnDrawGizmos()
+    {
+        if (showGizmos)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position - transform.forward * castOffset, radius);
+        }
+    }
     public void Update()
     {
         if (begunFadeout)

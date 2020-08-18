@@ -27650,6 +27650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1b91f031087174fad0c6d65d8145d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  registerMethod: 0
   path: 1
   id: 1
   anchor: 0
@@ -27659,14 +27660,15 @@ MonoBehaviour:
   speed: 14
   desiredLayers:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 512
   slimeLayer: 9
   damage: 60
   radius: 1.7
   disableOnImpact:
   - {fileID: 9064878134070739767}
-  knockbackForce: 120
+  showGizmos: 0
   castOffset: 1.7
+  knockbackForce: 120
 --- !u!1 &5620424798180503243
 GameObject:
   m_ObjectHideFlags: 0

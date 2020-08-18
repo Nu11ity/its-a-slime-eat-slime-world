@@ -6,10 +6,7 @@ public class KnockbackProjectile : BaseProjectile
 {
     [Header("Inherit Dependents")]
     public float knockbackForce;
-    public float castOffset;
     private float mass = 3;
-
-    public bool showGizmos;
 
     public override void DamageCast()
     {
@@ -33,13 +30,5 @@ public class KnockbackProjectile : BaseProjectile
                 }                           
             }
         }
-    }
-    void OnDrawGizmos()
-    {
-        if(showGizmos)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position - transform.forward * castOffset, radius);
-        }       
     }
 }

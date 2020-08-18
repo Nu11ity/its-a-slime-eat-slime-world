@@ -220,7 +220,8 @@ MonoBehaviour:
   - prefabObj: {fileID: 469679269041220941, guid: cdcd990c7f6d0b14db93900b3013a495,
       type: 3}
     objectPool: []
-  - prefabObj: {fileID: 0}
+  - prefabObj: {fileID: 8889491852745516909, guid: 54766f52cbf12aa4f834402b750aed0e,
+      type: 3}
     objectPool: []
   - prefabObj: {fileID: 0}
     objectPool: []

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexID: 1
   abilityName: Enveloping Blossoms
-  abilityIcon: {fileID: 21300000, guid: 22ebb074f4a6be446b9e9a132ff9036d, type: 3}
+  abilityIcon: {fileID: 21300000, guid: eeff49e051316944dad15296f8e68e1b, type: 3}
   abilityCost: 70
   affinityBonus: 5
   forecast: 1

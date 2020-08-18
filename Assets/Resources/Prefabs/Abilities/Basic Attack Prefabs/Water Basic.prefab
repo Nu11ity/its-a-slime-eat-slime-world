@@ -4738,20 +4738,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4897e8fe593d37548b866157e6c114cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  registerMethod: 0
+  path: 1
+  id: 0
+  anchor: 0
   impactObject: {fileID: 513315176713102408}
   allowCasting: 1
   lifeTime: 3
   speed: 18
-  path: 1
   desiredLayers:
     serializedVersion: 2
     m_Bits: 513
   slimeLayer: 9
   damage: 10
-  radius: 1
+  radius: 0.5
   disableOnImpact:
   - {fileID: 176631699267841737}
   - {fileID: 176257667805678577}
+  showGizmos: 0
+  castOffset: 0
 --- !u!1 &176412809348233927
 GameObject:
   m_ObjectHideFlags: 0

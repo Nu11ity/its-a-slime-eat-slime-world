@@ -57,6 +57,7 @@ MonoBehaviour:
   radius: 4.68
   duration: 8
   tickDelay: 0.15
+  checkMethod: 0
   psIndex: 0
   ps:
   - {fileID: 1857517144626752796}
