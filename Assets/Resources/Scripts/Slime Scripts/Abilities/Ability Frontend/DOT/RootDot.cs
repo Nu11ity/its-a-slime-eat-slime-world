@@ -4,31 +4,19 @@ using UnityEngine;
 
 public class RootDot : BaseDOT
 {
+    [Header("Root behavior")]
     public float rootDuration;
 
+    private List<GameObject> rootedTargets = new List<GameObject>();
     private Collider[] targets;
-    private float timeLeft;
 
-    public void Root()
-    {
-        timeLeft += Time.deltaTime;
-    }
     public override void OnDisableExpanded()
     {
-        timeLeft = 0;
-        if(targets.Length > 0)
-        {
-            for (int i = 0; i < targets.Length; i++)
-            {
-                if (targets[i].GetComponent<ThirdPersonLocomotion>().enableMovement == false && targets[i].GetComponent<Slime>().CurrentHealth > 0)
-                    targets[i].GetComponent<ThirdPersonLocomotion>().enableMovement = true;
-            }
-        }
+        if (rootedTargets.Count > 0)
+            rootedTargets.Clear();
     }
     public override void TickDamageCast()
     {
-        Root();
-
         tickValue += Time.deltaTime;
         if(tickValue >= tickDelay)
         {
@@ -43,14 +31,20 @@ public class RootDot : BaseDOT
                         {
                             targets[j].GetComponent<Slime>().TakeDamage(damage);
 
-                            //!!!COME BACK AND ADD ROOT FOR AI SLIME MOVEMENT CLASS!!!
-                            //At that time, convert both this stop method, as well
-                            //as the knockback method from projectiles, into the slime class itself.
-                            if(timeLeft < rootDuration)
-                                targets[j].GetComponent<ThirdPersonLocomotion>().enableMovement = false;
+                            //root behavior
+                            if (rootedTargets.Count > 0)
+                            {
+                                if (!rootedTargets.Contains(targets[j].gameObject))
+                                {
+                                    rootedTargets.Add(targets[j].gameObject);
+                                    targets[j].GetComponent<StatusController>().SetRootDuration(duration);
+                                }
+                            }
                             else
-                                targets[j].GetComponent<ThirdPersonLocomotion>().enableMovement = true;
-                            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            {
+                                rootedTargets.Add(targets[j].gameObject);
+                                targets[j].GetComponent<StatusController>().SetRootDuration(duration);
+                            }
                         }
                     }
                 }

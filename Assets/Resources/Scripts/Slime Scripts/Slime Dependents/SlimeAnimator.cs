@@ -7,14 +7,14 @@ public class SlimeAnimator : MonoBehaviour
     public Animator anim;
     public Transform focusPoint;
 
-    private ThirdPersonLocomotion locomotion;
+    private PlayerLocomotion locomotion;
 
     private Vector3 prevPos;
     private Vector3 velocity;
 
     private void Awake()
     {
-        locomotion = GetComponent<ThirdPersonLocomotion>();
+        locomotion = GetComponent<PlayerLocomotion>();
     }
     void FixedUpdate()
     {
@@ -28,7 +28,7 @@ public class SlimeAnimator : MonoBehaviour
     }
     public void CheckMoveState()
     {
-        if (locomotion.controller.velocity.magnitude > 0.1f)
+        if (locomotion.Controller.velocity.magnitude > 0.1f)
             anim.SetBool("Move", true);
         else
             anim.SetBool("Move", false);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealDot : BaseDOT
 {
+    [Header("Heal Behavior")]
     public float healthRegenSpeed;
 
     public void Heal()

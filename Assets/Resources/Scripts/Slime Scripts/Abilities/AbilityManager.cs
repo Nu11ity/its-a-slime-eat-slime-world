@@ -31,6 +31,10 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Path Management
+    public SlimeCombatCanvas combatCanvas_A;
+    public SlimeCombatCanvas combatCanvas_B;
+
+    [Header("Ability Handlers")]
     public PathDelegation pathOfFire;
     public PathDelegation pathOfWater;
     public PathDelegation pathOfNature;

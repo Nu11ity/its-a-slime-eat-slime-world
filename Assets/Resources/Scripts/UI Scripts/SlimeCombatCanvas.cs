@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SlimeCombatCanvas : MonoBehaviour
 {
+    [Header("Health/Energy")]
     public Image healthBarMeter;
     public Image energyBarMeter;
 
+    [Header("Ability Icons")]
     public List<Image> abilityIcons;
     public List<Image> abilityMeters;
     public List<GameObject> abilityMasks;
@@ -16,11 +19,26 @@ public class SlimeCombatCanvas : MonoBehaviour
     public float AbilityTimer02 { get; set; }
     public float AbilityTimer03 { get; set; }
 
-    //
-    public void SetAbilityFillMeter(int _value, int _max, int _index)
+    [Header("Slime Portrais/abilities")]
+    public List<Slime> slimes = new List<Slime>();
+    public List<Image> portraits = new List<Image>();
+
+    public void SetLineup(Slime _requester)
     {
-        abilityMeters[_index].fillAmount = (_value / _max);
+        if (!slimes.Contains(_requester))
+        {
+            slimes.Add(_requester);
+        }
     }
+    public void SetPortraits()
+    {
+        for (int i = 0; i < slimes.Count; i++)
+        {
+            portraits[i].sprite = slimes[i].MyPortrait;
+        }
+    }
+
+    // Ability Icon Set Methods
     public void SetAbilityFillMeter(float _value, float _max, int _index)
     {
         abilityMeters[_index].fillAmount = (_value / _max);
@@ -33,7 +51,7 @@ public class SlimeCombatCanvas : MonoBehaviour
     {
         abilityIcons[_index].sprite = _sprite;
     }
-    //
+    //Health/ Energy Set Methods
     public void SetHealthFillMeter(float _value, float _max)
     {
         healthBarMeter.fillAmount = (_value / _max);

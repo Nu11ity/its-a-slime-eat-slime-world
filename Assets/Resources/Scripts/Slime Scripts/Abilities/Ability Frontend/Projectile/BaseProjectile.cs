@@ -77,6 +77,10 @@ public class BaseProjectile : PooledAbilityObject
     public virtual void OnImpact()
     {
         impactObject.transform.parent = null;
+
+        if(impactObject.gameObject.activeSelf)//fixed ps not play issue
+            impactObject.gameObject.SetActive(false);
+
         impactObject.gameObject.SetActive(true);
     }
     protected virtual void OnDisable()

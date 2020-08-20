@@ -60,13 +60,17 @@ public class Slime : MonoBehaviour
     #endregion
 
     #region properties & variables
-    [Header("Slime Type")]
+    public enum SlimeControlType { Player, AI }
+    public SlimeControlType slimeControlType;
+
+    [Header("Slime Type")]   
     [SerializeField]
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }//read only
     public enum Archetype { Undefined, Fire, Water, Nature }
     public Archetype archetype;
-
+    public List<Sprite> slimePortrait = new List<Sprite>();
+    public Sprite MyPortrait { get; set; }
     //UI for ability icons, their slot point, and reference for fill bars
 
     public BaseAbility basicAttack;
@@ -75,7 +79,17 @@ public class Slime : MonoBehaviour
     public List<BaseAbility> abilities = new List<BaseAbility>();
     public List<AbilityTimer> AbilityTimers { get; set; }
 
-    public SlimeCombatCanvas myCombatCanvas;//Null
+    private SlimeCombatCanvas myCombatCanvas;
+    public SlimeCombatCanvas MyCombatCanvas
+    {
+        get
+        {
+            if(myCombatCanvas == null)
+                UpdateCombatCanvas();
+
+            return myCombatCanvas;
+        }
+    }
 
     [Header("Level Mapping")]
     public LevelMapping levelMapping;
@@ -104,7 +118,7 @@ public class Slime : MonoBehaviour
         {
             currentHealth = value;
             currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
-            myCombatCanvas.SetHealthFillMeter(currentHealth, MaxHealth);
+            MyCombatCanvas.SetHealthFillMeter(currentHealth, MaxHealth);           
         }
     }
 
@@ -121,26 +135,47 @@ public class Slime : MonoBehaviour
         {
             currentEnergy = value;
             currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
-            myCombatCanvas.SetEnergyFillMeter(currentEnergy, maxEnergy);
+            MyCombatCanvas.SetEnergyFillMeter(currentEnergy, maxEnergy);
         }
     }
     #endregion
 
     #region Initalize Slime methods
-    private void InitializeAbilities()
+    void OnEnable()
     {
+        //for (int i = 0; i < abilities.Count; i++)
+        //    MyCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
+    }
+    private void UpdateCombatCanvas()
+    {
+        if (slimeControlType == SlimeControlType.Player)
+            myCombatCanvas = AbilityManager.Instance.combatCanvas_A;
+        else if (slimeControlType == SlimeControlType.AI)
+            myCombatCanvas = AbilityManager.Instance.combatCanvas_B;
+    }
+    private void InitializeAbilities()
+    {       
         AbilityTimers = new List<AbilityTimer>();
         for (int i = 0; i < abilities.Count; i++)
         {
             AbilityTimers.Add(new AbilityTimer());
-            myCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
+            MyCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
         }
+
+        if (archetype == Archetype.Fire)
+            MyPortrait = slimePortrait[0];
+        else if (archetype == Archetype.Water)
+            MyPortrait = slimePortrait[1];
+        else if (archetype == Archetype.Nature)
+            MyPortrait = slimePortrait[2];
 
         BasicAttackTimer = new AbilityTimer();
         BasicAttackTimer.GlobalCD = basicAttack.globalCD;
 
         for (int i = 0; i < AbilityTimers.Count; i++)
             AbilityTimers[i].GlobalCD = abilities[i].globalCD;
+
+        //MyCombatCanvas.SetCurrentCombatSlime(this);
     }
     public void OnCombatEnd()
     {
@@ -195,7 +230,7 @@ public class Slime : MonoBehaviour
             return;
 
         if (CurrentHealth > 0)
-            Debug.Log("Play injured sfx");
+            Debug.Log("Inured + " + this.name);
 
         CurrentHealth -= _damage;
 

@@ -11,19 +11,17 @@ public class BaseExplosion : PooledAbilityObject
     public LayerMask desiredLayers;
     public List<Transform> castPositions;
     public bool showGizmos;
-    
 
-    private float currentTime;
-    private Collider[] targets;
-    private bool allowCasting;
+    protected List<GameObject> hitTargets = new List<GameObject>();
+    protected float currentTime;
+    protected Collider[] targets;
+    protected bool allowCasting;
 
     void Update()
     {
         if(allowCasting)
         {
             OnCastBehavior();
-            //stun cast...
-            //knock cast...
 
             currentTime += Time.deltaTime;
             if (currentTime >= duration)
@@ -43,6 +41,9 @@ public class BaseExplosion : PooledAbilityObject
     {
         allowCasting = false;
         currentTime = 0;
+
+        if(hitTargets.Count > 0)
+            hitTargets.Clear();
     }
     public virtual void OnCastBehavior()
     {
@@ -55,7 +56,19 @@ public class BaseExplosion : PooledAbilityObject
                 {
                     if(targets[j].gameObject != MySlime.gameObject)
                     {
-                        targets[j].GetComponent<Slime>().TakeDamage(damage);
+                        if(hitTargets.Count > 0)
+                        {
+                            if(!hitTargets.Contains(targets[j].gameObject))
+                            {
+                                hitTargets.Add(targets[j].gameObject);
+                                targets[j].GetComponent<Slime>().TakeDamage(damage);
+                            }
+                        }
+                        else
+                        {
+                            hitTargets.Add(targets[j].gameObject);
+                            targets[j].GetComponent<Slime>().TakeDamage(damage);
+                        }
                     }
                 }
             }
