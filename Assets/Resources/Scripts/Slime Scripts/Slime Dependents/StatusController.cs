@@ -10,6 +10,31 @@ public class StatusController : MonoBehaviour
     public BaseLocomotion SlimeLocomotion { get; set; }
     public BaseAbilityController SlimeController { get; set; }
 
+    [Header("Silence data")]
+    public float maxSilencedDuration;
+    private bool applySilence;
+    private float silenceDuration;
+    public float SilenceDuration
+    {
+        get { return silenceDuration; }
+        set
+        {
+            silenceDuration = value;
+            if(silenceDuration > 0)
+            {
+                SlimeController.CancelToggledAbility();
+                SlimeController.RestrictCasting = true;
+                applySilence = true;
+            }
+            if (silenceDuration <= 0)
+            {
+                SlimeController.RestrictCasting = false;
+                applySilence = false;
+            }
+        }
+    }
+
+    [Header("Stun data")]
     public float maxStunDuration;
     private bool applyStun;
     private float stunDuration;
@@ -38,6 +63,7 @@ public class StatusController : MonoBehaviour
         }
     }
 
+    [Header("Root data")]
     public float maxRootDuration;
     private bool applyRoot;
     private float rootDuration;
@@ -71,8 +97,18 @@ public class StatusController : MonoBehaviour
     }  
     void Update()
     {
+        SilenceTimer();
         RootTimer();
         StunTimer();
+    }
+    private void SilenceTimer()
+    {
+        if (applySilence)
+            SilenceDuration -= Time.deltaTime;
+    }
+    public void SetSilenceDuration(float _duration)
+    {
+        SilenceDuration += _duration;
     }
     private void StunTimer()
     {

@@ -9,7 +9,7 @@ public class PathDelegation : MonoBehaviour
     public List<BaseAbility> abilitiesPool;
 
     #region ability methods
-    public BaseAbility AbilityMap(Slime _slime)
+    public BaseAbility AbilityMap(BaseSlime _slime)
     {
         int abilityIndex = 0;
         bool set = false;

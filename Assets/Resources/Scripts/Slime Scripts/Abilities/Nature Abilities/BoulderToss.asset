@@ -16,6 +16,7 @@ MonoBehaviour:
   abilityName: Boulder Toss
   abilityIcon: {fileID: 21300000, guid: 05e2d6af00483bc42a42f768f4505213, type: 3}
   abilityCost: 45
+  abilityFunctions: 00000000
   affinityBonus: 1
   forecast: 2
   forecastScaler: {x: 1, y: 1, z: 1}

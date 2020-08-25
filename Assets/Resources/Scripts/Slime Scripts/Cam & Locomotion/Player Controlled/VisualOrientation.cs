@@ -9,12 +9,12 @@ public class VisualOrientation : MonoBehaviour
     public float rotSpeed = 10f;
 
     private Camera cam;
-    private PlayerLocomotion locomotion;
+    private BaseLocomotion locomotion;
 
     void Start()
     {
         cam = GetComponentInChildren<Camera>();
-        locomotion = GetComponent<PlayerLocomotion>();
+        locomotion = GetComponent<BaseLocomotion>();
     }
     void Update()
     {

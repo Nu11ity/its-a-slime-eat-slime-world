@@ -10,9 +10,14 @@ public class BaseAbilityController : MonoBehaviour
     public Transform freeCircleSpawn;
 
     public Slime SlimeData { get; set; }
-    public bool RestrictCasting { get; set; }
+    protected bool restrictCasting;
+    public virtual bool RestrictCasting
+    {
+        get { return restrictCasting; }
+        set { restrictCasting = value; }
+    }
 
-    protected SlimeCombatCanvas canvas;
+    protected CombatCanvas canvas;
     protected SlimeAnimator animator;
 
     public virtual void CancelToggledAbility() {}

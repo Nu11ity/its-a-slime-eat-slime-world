@@ -17,6 +17,15 @@ public class AbilityController : BaseAbilityController
                 currentIndex = value;
         }
     }
+    public override bool RestrictCasting
+    {
+        get { return restrictCasting; }
+        set
+        {
+            restrictCasting = value;
+            SlimeData.MyCombatCanvas.SilenceAll(value);
+        }
+    }
 
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
@@ -92,10 +101,7 @@ public class AbilityController : BaseAbilityController
         return true;
     }
     private void CheckAbilityInput(bool _input, int _index)
-    {
-        if (RestrictCasting)
-            return;
-
+    {        
         if(_input && !SlimeData.AbilityTimers[_index].OnCooldown)
         {
             if (SlimeData.CurrentEnergy < SlimeData.abilities[_index].abilityCost)
@@ -136,7 +142,10 @@ public class AbilityController : BaseAbilityController
     
     private void AbilityInputsCheck()
     {
-        if(!AbilityToggled)
+        if (RestrictCasting)
+            return;
+
+        if (!AbilityToggled)
         {
             CheckAbilityInput(slimeInputMap.Ability01Hit, 0);
             CheckAbilityInput(slimeInputMap.Ability02Hit, 1);

@@ -7,14 +7,14 @@ public class SlimeAnimator : MonoBehaviour
     public Animator anim;
     public Transform focusPoint;
 
-    private PlayerLocomotion locomotion;
+    private BaseLocomotion locomotion;
 
     private Vector3 prevPos;
     private Vector3 velocity;
 
     private void Awake()
     {
-        locomotion = GetComponent<PlayerLocomotion>();
+        locomotion = GetComponent<BaseLocomotion>();
     }
     void FixedUpdate()
     {

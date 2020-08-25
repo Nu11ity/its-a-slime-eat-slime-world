@@ -36,7 +36,7 @@ public class ProceduralSlimeSpawner : MonoBehaviour
             SlimeSetup(aiSlimes[i], spawnNodes[1]);
     }
 
-    private void SlimeSetup(Slime _slime, Transform _spawnNode)
+    private void SlimeSetup(BaseSlime _slime, Transform _spawnNode)
     {
         //int spawnNode = Random.Range(0, spawnNodes.Count);
 
@@ -67,7 +67,7 @@ public class ProceduralSlimeSpawner : MonoBehaviour
                 _slime.statMapping.genMap.generation = commonGensInArea[Random.Range(0, commonGensInArea.Count)];
         }
 
-        _slime.OnSpawnedToWorld();
+        _slime.OnSpawnToWorld();
         _slime.gameObject.SetActive(true);
     }
 }
