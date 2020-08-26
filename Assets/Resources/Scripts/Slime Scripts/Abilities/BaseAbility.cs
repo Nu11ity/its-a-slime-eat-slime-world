@@ -9,12 +9,12 @@ public abstract class BaseAbility : ScriptableObject
     public string abilityName;
     public Sprite abilityIcon;
     public int abilityCost;
+    public enum AbilityFunction { Direct, DOT, Force, Root, Stun, Slow, Silence, Heal, Protection, Power }
+    public List<AbilityFunction> abilityFunctions;
     public enum AffinityBonus { None, Strength, Agility, Intellect, Endurance, Spirit }
     public AffinityBonus affinityBonus;
     public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
-    public Forecast forecast;
-    public enum CastPoint { Free, Anchored }
-    public CastPoint castPoint;
+    public Forecast forecast;    
     public Vector3 forecastScaler;
     public float freeCircleReach;
     public float globalCD;

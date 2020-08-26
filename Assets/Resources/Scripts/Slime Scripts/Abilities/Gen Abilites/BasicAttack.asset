@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e782e3d6771b5147a97993816492d86, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
+  indexID: 0
   abilityName: Basic Attack
   abilityIcon: {fileID: 0}
   abilityCost: 0
+  abilityFunctions: 00000000
   affinityBonus: 0
   forecast: 0
   forecastScaler: {x: 0, y: 0, z: 0}
+  freeCircleReach: 0
   globalCD: 1

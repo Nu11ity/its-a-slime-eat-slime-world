@@ -16,6 +16,7 @@ MonoBehaviour:
   abilityName: Tideless Waves
   abilityIcon: {fileID: 21300000, guid: db24189abde247144b83fb23e63c9464, type: 3}
   abilityCost: 20
+  abilityFunctions: 0000000002000000
   affinityBonus: 3
   forecast: 3
   forecastScaler: {x: 1, y: 1, z: 4.25}

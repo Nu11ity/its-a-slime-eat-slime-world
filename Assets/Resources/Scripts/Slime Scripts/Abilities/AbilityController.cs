@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class AbilityController : MonoBehaviour
+public class AbilityController : BaseAbilityController
 {
-    public Slime SlimeData { get; set; }
-
     private int currentIndex;
     public int CurrentIndex
     {
@@ -19,9 +17,15 @@ public class AbilityController : MonoBehaviour
                 currentIndex = value;
         }
     }
-
-    public Transform laneSpawn;
-    public Transform coneSpawn;
+    public override bool RestrictCasting
+    {
+        get { return restrictCasting; }
+        set
+        {
+            restrictCasting = value;
+            SlimeData.MyCombatCanvas.SilenceAll(value);
+        }
+    }
 
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
@@ -29,15 +33,13 @@ public class AbilityController : MonoBehaviour
 
     private SlimeInputMap slimeInputMap;
     private FreeMoveAbility freeMoveAbility;
-    private SlimeCombatCanvas canvas;
-    private SlimeAnimator animator;
 
     private void Awake()
     {
         animator = GetComponent<SlimeAnimator>();
         slimeInputMap = GetComponent<SlimeInputMap>();
         SlimeData = GetComponent<Slime>();
-        canvas = SlimeData.myCombatCanvas;
+        canvas = SlimeData.MyCombatCanvas;
         freeMoveAbility = abilityForecasts[2].GetComponent<FreeMoveAbility>();
 
         for (int i = 0; i < abilityForecasts.Count; i++)
@@ -99,7 +101,7 @@ public class AbilityController : MonoBehaviour
         return true;
     }
     private void CheckAbilityInput(bool _input, int _index)
-    {
+    {        
         if(_input && !SlimeData.AbilityTimers[_index].OnCooldown)
         {
             if (SlimeData.CurrentEnergy < SlimeData.abilities[_index].abilityCost)
@@ -126,16 +128,24 @@ public class AbilityController : MonoBehaviour
     }
     private Transform AssignCastPoint(BaseAbility _ability)
     {
-        if (_ability.castPoint == BaseAbility.CastPoint.Free)
+        if (_ability.forecast == BaseAbility.Forecast.Lane)
             return laneSpawn;
-        else if (_ability.castPoint == BaseAbility.CastPoint.Anchored)
+        else if (_ability.forecast == BaseAbility.Forecast.Cone)
             return coneSpawn;
+        else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+            return freeCircleSpawn;
+        else if (_ability.forecast == BaseAbility.Forecast.BoundCircle || _ability.forecast == BaseAbility.Forecast.Instant)
+            return boundCircleSpawn;
 
         return transform;
     }
+    
     private void AbilityInputsCheck()
     {
-        if(!AbilityToggled)
+        if (RestrictCasting)
+            return;
+
+        if (!AbilityToggled)
         {
             CheckAbilityInput(slimeInputMap.Ability01Hit, 0);
             CheckAbilityInput(slimeInputMap.Ability02Hit, 1);
@@ -164,15 +174,18 @@ public class AbilityController : MonoBehaviour
         }
         if (slimeInputMap.OnCancelHit > 0.35f)
         {
-            if(AbilityToggled)
-            {//cancel ability | Read->(r-click/l-trigger hit)
-                CurrentIndex = -1;
-                CurrentForcast.EnableVisual(false);
-            }          
-            else
-            {
+            if (!AbilityToggled)
                 return;
-            }
+
+            CancelToggledAbility();
+        }
+    }
+    public override void CancelToggledAbility()
+    {
+        if (AbilityToggled)
+        {//cancel ability | Read->(r-click/l-trigger hit)
+            CurrentIndex = -1;
+            CurrentForcast.EnableVisual(false);
         }
     }
 }

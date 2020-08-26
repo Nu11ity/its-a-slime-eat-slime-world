@@ -10,21 +10,23 @@ public class BaseDOT : PooledAbilityObject
     public float radius;
     public float duration;
     public float tickDelay;
+    public enum CheckMethod { PS, Other }
+    public CheckMethod checkMethod;
     [Tooltip("index in ps pool that controls if stops playing to turn off this gameobject")]
     public int psIndex;
 
     public List<ParticleSystem> ps;
+    public bool showGizmos;
 
     private float durationValue;
-    private float tickValue;
+    protected float tickValue;
     private ParticleSystem.MainModule mainModule;
 
-    void Update()
-    {    
-        if (ps[psIndex].isPlaying)
+    private void ControlThruParticle()
+    {
+        if(ps[psIndex].isPlaying)
         {
             TickDamageCast();
-
             durationValue += Time.deltaTime;
             if (durationValue >= duration)
             {
@@ -41,18 +43,43 @@ public class BaseDOT : PooledAbilityObject
             gameObject.SetActive(false);
         }
     }
+    private void ControlThruDuration()
+    {
+        TickDamageCast();
+        durationValue += Time.deltaTime;
+        if (durationValue >= duration)
+        {
+            transform.parent = MyParent;
+            gameObject.SetActive(false);
+        }
+    }
+    void Update()
+    {
+        if (checkMethod == CheckMethod.PS)
+            ControlThruParticle();
+        else if (checkMethod == CheckMethod.Other)
+            ControlThruDuration();
+    }
+    public virtual void OnDisableExpanded()
+    {
+        //if derived children need extra logic in disable
+    }
     private void OnDisable()
     {
-        for (int i = 0; i < ps.Count; i++)
+        if(ps.Count > 0)
         {
-            mainModule = ps[i].main;
-            mainModule.loop = true;
+            for (int i = 0; i < ps.Count; i++)
+            {
+                mainModule = ps[i].main;
+                mainModule.loop = true;
+            }
         }
+        OnDisableExpanded();
         tickValue = 0;
         durationValue = 0;
         MySlime = null;
     }
-    private void TickDamageCast()
+    public virtual void TickDamageCast()
     {
         tickValue += Time.deltaTime;
         if(tickValue >= tickDelay)
@@ -71,5 +98,17 @@ public class BaseDOT : PooledAbilityObject
             }
             tickValue = 0;
         }    
+    }
+    void OnDrawGizmos()
+    {
+        if (showGizmos)
+        {
+            if (castPositions.Count > 0)
+            {
+                Gizmos.color = Color.yellow;
+                for (int i = 0; i < castPositions.Count; i++)
+                    Gizmos.DrawSphere(castPositions[i].position, radius);
+            }
+        }
     }
 }

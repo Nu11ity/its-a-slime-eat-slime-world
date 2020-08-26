@@ -31,6 +31,10 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Path Management
+    public CombatCanvas playerCombatCanvas;
+    public CombatCanvas enemyCombatCanvas;
+
+    [Header("Ability Handlers")]
     public PathDelegation pathOfFire;
     public PathDelegation pathOfWater;
     public PathDelegation pathOfNature;
@@ -62,13 +66,13 @@ public class AbilityManager : MonoBehaviour
         else if (_caller.archetype == Slime.Archetype.Nature)
             pathOfNature.RequestAbilityProjectile(_castPoint, _caller, pathOfNature.AbilityObjects[_id]);
     }
-    public BaseAbility AbilityMapRequest(Slime _slime)
+    public BaseAbility AbilityMapRequest(BaseSlime _slime)
     {
-        if (_slime.archetype == Slime.Archetype.Fire)
+        if (_slime.archetype == BaseSlime.Archetype.Fire)
             return pathOfFire.AbilityMap(_slime);
-        else if (_slime.archetype == Slime.Archetype.Water)
+        else if (_slime.archetype == BaseSlime.Archetype.Water)
             return pathOfWater.AbilityMap(_slime);
-        else if (_slime.archetype == Slime.Archetype.Nature)
+        else if (_slime.archetype == BaseSlime.Archetype.Nature)
             return pathOfNature.AbilityMap(_slime);
 
         Debug.LogError("Ability Map Request Couldn't be met");

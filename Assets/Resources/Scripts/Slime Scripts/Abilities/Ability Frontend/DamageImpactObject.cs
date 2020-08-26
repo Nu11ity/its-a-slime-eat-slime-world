@@ -37,7 +37,7 @@ public class DamageImpactObject : PooledImpactObject
                         targets[i].GetComponent<Slime>().TakeDamage(damage);
                         Vector3 dir = targets[i].transform.position - offset;
                         float force = Mathf.Clamp(knockbackForce / mass, 0, knockbackForce);
-                        targets[i].GetComponent<ThirdPersonLocomotion>().AddImpact(dir, force);
+                        targets[i].GetComponent<StatusController>().RequestImpact(dir, force);
                     }
                 }
             }

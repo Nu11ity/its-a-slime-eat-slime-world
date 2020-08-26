@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ProceduralSlimeSpawner : MonoBehaviour
 {
-    public List<Slime> mySlimes;
+    public List<Slime> playerSlimes;
+    public List<Slime> aiSlimes;
     public List<Transform> spawnNodes;
 
     [Range(1, 140)]
@@ -28,18 +29,20 @@ public class ProceduralSlimeSpawner : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < mySlimes.Count; i++)
-            SlimeSetup(mySlimes[i]);
+        for (int i = 0; i < playerSlimes.Count; i++)
+            SlimeSetup(playerSlimes[i], spawnNodes[0]);
+
+        for (int i = 0; i < aiSlimes.Count; i++)
+            SlimeSetup(aiSlimes[i], spawnNodes[1]);
     }
 
-    private void SlimeSetup(Slime _slime)
+    private void SlimeSetup(BaseSlime _slime, Transform _spawnNode)
     {
-        int spawnNode = Random.Range(0, spawnNodes.Count);
+        //int spawnNode = Random.Range(0, spawnNodes.Count);
 
-        _slime.transform.parent = spawnNodes[spawnNode];
-        _slime.transform.position = spawnNodes[spawnNode].position;
-        _slime.transform.rotation = spawnNodes[spawnNode].rotation;
-
+        _slime.transform.parent = _spawnNode;
+        _slime.transform.position = _spawnNode.position;
+        _slime.transform.rotation = _spawnNode.rotation;
 
         float typeChance = Random.value;
 
@@ -64,6 +67,7 @@ public class ProceduralSlimeSpawner : MonoBehaviour
                 _slime.statMapping.genMap.generation = commonGensInArea[Random.Range(0, commonGensInArea.Count)];
         }
 
-        _slime.OnSpawnedToWorld();
+        _slime.OnSpawnToWorld();
+        _slime.gameObject.SetActive(true);
     }
 }

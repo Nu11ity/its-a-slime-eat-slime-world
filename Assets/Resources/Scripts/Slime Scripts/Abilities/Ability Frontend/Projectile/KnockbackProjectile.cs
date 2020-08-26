@@ -6,10 +6,7 @@ public class KnockbackProjectile : BaseProjectile
 {
     [Header("Inherit Dependents")]
     public float knockbackForce;
-    public float castOffset;
     private float mass = 3;
-
-    public bool showGizmos;
 
     public override void DamageCast()
     {
@@ -24,22 +21,15 @@ public class KnockbackProjectile : BaseProjectile
                     if (targets[i].gameObject.layer == slimeLayer)
                     {
                         targets[i].GetComponent<Slime>().TakeDamage(damage);
+                        //Knockback
                         Vector3 dir = targets[i].transform.position - offset;
                         float force = Mathf.Clamp(knockbackForce / mass, 0, knockbackForce);
-                        targets[i].GetComponent<ThirdPersonLocomotion>().AddImpact(dir, force);
+                        targets[i].GetComponent<StatusController>().RequestImpact(dir, force);
                     }
                     OnImpact();
                     FadeOut();
                 }                           
             }
         }
-    }
-    void OnDrawGizmos()
-    {
-        if(showGizmos)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position - transform.forward * castOffset, radius);
-        }       
     }
 }
