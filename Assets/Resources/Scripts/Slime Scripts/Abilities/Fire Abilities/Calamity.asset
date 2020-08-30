@@ -15,10 +15,13 @@ MonoBehaviour:
   indexID: 2
   abilityName: Calamity
   abilityIcon: {fileID: 21300000, guid: 9f922002032136c4687b8dced9bc624c, type: 3}
-  abilityCost: 100
+  abilityCost: 40
   abilityFunctions: 0000000004000000
   affinityBonus: 1
-  forecast: 1
-  forecastScaler: {x: 2, y: 1, z: 2}
-  freeCircleReach: 10
-  globalCD: 12
+  globalCD: 15
+  abilityModuleData:
+    moduleData:
+    - name: Radius
+      modifier: 9.25
+    projection: 1
+    projectionScale: {x: 2, y: 1, z: 2}

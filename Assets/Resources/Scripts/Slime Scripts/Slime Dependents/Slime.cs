@@ -66,6 +66,18 @@ public class Slime : BaseSlime
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }
 
+    private StatusController myStatusControls;
+    public StatusController MyStatusControls
+    {//Read only
+        get
+        {
+            if (myStatusControls == null)
+                myStatusControls = GetComponent<StatusController>();
+
+            return myStatusControls;
+        }
+    }
+
     public enum SlimeControlType { Player, AI }
     public SlimeControlType slimeControlType;
 

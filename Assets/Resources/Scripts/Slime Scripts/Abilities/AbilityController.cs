@@ -79,22 +79,22 @@ public class AbilityController : BaseAbilityController
     }
     private bool GetForecast(BaseAbility _ability)
     {
-        if(_ability.forecast == BaseAbility.Forecast.Instant)
+        if(_ability.abilityModuleData.projection == AbilityModulesData.Projection.Instant)
         {
             CurrentForcast = null;
             return false;
         }
 
-        if(_ability.forecast == BaseAbility.Forecast.Cone)
+        if(_ability.abilityModuleData.projection == AbilityModulesData.Projection.Cone)
             CurrentForcast = abilityForecasts[0];
-        else if (_ability.forecast == BaseAbility.Forecast.Lane)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Lane)
             CurrentForcast = abilityForecasts[1];
-        else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Free)
         {
             CurrentForcast = abilityForecasts[2];
-            freeMoveAbility.Reach = _ability.freeCircleReach;
+            freeMoveAbility.Reach = _ability.abilityModuleData.moduleData[0].modifier;
         }
-        else if (_ability.forecast == BaseAbility.Forecast.BoundCircle)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Bound)
             CurrentForcast = abilityForecasts[3];
 
         AbilityToggled = true;
@@ -112,7 +112,7 @@ public class AbilityController : BaseAbilityController
             if (GetForecast(SlimeData.abilities[_index]))
             {
                 //uses projection before cast
-                CurrentForcast.EnableVisual(true, SlimeData.abilities[_index].forecastScaler);
+                CurrentForcast.EnableVisual(true, SlimeData.abilities[_index].abilityModuleData.projectionScale);
             }
             else
             {                
@@ -128,13 +128,14 @@ public class AbilityController : BaseAbilityController
     }
     private Transform AssignCastPoint(BaseAbility _ability)
     {
-        if (_ability.forecast == BaseAbility.Forecast.Lane)
+        if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Lane)
             return laneSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.Cone)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Cone)
             return coneSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Free)
             return freeCircleSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.BoundCircle || _ability.forecast == BaseAbility.Forecast.Instant)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Bound ||
+            _ability.abilityModuleData.projection == AbilityModulesData.Projection.Instant)
             return boundCircleSpawn;
 
         return transform;
@@ -156,6 +157,7 @@ public class AbilityController : BaseAbilityController
         {
             if(AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
             {//cast ability | Read->(l-click/r-trigger hit)
+                //SlimeData.MyStatusControls.SetSlowDuration(1, .25f);
                 SlimeData.abilities[currentIndex].AbilityActivated(AssignCastPoint(SlimeData.abilities[currentIndex]), SlimeData);//drain energy too!!!
                 SlimeData.DrainEnergy(SlimeData.abilities[currentIndex].abilityCost);
                 CurrentIndex = -1;
@@ -166,9 +168,9 @@ public class AbilityController : BaseAbilityController
             {//basic attack
                 if(SlimeData.BasicAttackTimer.ActivationCheck())
                 {
+                    SlimeData.MyStatusControls.SetSlowDuration(SlimeData.basicAttack.globalCD, .25f);
                     SlimeData.basicAttack.AbilityActivated(laneSpawn, SlimeData);
-                    animator.PlayAnimEvent("Ranged Attack Basic");//temp
-                    //animator.PlayAnimEvent("Melee Basic Attack");//temp
+                    animator.PlayAnimEvent("Ranged Attack Basic");
                 }
             }
         }

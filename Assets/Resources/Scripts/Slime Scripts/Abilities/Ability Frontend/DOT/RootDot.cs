@@ -29,7 +29,8 @@ public class RootDot : BaseDOT
                     {
                         if (targets[j].gameObject != MySlime.gameObject)
                         {
-                            targets[j].GetComponent<Slime>().TakeDamage(damage);
+                            Slime hitSlime = targets[j].GetComponent<Slime>();
+                            hitSlime.TakeDamage(damage);
 
                             //root behavior
                             if (rootedTargets.Count > 0)
@@ -37,13 +38,13 @@ public class RootDot : BaseDOT
                                 if (!rootedTargets.Contains(targets[j].gameObject))
                                 {
                                     rootedTargets.Add(targets[j].gameObject);
-                                    targets[j].GetComponent<StatusController>().SetRootDuration(duration);
+                                    hitSlime.MyStatusControls.SetRootDuration(duration);
                                 }
                             }
                             else
                             {
                                 rootedTargets.Add(targets[j].gameObject);
-                                targets[j].GetComponent<StatusController>().SetRootDuration(duration);
+                                hitSlime.MyStatusControls.SetRootDuration(duration);
                             }
                         }
                     }

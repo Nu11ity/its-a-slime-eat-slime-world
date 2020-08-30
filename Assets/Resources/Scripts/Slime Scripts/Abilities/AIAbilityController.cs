@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AIAbilityController : BaseAbilityController
 {
+    public AILocomotion Locomotion { get; set; }
+    public bool AbilityToggled { get; set; }
+
     private int currentIndex;
     public int CurrentIndex
     {
@@ -26,16 +29,20 @@ public class AIAbilityController : BaseAbilityController
         }
     }
 
-    public bool AbilityToggled { get; set; }
-
     private void Awake()
     {
         animator = GetComponent<SlimeAnimator>();
         SlimeData = GetComponent<Slime>();
         canvas = SlimeData.MyCombatCanvas;//maybe need?
+        Locomotion = GetComponent<AILocomotion>();
     }
     private void AbilityUpdater()
     {
+        if (SlimeData.CurrentHealth <= SlimeData.MaxHealth / 2)
+            Locomotion.controlledState = AILocomotion.ControlledState.Defensive;
+        else//need to add stragegic as well.....
+            Locomotion.controlledState = AILocomotion.ControlledState.Aggressive;
+
         SlimeData.BasicAttackTimer.UpdateMethod();
         for (int i = 0; i < SlimeData.AbilityTimers.Count; i++)
             SlimeData.AbilityTimers[i].UpdateMethod();
@@ -66,61 +73,87 @@ public class AIAbilityController : BaseAbilityController
         SlimeData.PassiveEnergyRegen();
         AbilityInputsCheck();
     }
-    private bool GetForecast(BaseAbility _ability)
-    {
-        if (_ability.forecast == BaseAbility.Forecast.Instant)
-            return false;
 
-        AbilityToggled = true;
-        return true;
-    }
-    private void CheckAbilityInput(bool _inRange, int _index)
+    private void CheckAbilityInput(bool _decision, int _index)
     {
-        if (_inRange && !SlimeData.AbilityTimers[_index].OnCooldown)
+        if (_decision && !SlimeData.AbilityTimers[_index].OnCooldown)
         {
             if (SlimeData.CurrentEnergy < SlimeData.abilities[_index].abilityCost)
-                return;//checks to make sure we have enough energy for ability to be toggled.
+                return;
 
             CurrentIndex = _index;
-
-            if (GetForecast(SlimeData.abilities[_index]))
-            {
-                //don't use forcasts as ai
-                //CurrentForcast.EnableVisual(true, SlimeData.abilities[_index].forecastScaler);
-            }
-            else
-            {
-                if (SlimeData.AbilityTimers[_index].ActivationCheck())
-                {//instant cast
-                    SlimeData.abilities[_index].AbilityActivated();//drain energy too!!!
-                    SlimeData.DrainEnergy(SlimeData.abilities[_index].abilityCost);
-                    CurrentIndex = -1;
-                    SlimeData.BasicAttackTimer.Timeout = true;
-                }
-            }
+            AbilityToggled = true;
         }
     }
     private Transform AssignCastPoint(BaseAbility _ability)
     {
-        if (_ability.forecast == BaseAbility.Forecast.Lane)
+        if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Lane)
             return laneSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.Cone)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Cone)
             return coneSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.FreeCircle)
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Free)
+        {//spawn effect on player
+            freeCircleSpawn.position = new Vector3(Locomotion.targetSlime.transform.position.x, 
+                freeCircleSpawn.position.y, Locomotion.targetSlime.transform.position.z);
             return freeCircleSpawn;
-        else if (_ability.forecast == BaseAbility.Forecast.BoundCircle || _ability.forecast == BaseAbility.Forecast.Instant)
+        }
+        else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Bound ||
+            _ability.abilityModuleData.projection == AbilityModulesData.Projection.Instant)
             return boundCircleSpawn;
 
         return transform;
     }
     private bool AbilityInputDecision(int _index)
     {
+        if(SlimeData.abilities[_index].abilityModuleData.projection == AbilityModulesData.Projection.Free)
+        {
+            if (Locomotion.Distance <= SlimeData.abilities[_index].abilityModuleData.moduleData[0].modifier)
+                return true;
+
+            return false;
+        }
+        else if(SlimeData.abilities[_index].abilityModuleData.projection == AbilityModulesData.Projection.Bound)
+        {//more data 
+            bool healthFull = (SlimeData.CurrentHealth >= SlimeData.MaxHealth);
+
+            if (!healthFull && SlimeData.abilities[_index].abilityFunctions.Contains(BaseAbility.AbilityFunction.Heal))
+                return true;
+            if (Locomotion.Distance <= SlimeData.abilities[_index].abilityModuleData.moduleData[0].modifier)
+                return true;
+
+            return false;
+        }
+        else if(SlimeData.abilities[_index].abilityModuleData.projection == AbilityModulesData.Projection.Lane)
+        {
+            if(Locomotion.Distance <= SlimeData.abilities[_index].abilityModuleData.moduleData[0].modifier)
+            {
+                Locomotion.LeadSpeed = SlimeData.abilities[_index].abilityModuleData.moduleData[1].modifier;
+                return true;
+            }
+            return false; 
+        }
+        else if (SlimeData.abilities[_index].abilityModuleData.projection == AbilityModulesData.Projection.Cone)
+        {
+            if (Locomotion.Distance <= SlimeData.abilities[_index].abilityModuleData.moduleData[0].modifier)
+                return true;
+
+            return false;
+        }
+        else if(SlimeData.abilities[_index].abilityModuleData.projection == AbilityModulesData.Projection.Instant)
+        {
+            bool healthFull = (SlimeData.CurrentHealth >= SlimeData.MaxHealth);
+            if (!healthFull && SlimeData.abilities[_index].abilityFunctions.Contains(BaseAbility.AbilityFunction.Heal))
+                return true;
+            //check if cast heals, do it!
+            //check if provides protection, do it!
+            //etc....etc...
+        }
+
         return false;
         //slime needs to judge it's actions
         //if in range do damage skill
         //if low on health, do healing skill
         //if inside combat range(or health drops), pop buff skill
-        //
     }
     private void AbilityInputsCheck()
     {
@@ -135,20 +168,21 @@ public class AIAbilityController : BaseAbilityController
         }
 
         if (AbilityToggled && SlimeData.AbilityTimers[currentIndex].ActivationCheck())
-        {//cast ability | Read->(l-click/r-trigger hit)
-            SlimeData.abilities[currentIndex].AbilityActivated(AssignCastPoint(SlimeData.abilities[currentIndex]), SlimeData);//drain energy too!!!
+        {//cast ability
+            //SlimeData.MyStatusControls.SetSlowDuration(1, .25f);
+            SlimeData.abilities[currentIndex].AbilityActivated(AssignCastPoint(SlimeData.abilities[currentIndex]), SlimeData);
             SlimeData.DrainEnergy(SlimeData.abilities[currentIndex].abilityCost);
             CurrentIndex = -1;
-            //CurrentForcast.EnableVisual(false);
             SlimeData.BasicAttackTimer.Timeout = true;
         }
         else
         {//basic attack
-            if (SlimeData.BasicAttackTimer.ActivationCheck())
+            if (SlimeData.BasicAttackTimer.ActivationCheck() && Locomotion.Distance <= SlimeData.basicAttack.abilityModuleData.moduleData[0].modifier)
             {
+                SlimeData.MyStatusControls.SetSlowDuration(SlimeData.basicAttack.globalCD, .25f);
+                Locomotion.LeadSpeed = SlimeData.basicAttack.abilityModuleData.moduleData[1].modifier;
                 SlimeData.basicAttack.AbilityActivated(laneSpawn, SlimeData);
-                animator.PlayAnimEvent("Ranged Attack Basic");//temp
-                //animator.PlayAnimEvent("Melee Basic Attack");//temp
+                animator.PlayAnimEvent("Ranged Attack Basic");
             }
         }
 

@@ -5,24 +5,133 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class AILocomotion : BaseLocomotion
 {
-    public enum ControlledState { Default, Aggressive, Defensive }
+    [Header("Behavior")]
     public ControlledState controlledState;
+    public enum ControlledState { Aggressive, Defensive, Strategic }
 
-    public Transform focusPoint;
+    [Header("Focus points")]
+    private Vector3 moveTarget;
+    public Vector3 MoveTarget
+    {//read only
+        get
+        {
+            Aim();
+
+            if (controlledState == ControlledState.Defensive)
+                moveTarget = DefensivePositioning();
+            else if (controlledState == ControlledState.Strategic)
+                moveTarget = StrategicPositioning();
+            else//Aggressive
+                moveTarget = targetSlime.transform.position;
+
+            return moveTarget;
+        }
+    }
+    public BaseLocomotion targetSlime;
+    public Transform projectileSpawner;
     public bool hasMovePoint;
 
+    [Header("Distance attributes")]
+    public bool stoppingDist;
+    public float LeadSpeed { get; set; }
+    private float distance;//Read only
+    public float Distance{ get {return distance = (targetSlime.transform.position - transform.position).magnitude; } }
+
+    public void Aim()
+    {
+        float t;
+
+        if (Distance <= 18f)
+            t = (targetSlime.transform.position - transform.position).magnitude / LeadSpeed;
+        else
+            t = (targetSlime.transform.position - transform.position).magnitude / 26f;
+
+        Vector3 futurePos = targetSlime.transform.position + targetSlime.Controller.velocity * t;
+        Vector3 aim = (futurePos - transform.position).normalized;
+        aim.y = 0;
+        projectileSpawner.transform.rotation = Quaternion.LookRotation(aim);
+    }
+    
+    public void OnDrawGizmos()
+    {
+        Vector3 nodeFront = transform.position + (transform.forward) * 10f;
+        Vector3 nodeBack = transform.position + (-transform.forward) * 10f;
+        Vector3 nodeRight = transform.position + (transform.right) * 10f;
+        Vector3 nodeLeft = transform.position + (-transform.right) * 10f;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(nodeFront, 1f);
+        Gizmos.DrawSphere(nodeBack, 1f);
+        Gizmos.DrawSphere(nodeRight, 1f);
+        Gizmos.DrawSphere(nodeLeft, 1f);
+    }
+    private Vector3 RandomPos { get; set; }
+    private float atNewPos;
+    private bool foundPosition; 
+    public Vector3 DefensivePositioning()
+    {
+        if(!foundPosition)
+        {
+            bool locationSafe = false;
+            while(!locationSafe)
+            {
+                List<bool> safe = new List<bool>();
+                Vector3 randomPos = Random.insideUnitSphere * 45f;
+                randomPos.y = 0;
+                RandomPos = randomPos;
+                Collider[] safetyCheck = Physics.OverlapSphere(RandomPos, 3f);
+                if (safetyCheck.Length > 0)
+                {
+                    for (int i = 0; i < safetyCheck.Length; i++)
+                    {
+                        Debug.Log("Inside unit sphere -> " + safetyCheck[i].name + ", Surface angle = " + safetyCheck[i].transform.eulerAngles.y);
+                        if (safetyCheck[i].transform.eulerAngles.y > 0)
+                            safe.Add(false);
+                        else
+                            safe.Add(true);
+                    }
+                }
+
+                if (safe.Contains(false))
+                    locationSafe = false;
+                else
+                    locationSafe = true;
+            }
+            foundPosition = true;        
+        }
+        if (foundPosition)
+        {
+            atNewPos = (transform.position - RandomPos).magnitude;
+            if (atNewPos <= 1.5f)
+                foundPosition = false;
+        }
+        return RandomPos;
+    }
+    public Vector3 StrategicPositioning()
+    {
+        //Point to left or right of slime
+        return Vector3.zero;
+    }
+    public void DistanceChecks()
+    {
+        if(Distance <= 3)
+            stoppingDist = true;
+        else
+            stoppingDist = false;
+    }
     void Awake()
     {
         Controller = GetComponent<CharacterController>();
     }
     void Update()
     {
+        DistanceChecks();
         UpdateController();
         SetRotation();
     }
     public override void SetRotation()
     {
-        Vector3 lookPos = focusPoint.position - visualOrientation.position;
+        Vector3 lookPos = MoveTarget - visualOrientation.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         visualOrientation.rotation = Quaternion.Slerp(visualOrientation.rotation, rotation, Time.deltaTime * rotSpeed);
@@ -75,7 +184,7 @@ public class AILocomotion : BaseLocomotion
     }
     public override void UpdateMovement()
     {
-        if(enableMovement)
+        if(enableMovement && !stoppingDist)
         {
             moveScale = 1;
 
@@ -92,17 +201,11 @@ public class AILocomotion : BaseLocomotion
 
             moveInfluence = acceleration * 0.1f * moveScale * moveScaleMultiplier;
 
-
-            //movement is based off the look direction.
-            //if we simply control where the slime looks we have targeting down
-            //then we need to focus on stop distances for abiltiies
-            //
-
             if(!hasMovePoint)
                 moveThrottle += ort * (0 * transform.lossyScale.z * moveInfluence * Vector3.forward);
             else if(hasMovePoint)
             {
-                float dist = (focusPoint.position - transform.position).magnitude;
+                float dist = (MoveTarget - transform.position).magnitude;
                 if (dist <= 5f)
                     hasMovePoint = false;
             }

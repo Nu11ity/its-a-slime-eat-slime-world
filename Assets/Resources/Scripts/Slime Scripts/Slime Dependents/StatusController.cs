@@ -10,6 +10,7 @@ public class StatusController : MonoBehaviour
     public BaseLocomotion SlimeLocomotion { get; set; }
     public BaseAbilityController SlimeController { get; set; }
 
+    #region Silence Methods
     [Header("Silence data")]
     public float maxSilencedDuration;
     private bool applySilence;
@@ -33,7 +34,18 @@ public class StatusController : MonoBehaviour
             }
         }
     }
+    private void SilenceTimer()
+    {
+        if (applySilence)
+            SilenceDuration -= Time.deltaTime;
+    }
+    public void SetSilenceDuration(float _duration)
+    {
+        SilenceDuration += _duration;
+    }
+    #endregion
 
+    #region Stun Methods
     [Header("Stun data")]
     public float maxStunDuration;
     private bool applyStun;
@@ -62,7 +74,18 @@ public class StatusController : MonoBehaviour
             stunDuration = Mathf.Clamp(stunDuration, 0, maxStunDuration);
         }
     }
+    private void StunTimer()
+    {
+        if (applyStun)
+            StunDuration -= Time.deltaTime;
+    }
+    public void SetStunDuration(float _duration)
+    {
+        StunDuration += _duration;
+    }
+    #endregion
 
+    #region Rooted Methods
     [Header("Root data")]
     public float maxRootDuration;
     private bool applyRoot;
@@ -89,36 +112,6 @@ public class StatusController : MonoBehaviour
 
         }
     }
-
-    void Awake()
-    {
-        SlimeLocomotion = GetComponent<BaseLocomotion>();
-        SlimeController = GetComponent<BaseAbilityController>();
-    }  
-    void Update()
-    {
-        SilenceTimer();
-        RootTimer();
-        StunTimer();
-    }
-    private void SilenceTimer()
-    {
-        if (applySilence)
-            SilenceDuration -= Time.deltaTime;
-    }
-    public void SetSilenceDuration(float _duration)
-    {
-        SilenceDuration += _duration;
-    }
-    private void StunTimer()
-    {
-        if (applyStun)
-            StunDuration -= Time.deltaTime;
-    }
-    public void SetStunDuration(float _duration)
-    {
-        StunDuration += _duration;
-    }
     private void RootTimer()
     {
         if (applyRoot)
@@ -127,6 +120,66 @@ public class StatusController : MonoBehaviour
     public void SetRootDuration(float _duration)
     {
         RootDuration += _duration;
+    }
+    #endregion
+
+    #region Slow Methods
+    [Header("Slow data")]
+    public float maxSlowDuration;
+    public float DefaultSpeed { get; set; }
+    public float SlowIntensity { get; set; }
+    private bool applySlow;
+    private float slowDuration;
+    public float SlowDuration
+    {
+        get { return slowDuration; }
+        set
+        {
+            slowDuration = value;
+            slowDuration = Mathf.Clamp(slowDuration, 0f, maxSlowDuration);
+
+            if (slowDuration > 0)
+            {
+                SlimeLocomotion.acceleration = SlowIntensity;
+                applySlow = true;
+            }
+            if (slowDuration <= 0)
+            {
+                SlimeLocomotion.acceleration = DefaultSpeed;
+                applySlow = false;
+            }
+
+        }
+    }
+    private void SlowTimer()
+    {
+        if (applySlow)
+            SlowDuration -= Time.deltaTime;
+    }
+    public void SetSlowDuration(float _duration, float _intensity)
+    {
+        if(slowDuration > 0)
+            SlowDuration += _duration - slowDuration;
+        else//Done so durations don't impede one another
+            SlowDuration += _duration;
+
+        if (_intensity > SlowIntensity)
+            SlowIntensity = _intensity;
+    }
+    #endregion
+
+    void Awake()
+    {
+        SlimeLocomotion = GetComponent<BaseLocomotion>();
+        SlimeController = GetComponent<BaseAbilityController>();
+        DefaultSpeed = SlimeLocomotion.acceleration;
+    }  
+    void Update()
+    {
+        SilenceTimer();
+        StunTimer();
+        RootTimer();
+        SlowTimer();
     }
     public void RequestImpact(Vector3 _dir, float _force)
     {

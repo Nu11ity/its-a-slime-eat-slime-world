@@ -15,10 +15,13 @@ MonoBehaviour:
   indexID: 3
   abilityName: Infernal Strike
   abilityIcon: {fileID: 21300000, guid: 9c2654c6e93b84e4391bd17cb4054e60, type: 3}
-  abilityCost: 40
+  abilityCost: 25
   abilityFunctions: 0000000004000000
   affinityBonus: 1
-  forecast: 2
-  forecastScaler: {x: 1, y: 1, z: 1}
-  freeCircleReach: 18
-  globalCD: 10
+  globalCD: 12
+  abilityModuleData:
+    moduleData:
+    - name: Reach
+      modifier: 18
+    projection: 2
+    projectionScale: {x: 1, y: 1, z: 1}

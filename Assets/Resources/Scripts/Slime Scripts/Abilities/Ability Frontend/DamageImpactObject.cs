@@ -34,10 +34,11 @@ public class DamageImpactObject : PooledImpactObject
                 {
                     if(targets[i].gameObject.layer == slimeLayer)
                     {
-                        targets[i].GetComponent<Slime>().TakeDamage(damage);
+                        Slime hitSlime = targets[i].GetComponent<Slime>();
+                        hitSlime.TakeDamage(damage);
                         Vector3 dir = targets[i].transform.position - offset;
                         float force = Mathf.Clamp(knockbackForce / mass, 0, knockbackForce);
-                        targets[i].GetComponent<StatusController>().RequestImpact(dir, force);
+                        hitSlime.MyStatusControls.RequestImpact(dir, force);
                     }
                 }
             }
