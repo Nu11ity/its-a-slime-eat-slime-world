@@ -66,6 +66,18 @@ public class Slime : BaseSlime
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }
 
+    private CaptureBehavior myCaptureBehavior;
+    public CaptureBehavior MyCaptureBehavior
+    {
+        get
+        {
+            if (myCaptureBehavior == null)
+                myCaptureBehavior = GetComponent<CaptureBehavior>();
+
+            return myCaptureBehavior;
+        }
+    }
+
     private StatusController myStatusControls;
     public StatusController MyStatusControls
     {//Read only
@@ -256,10 +268,11 @@ public class Slime : BaseSlime
         MyCombatCanvas.SetHealthFillMeter(1, 1);
         MyCombatCanvas.SetEnergyFillMeter(1, 1);
 
-        //play wounded anim
-        //Play death audio
-        //play death vfx
-        //reset slime
+        MyCaptureBehavior.RemoveFromCombat();
+
+        //Played Knocked out vfx/sfx
+        //Change Anim to wobble
+        //Let whichever class know it's in a capture ready state
     }
     #endregion
 }

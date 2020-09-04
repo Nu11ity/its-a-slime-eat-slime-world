@@ -22,13 +22,24 @@ public class BaseDOT : PooledAbilityObject
     protected float tickValue;
     private ParticleSystem.MainModule mainModule;
 
+    bool IntegrityMet()
+    {
+        if(MySlime != null)
+        {
+            if(!MySlime.MyStatusControls.SlimeController.RestrictCasting)
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
     private void ControlThruParticle()
     {
         if(ps[psIndex].isPlaying)
         {
             TickDamageCast();
             durationValue += Time.deltaTime;
-            if (durationValue >= duration)
+            if (durationValue >= duration || !IntegrityMet())
             {
                 for (int i = 0; i < ps.Count; i++)
                 {
@@ -47,7 +58,7 @@ public class BaseDOT : PooledAbilityObject
     {
         TickDamageCast();
         durationValue += Time.deltaTime;
-        if (durationValue >= duration)
+        if (durationValue >= duration || !IntegrityMet())
         {
             transform.parent = MyParent;
             gameObject.SetActive(false);

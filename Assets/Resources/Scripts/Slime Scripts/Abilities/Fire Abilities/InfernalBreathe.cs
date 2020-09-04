@@ -13,6 +13,7 @@ public class InfernalBreathe : BaseAbility
         Debug.Log("Infernal Breathe");
         AbilityManager.Instance.RequestAbilityAttack(_castPoint, _slime, indexID);
         _slime.MyStatusControls.SetSilenceDuration(channelDuration);
+        _slime.MyStatusControls.SetSlowDuration(channelDuration, .25f);
     }
     public override void AbilityActivated(Slime _slime) { Debug.Log("Infernal Breathe"); }
     public override void AbilityActivated() { Debug.Log("Infernal Breathe"); }

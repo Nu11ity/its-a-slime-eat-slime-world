@@ -7,6 +7,8 @@ public class AIAbilityController : BaseAbilityController
     public AILocomotion Locomotion { get; set; }
     public bool AbilityToggled { get; set; }
 
+    public bool Tracker { get; set; }
+
     private int currentIndex;
     public int CurrentIndex
     {
@@ -28,7 +30,20 @@ public class AIAbilityController : BaseAbilityController
             SlimeData.MyCombatCanvas.SilenceAll(value);
         }
     }
-
+    public bool IsAliveBehavior
+    {
+        get
+        {//Read only
+            if(!SlimeData.IsAlive)
+            {
+                Locomotion.DisableBehavior = true;
+                CancelToggledAbility();
+                SlimeData.MyCombatCanvas.ClearDefeatedSlimeData();
+                return false;
+            }
+            return true;
+        }
+    }
     private void Awake()
     {
         animator = GetComponent<SlimeAnimator>();
@@ -38,10 +53,19 @@ public class AIAbilityController : BaseAbilityController
     }
     private void AbilityUpdater()
     {
-        if (SlimeData.CurrentHealth <= SlimeData.MaxHealth / 2)
-            Locomotion.controlledState = AILocomotion.ControlledState.Defensive;
-        else//need to add stragegic as well.....
-            Locomotion.controlledState = AILocomotion.ControlledState.Aggressive;
+        Tracker = Locomotion.EnemyActive;
+
+        if (!Locomotion.EnemyActive)
+        {
+            Locomotion.controlledState = AILocomotion.ControlledState.Waiting;
+        }
+        else if(Locomotion.EnemyActive)
+        {
+            if (SlimeData.CurrentHealth <= SlimeData.MaxHealth / 2)
+                Locomotion.controlledState = AILocomotion.ControlledState.Defensive;
+            else//need to add stragegic as well.....
+                Locomotion.controlledState = AILocomotion.ControlledState.Aggressive;
+        }        
 
         SlimeData.BasicAttackTimer.UpdateMethod();
         for (int i = 0; i < SlimeData.AbilityTimers.Count; i++)
@@ -68,6 +92,9 @@ public class AIAbilityController : BaseAbilityController
     }
     void Update()
     {
+        if (!IsAliveBehavior)
+            return;
+
         AbilityUpdater();
         AbilityCDVisuals();
         SlimeData.PassiveEnergyRegen();
@@ -93,8 +120,8 @@ public class AIAbilityController : BaseAbilityController
             return coneSpawn;
         else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Free)
         {//spawn effect on player
-            freeCircleSpawn.position = new Vector3(Locomotion.targetSlime.transform.position.x, 
-                freeCircleSpawn.position.y, Locomotion.targetSlime.transform.position.z);
+            freeCircleSpawn.position = new Vector3(Locomotion.TargetSlime.transform.position.x, 
+                freeCircleSpawn.position.y, Locomotion.TargetSlime.transform.position.z);
             return freeCircleSpawn;
         }
         else if (_ability.abilityModuleData.projection == AbilityModulesData.Projection.Bound ||
@@ -157,7 +184,7 @@ public class AIAbilityController : BaseAbilityController
     }
     private void AbilityInputsCheck()
     {
-        if (RestrictCasting)
+        if (RestrictCasting || !Locomotion.EnemyActive)
             return;
 
         if (!AbilityToggled)

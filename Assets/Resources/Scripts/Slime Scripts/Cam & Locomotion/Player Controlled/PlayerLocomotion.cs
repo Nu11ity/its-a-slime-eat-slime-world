@@ -8,6 +8,8 @@ public class PlayerLocomotion : BaseLocomotion
     private SlimeInputMap slimeInputMap;
     private Camera cam;
 
+    public bool DisableBehavior { get; set; }
+
     [Tooltip("How many fixed speeds to use with linear movement? 0=linear control")]
     private int FixedSpeedSteps = 0;
 
@@ -20,6 +22,12 @@ public class PlayerLocomotion : BaseLocomotion
 
     void Update()
     {
+        if(DisableBehavior)
+        {
+            Controller.enabled = false;
+            return;
+        }
+
         UpdateController();
         SetRotation();
     }

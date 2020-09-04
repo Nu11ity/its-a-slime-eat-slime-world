@@ -7,7 +7,20 @@ public class AILocomotion : BaseLocomotion
 {
     [Header("Behavior")]
     public ControlledState controlledState;
-    public enum ControlledState { Aggressive, Defensive, Strategic }
+    public enum ControlledState { Aggressive, Defensive, Waiting }
+
+    public bool DisableBehavior { get; set; }
+    public bool EnemyActive
+    {
+        get
+        {//read only
+            if (EnemySlime != null)
+                if (EnemySlime.CurrentHealth <= 0)
+                    return false;
+
+            return true;
+        }
+    }
 
     [Header("Focus points")]
     private Vector3 moveTarget;
@@ -19,15 +32,31 @@ public class AILocomotion : BaseLocomotion
 
             if (controlledState == ControlledState.Defensive)
                 moveTarget = DefensivePositioning();
-            else if (controlledState == ControlledState.Strategic)
-                moveTarget = StrategicPositioning();
+            else if (controlledState == ControlledState.Waiting)
+                moveTarget = DefensivePositioning();//change
             else//Aggressive
-                moveTarget = targetSlime.transform.position;
+                moveTarget = TargetSlime.transform.position;
 
             return moveTarget;
         }
     }
-    public BaseLocomotion targetSlime;
+    private BaseLocomotion targetSlime;
+    public Slime EnemySlime { get; set; }
+    public BaseLocomotion TargetSlime
+    {
+        get
+        {//read only
+            if (targetSlime == null)
+            {
+                targetSlime = FindObjectOfType<PlayerLocomotion>();
+                EnemySlime = targetSlime.GetComponent<Slime>();
+            }
+
+            return targetSlime;
+        }
+    }
+
+
     public Transform projectileSpawner;
     public bool hasMovePoint;
 
@@ -35,18 +64,18 @@ public class AILocomotion : BaseLocomotion
     public bool stoppingDist;
     public float LeadSpeed { get; set; }
     private float distance;//Read only
-    public float Distance{ get {return distance = (targetSlime.transform.position - transform.position).magnitude; } }
+    public float Distance{ get {return distance = (TargetSlime.transform.position - transform.position).magnitude; } }
 
     public void Aim()
     {
         float t;
 
         if (Distance <= 18f)
-            t = (targetSlime.transform.position - transform.position).magnitude / LeadSpeed;
+            t = (TargetSlime.transform.position - transform.position).magnitude / LeadSpeed;
         else
-            t = (targetSlime.transform.position - transform.position).magnitude / 26f;
+            t = (TargetSlime.transform.position - transform.position).magnitude / 26f;
 
-        Vector3 futurePos = targetSlime.transform.position + targetSlime.Controller.velocity * t;
+        Vector3 futurePos = TargetSlime.transform.position + TargetSlime.Controller.velocity * t;
         Vector3 aim = (futurePos - transform.position).normalized;
         aim.y = 0;
         projectileSpawner.transform.rotation = Quaternion.LookRotation(aim);
@@ -67,7 +96,8 @@ public class AILocomotion : BaseLocomotion
     }
     private Vector3 RandomPos { get; set; }
     private float atNewPos;
-    private bool foundPosition; 
+    private bool foundPosition;
+    private int layerIndex = 8; 
     public Vector3 DefensivePositioning()
     {
         if(!foundPosition)
@@ -84,8 +114,8 @@ public class AILocomotion : BaseLocomotion
                 {
                     for (int i = 0; i < safetyCheck.Length; i++)
                     {
-                        Debug.Log("Inside unit sphere -> " + safetyCheck[i].name + ", Surface angle = " + safetyCheck[i].transform.eulerAngles.y);
-                        if (safetyCheck[i].transform.eulerAngles.y > 0)
+                        //Debug.Log("Inside unit sphere -> " + safetyCheck[i].name + ", Surface angle = " + safetyCheck[i].transform.eulerAngles.y);
+                        if (safetyCheck[i].gameObject.layer != layerIndex)//the issue is here!!!!!!!!!!!!!!!!!!!!!!!!!!!! <-----
                             safe.Add(false);
                         else
                             safe.Add(true);
@@ -107,17 +137,19 @@ public class AILocomotion : BaseLocomotion
         }
         return RandomPos;
     }
-    public Vector3 StrategicPositioning()
-    {
-        //Point to left or right of slime
-        return Vector3.zero;
-    }
     public void DistanceChecks()
     {
-        if(Distance <= 3)
-            stoppingDist = true;
-        else
+        if(EnemyActive)
+        {
+            if (Distance <= 3)
+                stoppingDist = true;
+            else
+                stoppingDist = false;
+        }
+        else if(!EnemyActive)
+        {
             stoppingDist = false;
+        }
     }
     void Awake()
     {
@@ -125,6 +157,12 @@ public class AILocomotion : BaseLocomotion
     }
     void Update()
     {
+        if (DisableBehavior)
+        {
+            Controller.enabled = false;
+            return;
+        }
+
         DistanceChecks();
         UpdateController();
         SetRotation();

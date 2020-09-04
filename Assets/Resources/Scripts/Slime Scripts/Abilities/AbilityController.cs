@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AbilityController : BaseAbilityController
 {
+    public PlayerLocomotion Locomotion { get; set; }
+
     private int currentIndex;
     public int CurrentIndex
     {
@@ -26,6 +28,20 @@ public class AbilityController : BaseAbilityController
             SlimeData.MyCombatCanvas.SilenceAll(value);
         }
     }
+    public bool IsAliveBehavior
+    {
+        get
+        {//Read only
+            if(!SlimeData.IsAlive)
+            {
+                Locomotion.DisableBehavior = true;
+                CancelToggledAbility();
+                SlimeData.MyCombatCanvas.ClearDefeatedSlimeData();
+                return false;
+            }
+            return true;
+        }
+    }
 
     public List<AbilityForecast> abilityForecasts;//0 cone, 1 lane, 2 circle
     public AbilityForecast CurrentForcast { get; set; }
@@ -39,6 +55,7 @@ public class AbilityController : BaseAbilityController
         animator = GetComponent<SlimeAnimator>();
         slimeInputMap = GetComponent<SlimeInputMap>();
         SlimeData = GetComponent<Slime>();
+        Locomotion = GetComponent<PlayerLocomotion>();
         canvas = SlimeData.MyCombatCanvas;
         freeMoveAbility = abilityForecasts[2].GetComponent<FreeMoveAbility>();
 
@@ -72,6 +89,9 @@ public class AbilityController : BaseAbilityController
     }
     void Update()
     {
+        if (!IsAliveBehavior)
+            return;
+
         AbilityUpdater();
         AbilityCDVisuals();
         SlimeData.PassiveEnergyRegen();

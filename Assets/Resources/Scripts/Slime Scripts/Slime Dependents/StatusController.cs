@@ -9,6 +9,7 @@ public class StatusController : MonoBehaviour
 
     public BaseLocomotion SlimeLocomotion { get; set; }
     public BaseAbilityController SlimeController { get; set; }
+    public Slime MySlime { get; set; }
 
     #region Silence Methods
     [Header("Silence data")]
@@ -56,22 +57,24 @@ public class StatusController : MonoBehaviour
         set
         {
             stunDuration = value;
+            stunDuration = Mathf.Clamp(stunDuration, 0, maxStunDuration);
+
             if (stunDuration > 0)
             {
                 SlimeController.CancelToggledAbility();
                 SlimeController.RestrictCasting = true;
                 SlimeLocomotion.enableMovement = false;
+                SetStatusUI(MySlime.MyCombatCanvas.stunStatusUI, -1);
                 applyStun = true;
             }
             if (stunDuration <= 0)
             {
                 if(!applyRoot)
                     SlimeLocomotion.enableMovement = true;
+                MySlime.MyCombatCanvas.stunStatusUI.Reset();
                 SlimeController.RestrictCasting = false;
                 applyStun = false;
             }
-
-            stunDuration = Mathf.Clamp(stunDuration, 0, maxStunDuration);
         }
     }
     private void StunTimer()
@@ -101,12 +104,14 @@ public class StatusController : MonoBehaviour
             if (rootDuration > 0)
             {
                 SlimeLocomotion.enableMovement = false;
+                SetStatusUI(MySlime.MyCombatCanvas.rootStatusUI, -1);
                 applyRoot = true;
             }
             if (rootDuration <= 0)
             {
                 if(!applyStun)
                     SlimeLocomotion.enableMovement = true;
+                MySlime.MyCombatCanvas.rootStatusUI.Reset();
                 applyRoot = false;
             }
 
@@ -140,11 +145,13 @@ public class StatusController : MonoBehaviour
 
             if (slowDuration > 0)
             {
+                SetStatusUI(MySlime.MyCombatCanvas.speedStatusUI, -1);
                 SlimeLocomotion.acceleration = SlowIntensity;
                 applySlow = true;
             }
             if (slowDuration <= 0)
             {
+                MySlime.MyCombatCanvas.speedStatusUI.Reset();
                 SlimeLocomotion.acceleration = DefaultSpeed;
                 applySlow = false;
             }
@@ -170,6 +177,7 @@ public class StatusController : MonoBehaviour
 
     void Awake()
     {
+        MySlime = GetComponent<Slime>();
         SlimeLocomotion = GetComponent<BaseLocomotion>();
         SlimeController = GetComponent<BaseAbilityController>();
         DefaultSpeed = SlimeLocomotion.acceleration;
@@ -188,5 +196,13 @@ public class StatusController : MonoBehaviour
     public void StopController()
     {
         SlimeLocomotion.Stop();
+    }
+    public void SetStatusUI(StatusEffectUI _ui, int _value)
+    {
+        if (MySlime.CurrentHealth <= 0)
+            return;
+
+        _ui.SetState(_value);
+        _ui.root.SetActive(true);     
     }
 }

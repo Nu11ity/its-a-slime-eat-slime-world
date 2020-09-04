@@ -9,6 +9,17 @@ public class CombatCanvas : MonoBehaviour
     public Image healthBarMeter;
     public Image energyBarMeter;
 
+    [Header("StatusEffect Data")]
+    public StatusEffectUI speedStatusUI;
+    public StatusEffectUI stunStatusUI;
+    public StatusEffectUI rootStatusUI;
+    public StatusEffectUI healthStatusUI;
+    public StatusEffectUI poisonStatusUI;
+    public StatusEffectUI burnStatusUI;
+    public StatusEffectUI powerStatusUI;
+    public StatusEffectUI defenseStatusUI;
+
+
     [Header("Ability Icons")]
     public List<Image> abilityIcons;
     public List<Image> abilityMeters;
@@ -41,8 +52,18 @@ public class CombatCanvas : MonoBehaviour
     {
         portraits[0].gameObject.SetActive(false);
         portraitMasks[0].gameObject.SetActive(true);
-
-        //remove abilities
+        ResetStatusUIObjs();
+    }
+    public void ResetStatusUIObjs()
+    {
+        speedStatusUI.Reset();
+        stunStatusUI.Reset();
+        rootStatusUI.Reset();
+        healthStatusUI.Reset();
+        poisonStatusUI.Reset();
+        burnStatusUI.Reset();
+        powerStatusUI.Reset();
+        defenseStatusUI.Reset();
     }
     public void SetAbilityFillMeter(float _value, float _max, int _index)
     {
@@ -64,6 +85,16 @@ public class CombatCanvas : MonoBehaviour
     {
         for (int i = 0; i < silenceMasks.Count; i++)
             silenceMasks[i].SetActive(_state);
+    }
+    public void ClearDefeatedSlimeData()
+    {
+        healthBarMeter.fillAmount = (1 / 1);
+        energyBarMeter.fillAmount = (1 / 1);
+        SilenceAll(false);
+        for (int i = 0; i < abilityIcons.Count; i++)
+            abilityIcons[i].sprite = abilityUIMask;
+        for (int i = 0; i < abilityMasks.Count; i++)
+            abilityMasks[i].SetActive(false);
     }
     //public virtual void SetHealthFillMeter(float _value, float _max, Slime _slime) {}
     //public virtual void SetHealthFillMeter(float _value, float _max, Slime _slime, int _index) { }
