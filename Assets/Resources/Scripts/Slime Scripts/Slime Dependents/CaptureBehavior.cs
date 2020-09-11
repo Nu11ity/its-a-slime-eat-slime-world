@@ -15,9 +15,9 @@ public class CaptureBehavior : MonoBehaviour
     }
     public void FeedSlimeData(BaseSlime _root)
     {//called from slime challenged to combat when loading in combat scene
-        MySlime.archetype = _root.archetype;
-        MySlime.levelMapping.level = _root.levelMapping.level;
-        MySlime.statMapping.genMap.generation = _root.statMapping.genMap.generation;
+        MySlime.data.archetype = _root.data.archetype;
+        MySlime.data.levelMapping.level = _root.data.levelMapping.level;
+        MySlime.data.statMapping.genMap.gen = _root.data.statMapping.genMap.gen;
         MySlime.OnSpawnToWorld();
     }
     public void RemoveFromCombat()

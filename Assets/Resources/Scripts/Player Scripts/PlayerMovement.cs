@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         _myController = GetComponent<CharacterController>();
         _canMove = true;
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {

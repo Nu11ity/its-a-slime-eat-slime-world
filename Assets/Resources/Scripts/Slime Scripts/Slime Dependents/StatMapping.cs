@@ -5,15 +5,32 @@ using UnityEngine;
 [System.Serializable]
 public class GenerationMapping
 {
-    public enum Generation { Gen01, Gen02, Gen03, Gen04, Gen05, Gen06 }
-    public Generation generation;
+    public enum Generation { one, two, three, four, five, six }
+    public Generation gen;
 
-    public int gen01LevelCap;
-    public int gen02LevelCap;
-    public int gen03LevelCap;
-    public int gen04LevelCap;
-    public int gen05LevelCap;
-    public int gen06LevelCap;
+    [Header("level cap")]
+    private int genOneCap = 40;
+    private int genTwoCap = 60;
+    private int genThreeCap = 80;
+    private int genFourCap = 100;
+    private int genFiveCap = 120;
+    private int genSixCap = 140;
+
+    public int ReturnGenCap()
+    {
+        if (gen == Generation.one)
+            return genOneCap;
+        else if (gen == Generation.two)
+            return genTwoCap;
+        else if (gen == Generation.three)
+            return genThreeCap;
+        else if (gen == Generation.four)
+            return genFourCap;
+        else if (gen == Generation.five)
+            return genFiveCap;
+        else
+            return genSixCap;
+    }
 }
 
 [System.Serializable]
@@ -38,11 +55,11 @@ public class StatMapping
         levelFlux = _levelFlux;
         currentMaxLevel = GenerationDefinedLevelCap();
 
-        strength.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.generation);
-        agility.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.generation);
-        intellect.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.generation);
-        endurance.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.generation);
-        spirit.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.generation);
+        strength.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.gen);
+        agility.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.gen);
+        intellect.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.gen);
+        endurance.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.gen);
+        spirit.InitializeStat(currentLevel, levelFlux, currentMaxLevel, genMap.gen);
 
         SetStats();
     }
@@ -61,17 +78,6 @@ public class StatMapping
     }
     public int GenerationDefinedLevelCap()
     {
-        if (genMap.generation == GenerationMapping.Generation.Gen01)
-            return genMap.gen01LevelCap;
-        else if (genMap.generation == GenerationMapping.Generation.Gen02)
-            return genMap.gen02LevelCap;
-        else if (genMap.generation == GenerationMapping.Generation.Gen03)
-            return genMap.gen03LevelCap;
-        else if (genMap.generation == GenerationMapping.Generation.Gen04)
-            return genMap.gen04LevelCap;
-        else if (genMap.generation == GenerationMapping.Generation.Gen05)
-            return genMap.gen05LevelCap;
-        else
-            return genMap.gen06LevelCap;
+        return genMap.ReturnGenCap();       
     } 
 }

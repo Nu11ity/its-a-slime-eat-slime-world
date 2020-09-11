@@ -9,7 +9,7 @@ public class BaseAbilityController : MonoBehaviour
     public Transform boundCircleSpawn;
     public Transform freeCircleSpawn;
 
-    public Slime SlimeData { get; set; }
+    public Slime MySlime { get; set; }
     protected bool restrictCasting;
     public virtual bool RestrictCasting
     {

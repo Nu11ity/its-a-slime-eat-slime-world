@@ -61,7 +61,7 @@ public class Slime : BaseSlime
     #endregion
 
     #region properties & variables
-    [Header("!o--Slime Data--o!")]
+    [Header("Slime")]
     [SerializeField]
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }
@@ -151,8 +151,8 @@ public class Slime : BaseSlime
     { 
         if (slimeControlType == SlimeControlType.AI)
         {
-            for (int i = 0; i < abilities.Count; i++)
-                MyCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
+            for (int i = 0; i < data.abilities.Count; i++)
+                MyCombatCanvas.SetAbilityIcon(i, data.abilities[i].abilityIcon);
 
             MyCombatCanvas.SetSlime(this);//portrait set
         }
@@ -160,26 +160,26 @@ public class Slime : BaseSlime
     private void InitializeAbilities()
     {       
         AbilityTimers = new List<AbilityTimer>();
-        for (int i = 0; i < abilities.Count; i++)
+        for (int i = 0; i < data.abilities.Count; i++)
         {
             AbilityTimers.Add(new AbilityTimer());
 
             if(slimeControlType == SlimeControlType.Player)
-                MyCombatCanvas.SetAbilityIcon(i, abilities[i].abilityIcon);
+                MyCombatCanvas.SetAbilityIcon(i, data.abilities[i].abilityIcon);
         }
 
-        if (archetype == Archetype.Fire)
+        if (data.archetype == SlimeData.Archetype.Fire)
             MyPortrait = slimePortrait[0];
-        else if (archetype == Archetype.Water)
+        else if (data.archetype == SlimeData.Archetype.Water)
             MyPortrait = slimePortrait[1];
-        else if (archetype == Archetype.Nature)
+        else if (data.archetype == SlimeData.Archetype.Nature)
             MyPortrait = slimePortrait[2];
 
         BasicAttackTimer = new AbilityTimer();
         BasicAttackTimer.GlobalCD = basicAttack.globalCD;
 
         for (int i = 0; i < AbilityTimers.Count; i++)
-            AbilityTimers[i].GlobalCD = abilities[i].globalCD;
+            AbilityTimers[i].GlobalCD = data.abilities[i].globalCD;
 
         if(slimeControlType == SlimeControlType.Player)
             MyCombatCanvas.SetSlime(this);//portrait set
@@ -199,15 +199,15 @@ public class Slime : BaseSlime
     }
     public void UpdateSlimeCheck()
     {
-        if(trackedLevel != levelMapping.level)
+        if(data.TrackedLevel != data.levelMapping.level)
         {
-            trackedLevel = levelMapping.level;
-            statMapping.strength.BaseStatValue++;
-            statMapping.agility.BaseStatValue++;
-            statMapping.intellect.BaseStatValue++;
-            statMapping.endurance.BaseStatValue++;
-            statMapping.spirit.BaseStatValue++;
-            statMapping.SetStats(levelMapping.level);
+            data.TrackedLevel = data.levelMapping.level;
+            data.statMapping.strength.BaseStatValue++;
+            data.statMapping.agility.BaseStatValue++;
+            data.statMapping.intellect.BaseStatValue++;
+            data.statMapping.endurance.BaseStatValue++;
+            data.statMapping.spirit.BaseStatValue++;
+            data.statMapping.SetStats(data.levelMapping.level);
         }
     }
     #endregion
@@ -260,7 +260,7 @@ public class Slime : BaseSlime
         isAlive = false;
 
         MyCombatCanvas.RemoveSlimeUI(this);
-        for (int i = 0; i < abilities.Count; i++)
+        for (int i = 0; i < data.abilities.Count; i++)
         {
             MyCombatCanvas.SetAbilityIcon(i, MyCombatCanvas.abilityUIMask);
             MyCombatCanvas.SetAbilityMask(i, false);

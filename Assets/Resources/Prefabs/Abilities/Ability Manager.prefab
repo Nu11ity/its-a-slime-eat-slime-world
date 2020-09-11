@@ -11975,6 +11975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be15f44f68d132459cbc3181ef15f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatCanvasRoot: {fileID: 0}
   playerCombatCanvas: {fileID: 7886803767176726541}
   enemyCombatCanvas: {fileID: 1677035742}
   pathOfFire: {fileID: 594135944}
@@ -12475,7 +12476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &773559087572039576
 Transform:
   m_ObjectHideFlags: 0

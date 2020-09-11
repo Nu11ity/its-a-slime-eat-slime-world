@@ -5,10 +5,11 @@ using UnityEngine;
 public class GizmosDemo : MonoBehaviour
 {
     public float size;
+    public Color color;
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = color;
         Gizmos.DrawSphere(transform.position, size);
     }
 }

@@ -23,8 +23,8 @@ public class ProceduralSlimeSpawner : MonoBehaviour
     public List<GenerationMapping.Generation> commonGensInArea;
     public List<GenerationMapping.Generation> rareGensInArea;
 
-    public List<Slime.Archetype> commonTypesInArea;
-    public List<Slime.Archetype> rareTypesInArea;
+    public List<SlimeData.Archetype> commonTypesInArea;
+    public List<SlimeData.Archetype> rareTypesInArea;
 
 
     void Start()
@@ -48,23 +48,23 @@ public class ProceduralSlimeSpawner : MonoBehaviour
 
         if (typeChance <= rareSpawnChance)
         {//rare spawn
-            _slime.levelMapping.level = Random.Range(maxLevelHere, maxLevelHere += rareLevelIncrease);
+            _slime.data.levelMapping.level = Random.Range(maxLevelHere, maxLevelHere += rareLevelIncrease);
 
             for (int i = 0; i < rareTypesInArea.Count; i++)
-                _slime.archetype = rareTypesInArea[Random.Range(0, rareTypesInArea.Count)];
+                _slime.data.archetype = rareTypesInArea[Random.Range(0, rareTypesInArea.Count)];
 
             for (int i = 0; i < rareGensInArea.Count; i++)
-                _slime.statMapping.genMap.generation = rareGensInArea[Random.Range(0, rareGensInArea.Count)];
+                _slime.data.statMapping.genMap.gen = rareGensInArea[Random.Range(0, rareGensInArea.Count)];
         }
         else
         {//normal Spawn
-            _slime.levelMapping.level = Random.Range(minLevelHere, maxLevelHere++);
+            _slime.data.levelMapping.level = Random.Range(minLevelHere, maxLevelHere++);
 
             for (int i = 0; i < commonTypesInArea.Count; i++)
-                _slime.archetype = commonTypesInArea[Random.Range(0, commonTypesInArea.Count)];
+                _slime.data.archetype = commonTypesInArea[Random.Range(0, commonTypesInArea.Count)];
 
             for (int i = 0; i < commonGensInArea.Count; i++)
-                _slime.statMapping.genMap.generation = commonGensInArea[Random.Range(0, commonGensInArea.Count)];
+                _slime.data.statMapping.genMap.gen = commonGensInArea[Random.Range(0, commonGensInArea.Count)];
         }
 
         _slime.OnSpawnToWorld();
