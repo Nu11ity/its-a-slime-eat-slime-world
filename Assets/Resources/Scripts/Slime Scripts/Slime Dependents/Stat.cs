@@ -19,6 +19,7 @@ public class Stat
     public int GeneratedBaseStat { get; set; }
     public int StatAffinity { get; set; }
 
+    [SerializeField]
     private int currentStatValue;
     public int CurrentStatValue
     {
@@ -53,7 +54,7 @@ public class Stat
 
         AffinityCheck();
 
-        if (gen != GenerationMapping.Generation.Gen01)
+        if (gen != GenerationMapping.Generation.one)
             ProcessGenData();
 
         BaseStatValue = GeneratedBaseStat;
@@ -62,17 +63,17 @@ public class Stat
     {
         int loopIterations = 0;
 
-        if (gen == GenerationMapping.Generation.Gen01)
+        if (gen == GenerationMapping.Generation.one)
             loopIterations = 1;
-        else if (gen == GenerationMapping.Generation.Gen02)
+        else if (gen == GenerationMapping.Generation.two)
             loopIterations = 2;
-        else if (gen == GenerationMapping.Generation.Gen03)
+        else if (gen == GenerationMapping.Generation.three)
             loopIterations = 3;
-        else if (gen == GenerationMapping.Generation.Gen04)
+        else if (gen == GenerationMapping.Generation.four)
             loopIterations = 4;
-        else if (gen == GenerationMapping.Generation.Gen05)
+        else if (gen == GenerationMapping.Generation.five)
             loopIterations = 5;
-        else if (gen == GenerationMapping.Generation.Gen06)
+        else if (gen == GenerationMapping.Generation.six)
             loopIterations = 6;
 
         for (int i = 0; i < loopIterations; i++)

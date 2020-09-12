@@ -5,32 +5,18 @@ using UnityEngine.UI;
 
 public class BaseSlime : MonoBehaviour
 {
-    [Header("!o--BaseSlime Data--o!")]
-    public Archetype archetype;
-    public enum Archetype { Undefined, Fire, Water, Nature }    
-
+    [Header("BaseSlime")]
     public BaseAbility basicAttack;
-    public List<BaseAbility> abilities = new List<BaseAbility>();
+    public SlimeData data;
 
-    [Header("Level Mapping")]
-    public LevelMapping levelMapping;
-    protected int trackedLevel;
-
-    [Header("Stat Mapping")]
-    public StatMapping statMapping;
-
-    [Header("Health Mapping")]
     public int hpMultiplier;
-
     public int MaxHealth
     {//read only
         get
         {
-            return statMapping.endurance.CurrentStatValue * hpMultiplier;
+            return data.statMapping.endurance.CurrentStatValue * hpMultiplier;
         }
     }
-
-    [SerializeField]
     protected float currentHealth;
     public virtual float CurrentHealth
     {
@@ -43,8 +29,7 @@ public class BaseSlime : MonoBehaviour
     }
 
     public int maxEnergy;
-    [SerializeField]
-    protected float currentEnergy;
+    protected float currentEnergy = 100;
     public virtual float CurrentEnergy
     {
         get { return currentEnergy; }
@@ -57,12 +42,12 @@ public class BaseSlime : MonoBehaviour
 
     public virtual void OnSpawnToWorld()
     {
-        levelMapping.LevelToExperience();
-        statMapping.GenerateStats(levelMapping.level, levelMapping.levelFlux);
-        trackedLevel = levelMapping.level;
+        data.levelMapping.LevelToExperience();
+        data.statMapping.GenerateStats(data.levelMapping.level, data.levelMapping.levelFlux);
+        data.TrackedLevel = data.levelMapping.level;
         CurrentHealth = MaxHealth;
 
         for (int i = 0; i < 3; i++)
-            abilities.Add(AbilityManager.Instance.AbilityMapRequest(this));
+            data.abilities.Add(AbilityManager.Instance.AbilityMapRequest(data));
     }
 }

@@ -178,10 +178,10 @@
             "id": "c26748bc-a5cb-4911-b7e7-ff68b03bf30d",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
+                    "name": "action",
+                    "type": "Value",
                     "id": "b1f5554b-07bd-42cc-a1e1-25e67ed7993a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 }
@@ -194,7 +194,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

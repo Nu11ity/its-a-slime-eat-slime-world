@@ -8,6 +8,8 @@ public class PlayerLocomotion : BaseLocomotion
     private SlimeInputMap slimeInputMap;
     private Camera cam;
 
+    public bool DisableBehavior { get; set; }
+
     [Tooltip("How many fixed speeds to use with linear movement? 0=linear control")]
     private int FixedSpeedSteps = 0;
 
@@ -20,6 +22,12 @@ public class PlayerLocomotion : BaseLocomotion
 
     void Update()
     {
+        if(DisableBehavior)
+        {
+            Controller.enabled = false;
+            return;
+        }
+
         UpdateController();
         SetRotation();
     }
@@ -108,11 +116,11 @@ public class PlayerLocomotion : BaseLocomotion
             if (moveForward)
                 moveThrottle += ort * (transform.lossyScale.z * moveInfluence * Vector3.forward);
             if (moveBack)
-                moveThrottle += ort * (transform.lossyScale.z * moveInfluence * backAndSideDampen * Vector3.back);
+                moveThrottle += ort * (transform.lossyScale.z * moveInfluence /* * backAndSideDampen */ * Vector3.back);
             if (moveLeft)
-                moveThrottle += ort * (transform.lossyScale.x * moveInfluence * backAndSideDampen * Vector3.left);
+                moveThrottle += ort * (transform.lossyScale.x * moveInfluence /* * backAndSideDampen */ * Vector3.left);
             if (moveRight)
-                moveThrottle += ort * (transform.lossyScale.x * moveInfluence * backAndSideDampen * Vector3.right);
+                moveThrottle += ort * (transform.lossyScale.x * moveInfluence /* * backAndSideDampen */ * Vector3.right);
 
             moveInfluence = acceleration * 0.1f * moveScale * moveScaleMultiplier;
 
@@ -130,15 +138,17 @@ public class PlayerLocomotion : BaseLocomotion
 
             if (primaryAxis.y < 0.0f)
                 moveThrottle += ort * (Mathf.Abs(primaryAxis.y) * transform.lossyScale.z * moveInfluence *
-                                       backAndSideDampen * Vector3.back);
+                                       /* backAndSideDampen * */ Vector3.back);
 
             if (primaryAxis.x < 0.0f)
                 moveThrottle += ort * (Mathf.Abs(primaryAxis.x) * transform.lossyScale.x * moveInfluence *
-                                       backAndSideDampen * Vector3.left);
+                                       /* backAndSideDampen * */ Vector3.left);
 
             if (primaryAxis.x > 0.0f)
-                moveThrottle += ort * (primaryAxis.x * transform.lossyScale.x * moveInfluence * backAndSideDampen *
-                                       Vector3.right);
+                moveThrottle += ort * (primaryAxis.x * transform.lossyScale.x * moveInfluence *
+                    /* backAndSideDampen * */ Vector3.right);
+
+            //Debug.Log("Velocity -> " + Controller.velocity.magnitude);
         }
     }
 }

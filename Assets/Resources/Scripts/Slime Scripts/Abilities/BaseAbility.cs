@@ -13,11 +13,9 @@ public abstract class BaseAbility : ScriptableObject
     public List<AbilityFunction> abilityFunctions;
     public enum AffinityBonus { None, Strength, Agility, Intellect, Endurance, Spirit }
     public AffinityBonus affinityBonus;
-    public enum Forecast { Instant, BoundCircle, FreeCircle, Lane, Cone }
-    public Forecast forecast;    
-    public Vector3 forecastScaler;
-    public float freeCircleReach;
     public float globalCD;
+
+    public AbilityModulesData abilityModuleData;
 
     public abstract void AbilityActivated();
     public abstract void AbilityActivated(Slime _slime);

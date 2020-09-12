@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 [System.Serializable]
 public class LevelMapping
-{    
+{
     public int level;
 
     [Tooltip("this '+' or '-' from the current level, used for stat gen")]
-    public int levelFlux;
+    public int levelFlux = 3;
 
     public int CurrentExperience { get; set; }
 

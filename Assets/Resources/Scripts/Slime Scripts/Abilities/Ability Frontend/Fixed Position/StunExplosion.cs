@@ -18,20 +18,21 @@ public class StunExplosion : BaseExplosion
                 {
                     if (targets[j].gameObject != MySlime.gameObject)
                     {
+                        Slime hitSlime = targets[j].GetComponent<Slime>();
                         if (hitTargets.Count > 0)
                         {
                             if (!hitTargets.Contains(targets[j].gameObject))
                             {
                                 hitTargets.Add(targets[j].gameObject);
-                                targets[j].GetComponent<Slime>().TakeDamage(damage);
-                                targets[j].GetComponent<StatusController>().SetStunDuration(stunDuration);
+                                hitSlime.TakeDamage(damage);
+                                hitSlime.MyStatusControls.SetStunDuration(stunDuration);
                             }
                         }
                         else
                         {
                             hitTargets.Add(targets[j].gameObject);
-                            targets[j].GetComponent<Slime>().TakeDamage(damage);
-                            targets[j].GetComponent<StatusController>().SetStunDuration(stunDuration);
+                            hitSlime.TakeDamage(damage);
+                            hitSlime.MyStatusControls.SetStunDuration(stunDuration);
                         }
                     }
                 }

@@ -18,7 +18,12 @@ MonoBehaviour:
   abilityCost: 20
   abilityFunctions: 0000000002000000
   affinityBonus: 3
-  forecast: 3
-  forecastScaler: {x: 1, y: 1, z: 4.25}
-  freeCircleReach: 0
   globalCD: 5
+  abilityModuleData:
+    moduleData:
+    - name: Distance
+      modifier: 42
+    - name: Speed
+      modifier: 14
+    projection: 3
+    projectionScale: {x: 1, y: 1, z: 4.25}
