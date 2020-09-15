@@ -81,7 +81,7 @@ Material:
     - _BacklightAmount: 2.3
     - _BumpScale: 1
     - _Cull: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.1
     - _DabsRotation: 15
     - _DabsTiling: 10
     - _DetailNormalMapScale: 1
