@@ -191,7 +191,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
             ""id"": ""c26748bc-a5cb-4911-b7e7-ff68b03bf30d"",
             ""actions"": [
                 {
-                    ""name"": ""action"",
+                    ""name"": ""Interact"",
                     ""type"": ""Value"",
                     ""id"": ""b1f5554b-07bd-42cc-a1e1-25e67ed7993a"",
                     ""expectedControlType"": ""Axis"",
@@ -203,11 +203,22 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""507026a1-b6f0-4225-a1ee-abf6757943d1"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""action"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cba75cb5-cf8c-4140-b59a-0325e955231e"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -224,7 +235,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         m_locomotion_sprint = m_locomotion.FindAction("sprint", throwIfNotFound: true);
         // interaction
         m_interaction = asset.FindActionMap("interaction", throwIfNotFound: true);
-        m_interaction_action = m_interaction.FindAction("action", throwIfNotFound: true);
+        m_interaction_Interact = m_interaction.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -331,12 +342,12 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     // interaction
     private readonly InputActionMap m_interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
-    private readonly InputAction m_interaction_action;
+    private readonly InputAction m_interaction_Interact;
     public struct InteractionActions
     {
         private @RobotInputs m_Wrapper;
         public InteractionActions(@RobotInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @action => m_Wrapper.m_interaction_action;
+        public InputAction @Interact => m_Wrapper.m_interaction_Interact;
         public InputActionMap Get() { return m_Wrapper.m_interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -346,16 +357,16 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_InteractionActionsCallbackInterface != null)
             {
-                @action.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
-                @action.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
-                @action.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
+                @Interact.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @action.started += instance.OnAction;
-                @action.performed += instance.OnAction;
-                @action.canceled += instance.OnAction;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -369,6 +380,6 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     }
     public interface IInteractionActions
     {
-        void OnAction(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

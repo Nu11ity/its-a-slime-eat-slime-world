@@ -103,11 +103,17 @@ public class AILocomotion : BaseLocomotion
         if(!foundPosition)
         {
             bool locationSafe = false;
+            int safetyCap = 0;
             while(!locationSafe)
             {
+                //
+                safetyCap++;
+                if (safetyCap > 40)
+                    locationSafe = true;
+                //
                 List<bool> safe = new List<bool>();
                 Vector3 randomPos = Random.insideUnitSphere * 45f;
-                randomPos.y = 0;
+                randomPos.y = transform.position.y;
                 RandomPos = randomPos;
                 Collider[] safetyCheck = Physics.OverlapSphere(RandomPos, 3f);
                 if (safetyCheck.Length > 0)

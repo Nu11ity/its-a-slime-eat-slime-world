@@ -268,11 +268,65 @@ public class Slime : BaseSlime
         MyCombatCanvas.SetHealthFillMeter(1, 1);
         MyCombatCanvas.SetEnergyFillMeter(1, 1);
 
+        ResetPooledAbilityObjs();
         MyCaptureBehavior.RemoveFromCombat();
 
+        Invoke("DelayedResponse", 1.5f);
         //Played Knocked out vfx/sfx
         //Change Anim to wobble
         //Let whichever class know it's in a capture ready state
+    }
+    public void ResetPooledAbilityObjs()
+    {
+        foreach (PooledAbilityObject obj in gameObject.GetComponentsInChildren<PooledAbilityObject>())
+        {
+            obj.transform.parent = obj.MyParent;
+            obj.gameObject.SetActive(false);
+        }
+    }
+    private void DelayedResponse()
+    {       
+        if (!ArenaManager.instance)
+            gameObject.SetActive(false);
+        else if (ArenaManager.instance)
+            RemoveSlimeData();
+    }
+    private void RemoveSlimeData()
+    {       
+        if (slimeControlType == SlimeControlType.AI)
+        {
+            gameObject.SetActive(false);
+
+            ArenaManager.instance.automatedSlimes.Remove(ArenaManager.instance.automatedSlimes[0]);
+            AbilityManager.Instance.slimeManager.RemoveAutomatedSlime();
+
+            if (ArenaManager.instance.automatedSlimes.Count == 0)
+            {
+                Debug.LogError("Leave arena scene, -> AI loss");
+                //Reset All pooled objects before deloading of scene
+                AbilityManager.Instance.slimeManager.InitializedCombat = false;
+            }
+
+            if (ArenaManager.instance.automatedSlimes.Count > 0)
+                ArenaManager.instance.SpawnAutomatedSlime(ArenaManager.instance.automatedSlimes[0]);
+        }
+        else if(slimeControlType == SlimeControlType.Player)
+        {
+            ArenaManager.instance.controlledSlimes.Remove(ArenaManager.instance.controlledSlimes[0]);
+
+            if(ArenaManager.instance.controlledSlimes.Count == 0)
+            {
+                Debug.LogError("Leave arena scene, -> player loss");
+                //Reset All pooled objects before deloading of scene
+                AbilityManager.Instance.slimeManager.InitializedCombat = false;
+            }
+
+            if (ArenaManager.instance.controlledSlimes.Count > 0)
+            {
+                gameObject.SetActive(false);
+                ArenaManager.instance.SpawnControlledSlime(ArenaManager.instance.controlledSlimes[0]);
+            }
+        }
     }
     #endregion
 }

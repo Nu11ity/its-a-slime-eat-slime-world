@@ -33,7 +33,10 @@ public class WorldSlimeSpawner : MonoBehaviour
 
     void Start()
     {
-        SlimeSetup();
+        for (int i = 0; i < 4; i++)
+        {
+            SlimeSetup();
+        }
     }
     public Vector3 RelativeRandomPosition()
     {//World slime method call

@@ -44,6 +44,8 @@ public class BaseExplosion : PooledAbilityObject
 
         if(hitTargets.Count > 0)
             hitTargets.Clear();
+
+        transform.parent = MyParent;
     }
     public virtual void OnCastBehavior()
     {

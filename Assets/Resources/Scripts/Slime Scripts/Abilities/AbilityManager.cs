@@ -31,6 +31,7 @@ public class AbilityManager : MonoBehaviour
     #endregion
 
     #region Path Management
+    public SlimeManager slimeManager;
     public GameObject combatCanvasRoot;
     private bool setCanvas;
     public bool SetCanvas

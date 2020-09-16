@@ -12,7 +12,6 @@ public class PlayerInteraction : MonoBehaviour
     private PlayerInputMap input;
 
     private IInteractable objectToInteractWith;
-    //public static event Action<IInteractable> ObjectToInteractWithChanged;
     public IInteractable ObjectToInteractWith
     {
         get { return objectToInteractWith; }
@@ -27,9 +26,6 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (objectToInteractWith != null)//update to new value
                     objectToInteractWith.OnHoverEnter();
-
-                Debug.Log("Interaction would be made with -> " + objectToInteractWith);
-                //ObjectToInteractWithChanged.Invoke(objectToInteractWith);
             }        
         }
     }
@@ -47,8 +43,14 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (objectToInteractWith != null)
         {
-            Debug.DrawRay(cam.transform.position, ((MonoBehaviour)objectToInteractWith).transform.position - cam.transform.position, Color.green);
-            //player input for interaction key
+            Vector3 interactablePos = ((MonoBehaviour)objectToInteractWith).transform.position;
+            Debug.DrawRay(cam.transform.position, interactablePos - cam.transform.position, Color.green);
+
+            if(input.Interact && !AbilityManager.Instance.slimeManager.InitializedCombat)
+            {//Change later when more then just combat as interaction option
+                objectToInteractWith.Interact();
+                //stop robot input
+            }
         }
     }
     void FixedUpdate()

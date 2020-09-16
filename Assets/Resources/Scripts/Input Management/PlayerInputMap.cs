@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class PlayerInputMap : MonoBehaviour
 {
-    public RobotInputs PlayerInput { get; set; }
+    private RobotInputs playerInput;
+    public RobotInputs PlayerInput
+    {
+        get
+        {
+            if(playerInput == null)
+                playerInput = new RobotInputs();
+
+            return playerInput;
+        }
+    }
 
     public Vector2 LookData { get; set; }
     public Vector2 MoveData { get; set; }
@@ -12,10 +22,14 @@ public class PlayerInputMap : MonoBehaviour
     public bool Jump { get; set; }
     public bool Sprint { get; set; }
 
-    void Awake()
+    public bool Interact
     {
-        PlayerInput = new RobotInputs();
+        get
+        {
+            return PlayerInput.interaction.Interact.triggered;
+        }
     }
+
     void OnEnable()
     {
         PlayerInput.Enable();

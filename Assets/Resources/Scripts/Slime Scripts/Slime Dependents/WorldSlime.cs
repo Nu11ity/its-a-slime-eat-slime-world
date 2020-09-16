@@ -17,6 +17,7 @@ public class WorldSlime : MonoBehaviour, IInteractable
     public SlimeData data;
 
     [Header("Control Behavior")]
+    public GameObject interactVisual;
     public NavMeshAgent agent;
     public enum States { Wander, Idle }
     public States currentState;
@@ -26,6 +27,9 @@ public class WorldSlime : MonoBehaviour, IInteractable
 
     public float intervalCheck;
     private float interval;
+
+    public LayerMask desiredLayer;//interactable
+    public float allyCallRange;
 
     private Vector3 randomPoint;
     private Vector3 finalPos;
@@ -47,26 +51,47 @@ public class WorldSlime : MonoBehaviour, IInteractable
     {
         DetermineStates();
     }
-    private void SpawnSphere(Vector3 _pos)
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = _pos;
-    }
+    //private void SpawnSphere(Vector3 _pos)
+    //{
+    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //    sphere.transform.position = _pos;
+    //}
 
     #region IInteractable Behavior
+    public void ConvertToCaptureReady()
+    {
+        Debug.Log(this.name + " is in a capture ready state");
+    }
     public void OnHoverEnter()
     {
         Debug.Log("OnHoverEnter thru -> " + transform.name);
-        //
+        interactVisual.SetActive(true);
     }
     public void OnHoverExit()
     {
         Debug.Log("OnHoverExit thru -> " + transform.name);
-        //
+        interactVisual.SetActive(false);
     }
+
+    private Collider[] allies;
     public void Interact()
     {
-        //
+        Debug.Log("Interacted with -> " + transform.name);
+        AbilityManager.Instance.slimeManager.automatedSlimes.Add(this);
+        allies = Physics.OverlapSphere(transform.position, allyCallRange, desiredLayer);
+        if(allies.Length > 0)
+        {
+            for (int i = 0; i < allies.Length; i++)
+            {
+                if(allies[i].GetComponent<WorldSlime>())
+                {
+                    Debug.Log("Found an ally in -> " + allies[i].transform.name);
+                    AbilityManager.Instance.slimeManager.automatedSlimes.Add(allies[i].GetComponent<WorldSlime>());
+                }
+            }
+        }
+
+        AbilityManager.Instance.slimeManager.InitializedCombat = true;
     }
     #endregion  
 
@@ -124,7 +149,7 @@ public class WorldSlime : MonoBehaviour, IInteractable
                     finalPos = hit.position;
                     agent.SetDestination(finalPos);
 
-                    SpawnSphere(finalPos);
+                    //SpawnSphere(finalPos);
                 }
             }           
 

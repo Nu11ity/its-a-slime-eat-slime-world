@@ -64,8 +64,11 @@ public class PathDelegation : MonoBehaviour
                     _abilityPool.objectPool[i].transform.position = _castPoint.position;
                     _abilityPool.objectPool[i].transform.rotation = _castPoint.rotation;
 
-                    if(!_abilityPool.objectPool[i].anchor)
+                    if (!_abilityPool.objectPool[i].anchor)
+                    {
+                        _abilityPool.objectPool[i].transform.parent = AbilityManager.Instance.transform;
                         _abilityPool.objectPool[i].transform.parent = null;
+                    }
 
                     _abilityPool.objectPool[i].gameObject.SetActive(true);
                     return;
