@@ -15,10 +15,13 @@ MonoBehaviour:
   indexID: 3
   abilityName: Ocean Torrent
   abilityIcon: {fileID: 21300000, guid: fccc7156f5a20d847b6f18880c73d76d, type: 3}
-  abilityCost: 45
-  abilityFunctions: 010000000600000005000000
+  abilityCost: 10
+  abilityFunctions: 010000000500000002000000
   affinityBonus: 3
-  forecast: 4
-  forecastScaler: {x: 1.5, y: 1, z: 1.5}
-  freeCircleReach: 0
-  globalCD: 7
+  globalCD: 16
+  abilityModuleData:
+    moduleData:
+    - name: Reach
+      modifier: 12
+    projection: 2
+    projectionScale: {x: 1.5, y: 1, z: 1.5}

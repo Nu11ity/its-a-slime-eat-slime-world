@@ -211,7 +211,7 @@ MonoBehaviour:
   agent: {fileID: 4703533785572876307}
   currentState: 1
   wander:
-    speed: 0
+    speed: 1.5
     intervalTicks: 3
     duration: 8
   idle:

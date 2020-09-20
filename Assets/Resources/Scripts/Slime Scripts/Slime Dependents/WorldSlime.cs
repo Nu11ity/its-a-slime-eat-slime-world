@@ -51,11 +51,6 @@ public class WorldSlime : MonoBehaviour, IInteractable
     {
         DetermineStates();
     }
-    //private void SpawnSphere(Vector3 _pos)
-    //{
-    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    //    sphere.transform.position = _pos;
-    //}
 
     #region IInteractable Behavior
     public void ConvertToCaptureReady()
@@ -139,22 +134,31 @@ public class WorldSlime : MonoBehaviour, IInteractable
         {
             agent.speed = wander.speed;
             bool successful = false;
+            
+            int safetyNet = 0;
             while(!successful)
-            {
-                randomPoint = Spawner.RelativeRandomPosition() + transform.position;
-
-                if (NavMesh.SamplePosition(randomPoint, out hit, 20, 1))
+            {               
+                safetyNet++;
+                if (safetyNet > 25)
+                    successful = true;               
+                //randomPoint = Spawner.RelativeRandomPosition() + transform.position;
+                randomPoint = Spawner.RelativeRandomPosition();
+                if (NavMesh.SamplePosition(randomPoint, out hit, 2, 1))
                 {
                     successful = true;
                     finalPos = hit.position;
                     agent.SetDestination(finalPos);
 
-                    //SpawnSphere(finalPos);
+                    SpawnSphere(finalPos);
                 }
             }           
-
             wander.Timer = wander.duration;
         }      
+    }
+    private void SpawnSphere(Vector3 _pos)
+    {
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = _pos;
     }
     private void Idle()
     {

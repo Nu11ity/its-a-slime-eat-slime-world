@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class WorldSlimeSpawner : MonoBehaviour
 {
     public float unitSphereRadius;
+    //[Tooltip("Set this to the current Y of spawn area, can aleave calls due to inside unit sphere casting high or low")]
+    //public float offsetY;
     public GameObject SlimePrefab;
 
     [Range(1, 140)]
@@ -41,7 +43,8 @@ public class WorldSlimeSpawner : MonoBehaviour
     public Vector3 RelativeRandomPosition()
     {//World slime method call
         Vector3 pos = Random.insideUnitSphere * unitSphereRadius;
-        pos.y = 0;
+        pos += transform.position;
+        pos.y = transform.position.y;//Helps us have fewer calls in long run
         return pos;
     }
 

@@ -9743,9 +9743,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75648efebdc566428cf5b5c8f7e6365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  registerMethod: 0
   path: 0
   id: 1
   anchor: 1
+  module:
+    behaviors: 00000000
+    tickDamageAmt: 5
+    healthRegenSpeed: 0
+    rootDuration: 0
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    pullForce: 0
   castPositions:
   - {fileID: 5495742128752098546}
   - {fileID: 5495742128057626339}
@@ -9760,14 +9770,15 @@ MonoBehaviour:
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  damage: 10
   radius: 2
   duration: 2.5
   tickDelay: 0.15
+  checkMethod: 0
   psIndex: 0
   ps:
   - {fileID: 5495742128421077562}
   - {fileID: 5495742128311899089}
+  showGizmos: 0
 --- !u!1 &5495742129212408680
 GameObject:
   m_ObjectHideFlags: 0

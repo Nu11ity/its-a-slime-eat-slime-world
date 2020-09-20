@@ -13926,7 +13926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8889491852745516908}
-  - component: {fileID: 8889491852745516907}
+  - component: {fileID: 4873466517618173436}
   m_Layer: 0
   m_Name: Entangling Thorns
   m_TagString: Untagged
@@ -13951,7 +13951,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8889491852745516907
+--- !u!114 &4873466517618173436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13960,19 +13960,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8889491852745516909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d620ffafc4a1d1344a6d6e36570bf50e, type: 3}
+  m_Script: {fileID: 11500000, guid: e75648efebdc566428cf5b5c8f7e6365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   registerMethod: 0
   path: 2
   id: 2
   anchor: 0
+  module:
+    behaviors: 0000000002000000
+    tickDamageAmt: 3
+    healthRegenSpeed: 0
+    rootDuration: 7
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    pullForce: 0
   castPositions:
   - {fileID: 8889491852745516908}
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  damage: 7
   radius: 3.5
   duration: 7.25
   tickDelay: 0.1
@@ -13980,7 +13988,6 @@ MonoBehaviour:
   psIndex: 0
   ps: []
   showGizmos: 0
-  rootDuration: 7
 --- !u!1 &8889491852760221220
 GameObject:
   m_ObjectHideFlags: 0

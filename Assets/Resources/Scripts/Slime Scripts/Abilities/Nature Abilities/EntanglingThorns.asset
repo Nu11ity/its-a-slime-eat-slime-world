@@ -22,8 +22,6 @@ MonoBehaviour:
   abilityModuleData:
     moduleData:
     - name: Reach
-      modifier: 14
-    name: Reach
-    modifier: 14
+      modifier: 16
     projection: 2
     projectionScale: {x: 0.75, y: 1, z: 0.75}

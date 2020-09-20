@@ -21,7 +21,7 @@ public class DamageImpactObject : PooledImpactObject
         if (myProjectile == null)
             myProjectile = parentObject.GetComponent<BaseProjectile>();
 
-        damage = myProjectile.damage / 3;
+        //damage = myProjectile.damage / 3;
         knockbackForce = 120 / 3;
 
         Vector3 offset = transform.position - transform.forward * castOffset;

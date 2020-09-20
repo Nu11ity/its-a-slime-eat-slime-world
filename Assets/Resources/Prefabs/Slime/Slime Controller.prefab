@@ -14686,6 +14686,7 @@ Transform:
   m_Children:
   - {fileID: 3573207369566187998}
   - {fileID: 3573207369825456849}
+  - {fileID: 6044055434594658177}
   - {fileID: 9003268076394433135}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -14804,7 +14805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laneSpawn: {fileID: 3573207370441526385}
   coneSpawn: {fileID: 3573207369647069861}
-  boundCircleSpawn: {fileID: 3573207369528447476}
+  boundCircleSpawn: {fileID: 6044055434594658177}
   freeCircleSpawn: {fileID: 3573207368759639280}
   abilityForecasts:
   - {fileID: 3573207370409707804}
@@ -16264,6 +16265,36 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3166147967989613678}
+  m_Father: {fileID: 3573207369340613525}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5504948557163323093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6044055434594658177}
+  m_Layer: 9
+  m_Name: Anchor Spawn(Non-Rotational)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6044055434594658177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504948557163323093}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.977, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
   m_Father: {fileID: 3573207369340613525}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31162,15 +31193,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4fd347c3dd24aaacb117b1d8092c, type: 3}
---- !u!4 &6560443064632652763 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3573207368667960102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5509028304597875521 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9070976588298053735, guid: e87f4fd347c3dd24aaacb117b1d8092c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3573207368667960102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6560443064632652763 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
     type: 3}
   m_PrefabInstance: {fileID: 3573207368667960102}
   m_PrefabAsset: {fileID: 0}

@@ -15,6 +15,8 @@ public class ArenaManager : MonoBehaviour
     }
     #endregion
 
+    public float arenaRadius;
+
     public GameObject controlledSlime;
     public GameObject automatedSlime;
 
@@ -31,6 +33,13 @@ public class ArenaManager : MonoBehaviour
         ReadSlimeManager();
     }
 
+    public Vector3 RelativeRandomPosition()
+    {
+        Vector3 pos = Random.insideUnitSphere * arenaRadius;
+        pos += transform.position;
+        pos.y = transform.position.y;
+        return pos;
+    }
     private void ReadSlimeManager()
     {
         ab = AbilityManager.Instance;

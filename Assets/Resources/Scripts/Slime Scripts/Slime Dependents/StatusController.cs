@@ -11,6 +11,40 @@ public class StatusController : MonoBehaviour
     public BaseAbilityController SlimeController { get; set; }
     public Slime MySlime { get; set; }
 
+    //-------Add Channeling behavior just like silence.....
+    #region Channeling Methods 
+    [Header("Channel data")]
+    public float maxChannelDuration;
+    private bool applyChannel;
+    private float channelDuration;
+    public float ChannelDuration
+    {
+        get { return channelDuration; }
+        set
+        {
+            channelDuration = value;
+            if(channelDuration > 0)
+            {
+                SlimeController.RestrictCasting = true;
+                applyChannel = true;
+            }
+            if(channelDuration <= 0)
+            {
+                SlimeController.RestrictCasting = false;
+                applyChannel = false;
+            }
+        }
+    }
+    private void ChannelTimer()
+    {
+        if (applyChannel)
+            ChannelDuration -= Time.deltaTime;
+    }
+    public void SetChannelDuration(float _duration)
+    {
+        ChannelDuration += _duration;
+    }
+    #endregion
     #region Silence Methods
     [Header("Silence data")]
     public float maxSilencedDuration;
@@ -184,6 +218,7 @@ public class StatusController : MonoBehaviour
     }  
     void Update()
     {
+        ChannelTimer();
         SilenceTimer();
         StunTimer();
         RootTimer();
@@ -192,6 +227,10 @@ public class StatusController : MonoBehaviour
     public void RequestImpact(Vector3 _dir, float _force)
     {
         SlimeLocomotion.AddImpact(_dir, _force);
+    }
+    public void RequestContinousForce(Vector3 _dir, float _force)
+    {
+        SlimeLocomotion.ContinuousForce(_dir, _force);
     }
     public void StopController()
     {

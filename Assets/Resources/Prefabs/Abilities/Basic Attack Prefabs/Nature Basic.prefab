@@ -81,6 +81,15 @@ MonoBehaviour:
   path: 2
   id: 0
   anchor: 0
+  module:
+    behaviors: 00000000
+    damageAmt: 10
+    healAmt: 0
+    rootDuration: 0
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    KnockbackForce: 0
   impactObject: {fileID: 5145847708554296099}
   allowCasting: 1
   lifeTime: 3
