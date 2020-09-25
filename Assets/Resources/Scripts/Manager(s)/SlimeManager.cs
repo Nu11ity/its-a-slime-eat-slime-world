@@ -83,6 +83,7 @@ public class SlimeManager : MonoBehaviour
     {
         if(automatedSlimes.Count > 0)
         {
+            Debug.LogError(automatedSlimes[0].name + " is in capture ready state");
             automatedSlimes[0].ConvertToCaptureReady();
             automatedSlimes.Remove(automatedSlimes[0]);
         }

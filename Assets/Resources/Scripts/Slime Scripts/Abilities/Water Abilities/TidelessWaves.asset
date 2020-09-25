@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexID: 1
   abilityName: Tideless Waves
-  abilityIcon: {fileID: 21300000, guid: db24189abde247144b83fb23e63c9464, type: 3}
+  abilityIcon: {fileID: 21300000, guid: 8ac23dc140bfed845964fe2303763271, type: 3}
   abilityCost: 20
   abilityFunctions: 0000000002000000
   affinityBonus: 3

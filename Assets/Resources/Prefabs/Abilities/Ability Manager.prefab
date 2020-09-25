@@ -1886,7 +1886,7 @@ MonoBehaviour:
     root: {fileID: 1377137634}
     positive: {fileID: 1172768495}
     negative: {fileID: 2062152938}
-  defenseStatusUI:
+  protectionStatusUI:
     root: {fileID: 1929910470}
     positive: {fileID: 2145653789}
     negative: {fileID: 1445339341}
@@ -2591,7 +2591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438783037}
   m_Layer: 5
-  m_Name: DefenseStatusUI (Disabled)
+  m_Name: ProtectionsStatusUI (Disabled)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5067,7 +5067,7 @@ MonoBehaviour:
     root: {fileID: 58402684}
     positive: {fileID: 1864227512}
     negative: {fileID: 42009945}
-  defenseStatusUI:
+  protectionStatusUI:
     root: {fileID: 438783036}
     positive: {fileID: 1095930462}
     negative: {fileID: 414421396}
@@ -10828,7 +10828,7 @@ GameObject:
   - component: {fileID: 1929910471}
   - component: {fileID: 1929910473}
   m_Layer: 5
-  m_Name: DefenseStatusUI (Disabled)
+  m_Name: ProtectionsStatusUI (Disabled)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12287,7 +12287,8 @@ MonoBehaviour:
   - prefabObj: {fileID: 5620424798127034662, guid: 55f495dda478d0d40997871dec06566c,
       type: 3}
     objectPool: []
-  - prefabObj: {fileID: 0}
+  - prefabObj: {fileID: 3866735682013071690, guid: 9350448ae9ecc8941909a23affcb520c,
+      type: 3}
     objectPool: []
   - prefabObj: {fileID: 6431764473804528528, guid: f1f5cc31c954524438df502f3713c37e,
       type: 3}

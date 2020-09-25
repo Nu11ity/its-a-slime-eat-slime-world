@@ -34,6 +34,7 @@ public class BaseProjectile : PooledAbilityObject
     protected bool begunFadeout;
     protected Collider[] targets;
     protected List<GameObject> hitTargets = new List<GameObject>();
+    private Vector3 offset;
 
     void OnDrawGizmos()
     {
@@ -84,7 +85,8 @@ public class BaseProjectile : PooledAbilityObject
     }
     public virtual void OnCastBehavior()
     {
-        targets = Physics.OverlapSphere(transform.position, radius, desiredLayers);
+        offset = transform.position - transform.forward * castOffset;
+        targets = Physics.OverlapSphere(offset, radius, desiredLayers);
         if (targets.Length > 0)
         {
             for (int i = 0; i < targets.Length; i++)
@@ -143,7 +145,14 @@ public class BaseProjectile : PooledAbilityObject
     #region Behavior Methods
     private void ApplyDamage(Slime _hitSlime)
     {
-        _hitSlime.TakeDamage(module.damageAmt);
+        float trueDamage = 0;
+        //Power buff gives 20% damage buff
+        if(MySlime.MyStatusControls.ApplyPower)
+            trueDamage = module.damageAmt * 1.2f;
+        else
+            trueDamage = module.damageAmt;
+
+        _hitSlime.TakeDamage(trueDamage);
     }
     private void ApplyRoot(Slime _hitSlime)
     {

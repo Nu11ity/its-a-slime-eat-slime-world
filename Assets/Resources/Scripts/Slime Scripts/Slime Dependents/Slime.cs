@@ -233,15 +233,22 @@ public class Slime : BaseSlime
         CurrentEnergy -= _drainAmt;
         Mathf.Clamp(CurrentEnergy, 0, maxEnergy);
     }
-    public void TakeDamage(int _damage)
+    public void TakeDamage(float _damage)
     {
         if (!isAlive)
             return;
-       
+
+        //if protections applied cut damage by fixed percentage that i decide(20%, 40%, etc...)
+        float trueDamage = 0;
+        if (MyStatusControls.ApplyProtection)
+            trueDamage = _damage * .8f;//20% shaved off damage due to protections
+        else
+            trueDamage = _damage;
+
         if (CurrentHealth > 0)
         {
             Debug.Log("Inured + " + this.name);
-            CurrentHealth -= _damage;
+            CurrentHealth -= trueDamage;
 
             if (slimeControlType == SlimeControlType.AI)
                 OnUpdateCombatUI();

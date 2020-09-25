@@ -14,26 +14,22 @@ public class WSlimeBehavior
 
 public class WorldSlime : MonoBehaviour, IInteractable
 {
-    public SlimeData data;
-
     [Header("Control Behavior")]
     public GameObject interactVisual;
+    public GameObject unconciousVFX;
     public NavMeshAgent agent;
+    public float intervalCheck;
+    public float allyCallRange;
+    public LayerMask desiredLayer;//interactable
     public enum States { Wander, Idle }
     public States currentState;
 
+    [Header("SlimeData module")]
+    public SlimeData data;
+
+    [Header("Behavior modules")]
     public WSlimeBehavior wander;
     public WSlimeBehavior idle;
-
-    public float intervalCheck;
-    private float interval;
-
-    public LayerMask desiredLayer;//interactable
-    public float allyCallRange;
-
-    private Vector3 randomPoint;
-    private Vector3 finalPos;
-    private NavMeshHit hit;
 
     private WorldSlimeSpawner spawner;
     public WorldSlimeSpawner Spawner
@@ -46,6 +42,23 @@ public class WorldSlime : MonoBehaviour, IInteractable
             return spawner;
         }
     }
+    private SlimeFaceControls faceControl;
+    public SlimeFaceControls FaceControl
+    {
+        get
+        {
+            if (faceControl == null)
+                faceControl = GetComponent<SlimeFaceControls>();
+
+            return faceControl;
+        }
+    }
+
+    private float interval;
+    private Vector3 randomPoint;
+    private Vector3 finalPos;
+    private NavMeshHit hit;
+
 
     public void Update()
     {
@@ -56,6 +69,9 @@ public class WorldSlime : MonoBehaviour, IInteractable
     public void ConvertToCaptureReady()
     {
         Debug.Log(this.name + " is in a capture ready state");
+        unconciousVFX.SetActive(true);
+        FaceControl.FacialBehavior = SlimeFaceControls.FacialBehaviors.Unconcious;
+        //slimeAnim.CrossFade("Unconcious", .5f);
     }
     public void OnHoverEnter()
     {
@@ -78,14 +94,13 @@ public class WorldSlime : MonoBehaviour, IInteractable
         {
             for (int i = 0; i < allies.Length; i++)
             {
-                if(allies[i].GetComponent<WorldSlime>())
+                if(allies[i].GetComponent<WorldSlime>() && allies[i].gameObject != this.gameObject)
                 {
                     Debug.Log("Found an ally in -> " + allies[i].transform.name);
                     AbilityManager.Instance.slimeManager.automatedSlimes.Add(allies[i].GetComponent<WorldSlime>());
                 }
             }
         }
-
         AbilityManager.Instance.slimeManager.InitializedCombat = true;
     }
     #endregion  
@@ -149,17 +164,17 @@ public class WorldSlime : MonoBehaviour, IInteractable
                     finalPos = hit.position;
                     agent.SetDestination(finalPos);
 
-                    SpawnSphere(finalPos);
+                    //SpawnSphere(finalPos);
                 }
             }           
             wander.Timer = wander.duration;
         }      
     }
-    private void SpawnSphere(Vector3 _pos)
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = _pos;
-    }
+    //private void SpawnSphere(Vector3 _pos)
+    //{
+    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //    sphere.transform.position = _pos;
+    //}
     private void Idle()
     {
         idle.Timer -= Time.deltaTime;

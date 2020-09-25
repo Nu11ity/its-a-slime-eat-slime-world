@@ -13797,6 +13797,10 @@ MonoBehaviour:
   path: 0
   id: 3
   anchor: 0
+  projections:
+  - projectionMesh: {fileID: 5076154057588525173}
+    friendly: {fileID: 2100000, guid: 971ac7fd177556847a8c23a976fe635b, type: 2}
+    damaging: {fileID: 2100000, guid: 29e8d6ea82a1e0742a0b866448401cf1, type: 2}
   module:
     behaviors: 0000000003000000
     damageAmt: 80
@@ -13809,7 +13813,6 @@ MonoBehaviour:
   startDelay: 1
   duration: 1.5
   radius: 4.7
-  damage: 0
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512

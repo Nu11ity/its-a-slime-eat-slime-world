@@ -164,7 +164,14 @@ public class BaseDOT : PooledAbilityObject
     #region Behavior Methods
     private void ApplyDamage(Slime _hitSlime)
     {
-        _hitSlime.TakeDamage(module.tickDamageAmt);
+        float trueDamage = 0;
+        //Power buff gives 20% damage buff
+        if (MySlime.MyStatusControls.ApplyPower)
+            trueDamage = module.tickDamageAmt * 1.2f;
+        else
+            trueDamage = module.tickDamageAmt;
+
+        _hitSlime.TakeDamage(trueDamage);
     }
     private void ApplyRoot(Slime _hitSlime)
     {

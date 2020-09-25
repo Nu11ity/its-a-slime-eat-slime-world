@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexID: 3
   abilityName: Infernal Strike
-  abilityIcon: {fileID: 21300000, guid: 9c2654c6e93b84e4391bd17cb4054e60, type: 3}
+  abilityIcon: {fileID: 21300000, guid: ac755d201a7bbc441bb9a4ac3d56bad4, type: 3}
   abilityCost: 25
   abilityFunctions: 0000000004000000
   affinityBonus: 1

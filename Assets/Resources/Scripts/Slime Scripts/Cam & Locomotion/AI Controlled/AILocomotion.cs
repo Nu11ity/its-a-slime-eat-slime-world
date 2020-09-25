@@ -81,25 +81,25 @@ public class AILocomotion : BaseLocomotion
         aim.y = 0;
         projectileSpawner.transform.rotation = Quaternion.LookRotation(aim);
     }
-    
-    public void OnDrawGizmos()
-    {
-        Vector3 nodeFront = transform.position + (transform.forward) * 10f;
-        Vector3 nodeBack = transform.position + (-transform.forward) * 10f;
-        Vector3 nodeRight = transform.position + (transform.right) * 10f;
-        Vector3 nodeLeft = transform.position + (-transform.right) * 10f;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(nodeFront, 1f);
-        Gizmos.DrawSphere(nodeBack, 1f);
-        Gizmos.DrawSphere(nodeRight, 1f);
-        Gizmos.DrawSphere(nodeLeft, 1f);
-    }
-    private void SpawnSphere(Vector3 _pos)
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = _pos;
-    }
+    //public void OnDrawGizmos()
+    //{
+    //    Vector3 nodeFront = transform.position + (transform.forward) * 10f;
+    //    Vector3 nodeBack = transform.position + (-transform.forward) * 10f;
+    //    Vector3 nodeRight = transform.position + (transform.right) * 10f;
+    //    Vector3 nodeLeft = transform.position + (-transform.right) * 10f;
+
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawSphere(nodeFront, 1f);
+    //    Gizmos.DrawSphere(nodeBack, 1f);
+    //    Gizmos.DrawSphere(nodeRight, 1f);
+    //    Gizmos.DrawSphere(nodeLeft, 1f);
+    //}
+    //private void SpawnSphere(Vector3 _pos)
+    //{
+    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //    sphere.transform.position = _pos;
+    //}
 
     //private NavMeshAgent agent;
     //public NavMeshAgent Agent
@@ -150,7 +150,7 @@ public class AILocomotion : BaseLocomotion
                     successful = true;
                     finalPos = navHit.position;
                     //Agent.SetDestination(finalPos);
-                    SpawnSphere(finalPos);
+                    //SpawnSphere(finalPos);
                     positionSet = true;
                 }
             }

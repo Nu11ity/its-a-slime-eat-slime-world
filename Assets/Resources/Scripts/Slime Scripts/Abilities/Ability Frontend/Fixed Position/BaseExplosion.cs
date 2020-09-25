@@ -122,7 +122,14 @@ public class BaseExplosion : PooledAbilityObject
     #region Behavior Methods
     private void ApplyDamage(Slime _hitSlime)
     {
-        _hitSlime.TakeDamage(module.damageAmt);
+        float trueDamage = 0;
+        //Power buff gives 20% damage buff
+        if (MySlime.MyStatusControls.ApplyPower)
+            trueDamage = module.damageAmt * 1.2f;
+        else
+            trueDamage = module.damageAmt;
+
+        _hitSlime.TakeDamage(trueDamage);
     }
     private void ApplyRoot(Slime _hitSlime)
     {

@@ -9125,6 +9125,10 @@ MonoBehaviour:
   path: 1
   id: 3
   anchor: 0
+  projections:
+  - projectionMesh: {fileID: 6431764473322909503}
+    friendly: {fileID: 2100000, guid: 971ac7fd177556847a8c23a976fe635b, type: 2}
+    damaging: {fileID: 2100000, guid: 29e8d6ea82a1e0742a0b866448401cf1, type: 2}
   module:
     behaviors: 000000000400000005000000
     tickDamageAmt: 1

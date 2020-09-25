@@ -10,11 +10,80 @@ public class StatusController : MonoBehaviour
     public BaseLocomotion SlimeLocomotion { get; set; }
     public BaseAbilityController SlimeController { get; set; }
     public Slime MySlime { get; set; }
+    private float maxDuration = 10f;
 
-    //-------Add Channeling behavior just like silence.....
+    //Abilities in world will reference slime's status controls thru the myslime property set when ability is initialized.
+    //Ability checks if ApplyPower is set to true/false, and fixes it's damage value based off this information. 
+    //Percentage value should follow the protections value percentage.
+    #region Power Methods
+    public bool ApplyPower { get; set; }
+    private float powerDuration;
+    public float PowerDuration
+    {
+        get { return powerDuration; }
+        set
+        {
+            powerDuration = value;
+            powerDuration = Mathf.Clamp(powerDuration, 0, maxDuration);
+
+            if (powerDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.powerStatusUI, 1);
+                ApplyPower = true;
+            }
+            if(powerDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.powerStatusUI.Reset();
+                ApplyPower = false;
+            }
+        }
+    }
+    private void PowerTimer()
+    {
+        if (ApplyPower)
+            PowerDuration -= Time.deltaTime;
+    }
+    public void SetPowerDuration(float _duration)
+    {
+        PowerDuration += _duration;
+    }
+    #endregion
+
+    #region Protections Methods
+    public bool ApplyProtection { get; set; }
+    private float protectionDuration;
+    public float ProtectionDuration
+    {
+        get { return protectionDuration; }
+        set
+        {
+            protectionDuration = value;
+            protectionDuration = Mathf.Clamp(protectionDuration, 0, maxDuration);
+
+            if (protectionDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.protectionStatusUI, 1);
+                ApplyProtection = true;
+            }
+            if (protectionDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.protectionStatusUI.Reset();
+                ApplyProtection = false;
+            }
+        }
+    }
+    private void ProtectionTimer()
+    {
+        if (ApplyProtection)
+            ProtectionDuration -= Time.deltaTime;
+    }
+    public void SetProtectionDuration(float _duration)
+    {
+        ProtectionDuration += _duration;
+    }
+    #endregion
+
     #region Channeling Methods 
-    [Header("Channel data")]
-    public float maxChannelDuration;
     private bool applyChannel;
     private float channelDuration;
     public float ChannelDuration
@@ -23,7 +92,9 @@ public class StatusController : MonoBehaviour
         set
         {
             channelDuration = value;
-            if(channelDuration > 0)
+            channelDuration = Mathf.Clamp(channelDuration, 0, maxDuration);
+
+            if (channelDuration > 0)
             {
                 SlimeController.RestrictCasting = true;
                 applyChannel = true;
@@ -45,9 +116,8 @@ public class StatusController : MonoBehaviour
         ChannelDuration += _duration;
     }
     #endregion
+
     #region Silence Methods
-    [Header("Silence data")]
-    public float maxSilencedDuration;
     private bool applySilence;
     private float silenceDuration;
     public float SilenceDuration
@@ -56,7 +126,9 @@ public class StatusController : MonoBehaviour
         set
         {
             silenceDuration = value;
-            if(silenceDuration > 0)
+            silenceDuration = Mathf.Clamp(silenceDuration, 0, maxDuration);
+
+            if (silenceDuration > 0)
             {
                 SlimeController.CancelToggledAbility();
                 SlimeController.RestrictCasting = true;
@@ -81,8 +153,6 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Stun Methods
-    [Header("Stun data")]
-    public float maxStunDuration;
     private bool applyStun;
     private float stunDuration;
     public float StunDuration
@@ -91,7 +161,7 @@ public class StatusController : MonoBehaviour
         set
         {
             stunDuration = value;
-            stunDuration = Mathf.Clamp(stunDuration, 0, maxStunDuration);
+            stunDuration = Mathf.Clamp(stunDuration, 0, maxDuration);
 
             if (stunDuration > 0)
             {
@@ -123,8 +193,6 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Rooted Methods
-    [Header("Root data")]
-    public float maxRootDuration;
     private bool applyRoot;
     private float rootDuration;
     public float RootDuration
@@ -133,7 +201,7 @@ public class StatusController : MonoBehaviour
         set
         {
             rootDuration = value;
-            rootDuration = Mathf.Clamp(rootDuration, 0f, maxRootDuration);
+            rootDuration = Mathf.Clamp(rootDuration, 0f, maxDuration);
 
             if (rootDuration > 0)
             {
@@ -163,8 +231,6 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Slow Methods
-    [Header("Slow data")]
-    public float maxSlowDuration;
     public float DefaultSpeed { get; set; }
     public float SlowIntensity { get; set; }
     private bool applySlow;
@@ -175,7 +241,7 @@ public class StatusController : MonoBehaviour
         set
         {
             slowDuration = value;
-            slowDuration = Mathf.Clamp(slowDuration, 0f, maxSlowDuration);
+            slowDuration = Mathf.Clamp(slowDuration, 0f, maxDuration);
 
             if (slowDuration > 0)
             {
@@ -218,6 +284,8 @@ public class StatusController : MonoBehaviour
     }  
     void Update()
     {
+        PowerTimer();
+        ProtectionTimer();
         ChannelTimer();
         SilenceTimer();
         StunTimer();

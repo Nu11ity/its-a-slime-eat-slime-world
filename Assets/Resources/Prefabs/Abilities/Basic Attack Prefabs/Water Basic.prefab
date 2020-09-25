@@ -4742,9 +4742,10 @@ MonoBehaviour:
   path: 1
   id: 0
   anchor: 0
+  projections: []
   module:
-    behaviors: 
-    damageAmt: 0
+    behaviors: 00000000
+    damageAmt: 10
     healAmt: 0
     rootDuration: 0
     stunDuration: 0
