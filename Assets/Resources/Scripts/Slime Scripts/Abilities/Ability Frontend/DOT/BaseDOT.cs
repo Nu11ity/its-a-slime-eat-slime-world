@@ -5,23 +5,26 @@ using UnityEngine;
 [System.Serializable]
 public class DotBehaviorModule
 {
-    public enum Behaviors { Dot, Heal, Root, Stun, Slow, Force }
+    public enum Behaviors { Dot, Root, Stun, Slow, Force, HealOverTime, BurstHeal, Silence }
     public List<Behaviors> behaviors = new List<Behaviors>();
 
     public int tickDamageAmt;
-    public float healthRegenSpeed;
     public float rootDuration;
     public float stunDuration;
     public float slowDuration;
     public float slowIntensity;
     public float pullForce;
+    public float overTimeHealAmt;
+    public float overTimeHealDuration;
+    public int burstHealAmt;
+    public float silenceDuration;
 }
 public class BaseDOT : PooledAbilityObject
 {
     public DotBehaviorModule module;
     public List<Transform> castPositions;
+    public List<float> radiusIndex;
     public LayerMask desiredLayers;
-    public float radius;
     public float duration;
     public float tickDelay;    
     public enum CheckMethod { PS, Other }
@@ -35,7 +38,7 @@ public class BaseDOT : PooledAbilityObject
     private float durationValue;
     protected float tickValue;
     private ParticleSystem.MainModule mainModule;
-    protected List<GameObject> hitTargets = new List<GameObject>();
+    //protected List<GameObject> hitTargets = new List<GameObject>();
 
     void IntegrityMet()//-------
     {
@@ -54,7 +57,8 @@ public class BaseDOT : PooledAbilityObject
         {
             OnCastBehavior();
             durationValue += Time.deltaTime;
-            if (durationValue >= duration)
+            float _adjustValue = (ps[0].main.duration + ps[0].main.startLifetimeMultiplier) * ps[0].main.simulationSpeed;
+            if (durationValue >= (duration - _adjustValue))
             {
                 for (int i = 0; i < ps.Count; i++)
                 {
@@ -90,8 +94,16 @@ public class BaseDOT : PooledAbilityObject
     }
     public virtual void OnDisableExpanded()
     {
-        if (hitTargets.Count > 0)
-            hitTargets.Clear();
+        //if (hitTargets.Count > 0)
+        //    hitTargets.Clear();
+    }
+    private void BeginAfterDelay()
+    {
+        ApplyHeals();
+    }
+    private void OnEnable()
+    {
+        Invoke("BeginAfterDelay", .2f);
     }
     private void OnDisable()
     {
@@ -108,28 +120,25 @@ public class BaseDOT : PooledAbilityObject
         durationValue = 0;
         MySlime = null;
     }
-    private bool ContainerCheck(GameObject _obj)
-    {
-        if (hitTargets.Count > 0)
-        {
-            if (!hitTargets.Contains(_obj))
-                return true;
-            else
-                return false;
-        }
-        return true;
-    }
+    //private bool ContainerCheck(GameObject _obj)
+    //{
+    //    if (hitTargets.Count > 0)
+    //    {
+    //        if (!hitTargets.Contains(_obj))
+    //            return true;
+    //        else
+    //            return false;
+    //    }
+    //    return true;
+    //}
     public virtual void OnCastBehavior()
     {
-        if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Heal))
-            ApplyHeal();
-
         tickValue += Time.deltaTime;
         if(tickValue >= tickDelay)
         {
             for (int i = 0; i < castPositions.Count; i++)
             {
-                Collider[] targets = Physics.OverlapSphere(castPositions[i].position, radius, desiredLayers);
+                Collider[] targets = Physics.OverlapSphere(castPositions[i].position, radiusIndex[i], desiredLayers);
                 if(targets.Length > 0)
                 {
                     for (int j = 0; j < targets.Length; j++)
@@ -142,18 +151,21 @@ public class BaseDOT : PooledAbilityObject
                                 ApplyDamage(hitSlime);
                             if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Force))
                                 ApplyForce(hitSlime);
+                            if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Root))
+                                ApplyRoot(hitSlime);
+                            if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Stun))
+                                ApplyStun(hitSlime);
+                            if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Slow))
+                                ApplySlow(hitSlime);
+                            if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Silence))
+                                ApplySilence(hitSlime);
 
-                            if (ContainerCheck(targets[j].gameObject))
-                            {//We only need to root, stun, slow, silence one time with high duration
-                                hitTargets.Add(targets[j].gameObject);                             
+                            //if (ContainerCheck(targets[j].gameObject))
+                            //{//We only need to root, stun, slow, silence one time with high duration
+                            //    hitTargets.Add(targets[j].gameObject);                             
                               
-                                if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Root))
-                                    ApplyRoot(hitSlime);
-                                if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Stun))
-                                    ApplyStun(hitSlime);
-                                if (module.behaviors.Contains(DotBehaviorModule.Behaviors.Slow))
-                                    ApplySlow(hitSlime);          
-                            }                         
+                                
+                            //}                         
                         }
                     }
                 }
@@ -175,25 +187,36 @@ public class BaseDOT : PooledAbilityObject
     }
     private void ApplyRoot(Slime _hitSlime)
     {
-        _hitSlime.MyStatusControls.SetRootDuration(module.rootDuration);
+        if(!_hitSlime.MyStatusControls.ApplyRoot)
+            _hitSlime.MyStatusControls.SetRootDuration(module.rootDuration);
     }
     private void ApplyStun(Slime _hitSlime)
     {
-        _hitSlime.MyStatusControls.SetStunDuration(module.stunDuration);
+        if(!_hitSlime.MyStatusControls.ApplyStun)
+            _hitSlime.MyStatusControls.SetStunDuration(module.stunDuration);
     }
     private void ApplySlow(Slime _hitSlime)
     {
-        _hitSlime.MyStatusControls.SetSlowDuration(module.slowDuration, module.slowIntensity);
+        if(!_hitSlime.MyStatusControls.ApplySlow)
+            _hitSlime.MyStatusControls.SetSlowDuration(module.slowDuration, module.slowIntensity);
     }
     public void ApplyForce(Slime _hitSlime)
     {
         Vector3 dir = _hitSlime.transform.position - transform.position;
         _hitSlime.MyStatusControls.RequestContinousForce(dir, module.pullForce);
     }
-    public void ApplyHeal()
+    public void ApplySilence(Slime _hitSlime)
     {
-        if (MySlime.CurrentHealth < MySlime.MaxHealth)
-            MySlime.CurrentHealth += Time.deltaTime * module.healthRegenSpeed;
+        if(!_hitSlime.MyStatusControls.ApplySilence)
+            _hitSlime.MyStatusControls.SetSilenceDuration(module.silenceDuration);
+    }
+    public void ApplyHeals()
+    {
+        if(module.behaviors.Contains(DotBehaviorModule.Behaviors.BurstHeal))
+            MySlime.HealDamage(module.burstHealAmt);
+        
+        if(module.behaviors.Contains(DotBehaviorModule.Behaviors.HealOverTime))
+            MySlime.MyStatusControls.SetHotDuration(module.overTimeHealDuration, module.overTimeHealAmt);
     }
    
     #endregion
@@ -205,7 +228,7 @@ public class BaseDOT : PooledAbilityObject
             {
                 Gizmos.color = Color.yellow;
                 for (int i = 0; i < castPositions.Count; i++)
-                    Gizmos.DrawSphere(castPositions[i].position, radius);
+                    Gizmos.DrawSphere(castPositions[i].position, radiusIndex[i]);
             }
         }
     }

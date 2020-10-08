@@ -94,7 +94,6 @@ public class AbilityController : BaseAbilityController
 
         AbilityUpdater();
         AbilityCDVisuals();
-        MySlime.PassiveEnergyRegen();
         AbilityInputsCheck();
     }
     private bool GetForecast(BaseAbility _ability)

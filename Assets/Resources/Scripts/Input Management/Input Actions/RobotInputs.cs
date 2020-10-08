@@ -223,6 +223,33 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""menu"",
+            ""id"": ""ad9e3445-277c-474d-9977-08611251e92f"",
+            ""actions"": [
+                {
+                    ""name"": ""cursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""737bb51a-8064-4658-87eb-02d108340abb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0b902e09-45fb-4f5c-b740-7963de7d8428"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""cursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -236,6 +263,9 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         // interaction
         m_interaction = asset.FindActionMap("interaction", throwIfNotFound: true);
         m_interaction_Interact = m_interaction.FindAction("Interact", throwIfNotFound: true);
+        // menu
+        m_menu = asset.FindActionMap("menu", throwIfNotFound: true);
+        m_menu_cursor = m_menu.FindAction("cursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -371,6 +401,39 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         }
     }
     public InteractionActions @interaction => new InteractionActions(this);
+
+    // menu
+    private readonly InputActionMap m_menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_menu_cursor;
+    public struct MenuActions
+    {
+        private @RobotInputs m_Wrapper;
+        public MenuActions(@RobotInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @cursor => m_Wrapper.m_menu_cursor;
+        public InputActionMap Get() { return m_Wrapper.m_menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @cursor.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @cursor.started += instance.OnCursor;
+                @cursor.performed += instance.OnCursor;
+                @cursor.canceled += instance.OnCursor;
+            }
+        }
+    }
+    public MenuActions @menu => new MenuActions(this);
     public interface ILocomotionActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -381,5 +444,9 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     public interface IInteractionActions
     {
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnCursor(InputAction.CallbackContext context);
     }
 }

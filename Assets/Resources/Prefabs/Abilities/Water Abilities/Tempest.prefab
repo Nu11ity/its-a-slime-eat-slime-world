@@ -9248,12 +9248,12 @@ MonoBehaviour:
   anchor: 1
   projections: []
   module:
-    behaviors: 000000000100000002000000
+    behaviors: 000000000100000003000000
     powerDuration: 8
     protectionDuration: 8
-    burstHealAmt: 65
-    overTimeHealAmt: 0
-    overTimeHealDuration: 0
+    burstHealAmt: 0
+    overTimeHealAmt: 3
+    overTimeHealDuration: 8
     moveSpeedDuration: 0
     moveSpeedAmt: 0
   startDelay: 0.2

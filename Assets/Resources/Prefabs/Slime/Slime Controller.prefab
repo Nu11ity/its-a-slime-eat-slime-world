@@ -14665,7 +14665,7 @@ GameObject:
   - component: {fileID: 3573207369340613513}
   - component: {fileID: 3573207369340613518}
   - component: {fileID: 3573207369340613512}
-  - component: {fileID: 7988688411976219170}
+  - component: {fileID: 4812910877508798765}
   m_Layer: 9
   m_Name: Slime Controller
   m_TagString: Untagged
@@ -14725,6 +14725,7 @@ MonoBehaviour:
         gen: 0
   hpMultiplier: 10
   maxEnergy: 100
+  defeatVFX: {fileID: 5203803337861089053}
   isAlive: 1
   slimeControlType: 0
   slimePortrait:
@@ -14748,10 +14749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlType: 0
-  maxSilencedDuration: 15
-  maxStunDuration: 15
-  maxRootDuration: 15
-  maxSlowDuration: 15
 --- !u!143 &3573207369340613524
 CharacterController:
   m_ObjectHideFlags: 0
@@ -14838,7 +14835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef912c906c2725d48925b1870540e5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7988688411976219170
+--- !u!114 &4812910877508798765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14847,11 +14844,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3573207369340613526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5198c71c3f857174e8c4683c30bfc1db, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ffb9bd0a77cff74abc33aac9c5f4e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defeatVFX: {fileID: 5203803337861089053}
-  visualObj: {fileID: 3573207369825456848}
+  slimeMesh: {fileID: 6666914563613030839}
+  fireModule:
+    mat: {fileID: 2100000, guid: a43d966414a2bd445b5b771713b80bb5, type: 2}
+  waterModule:
+    mat: {fileID: 2100000, guid: 2647cd6f48b86cc45bc931aa8b78d622, type: 2}
+  natureModule:
+    mat: {fileID: 2100000, guid: cf9d0b74cd4d3c940bd5c493c8661d3a, type: 2}
 --- !u!1 &3573207369497174267
 GameObject:
   m_ObjectHideFlags: 0
@@ -31191,17 +31193,25 @@ PrefabInstance:
       propertyPath: m_CullingMode
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9070976589669262968, guid: e87f4fd347c3dd24aaacb117b1d8092c, type: 3}
+    - {fileID: 9070976589669262970, guid: e87f4fd347c3dd24aaacb117b1d8092c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e87f4fd347c3dd24aaacb117b1d8092c, type: 3}
---- !u!95 &5509028304597875521 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9070976588298053735, guid: e87f4fd347c3dd24aaacb117b1d8092c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3573207368667960102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6560443064632652763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7682566052501889277, guid: e87f4fd347c3dd24aaacb117b1d8092c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3573207368667960102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6666914563613030839 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7859685502759955089, guid: e87f4fd347c3dd24aaacb117b1d8092c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3573207368667960102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5509028304597875521 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9070976588298053735, guid: e87f4fd347c3dd24aaacb117b1d8092c,
     type: 3}
   m_PrefabInstance: {fileID: 3573207368667960102}
   m_PrefabAsset: {fileID: 0}

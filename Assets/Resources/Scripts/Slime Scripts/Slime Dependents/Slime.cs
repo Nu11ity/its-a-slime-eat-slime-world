@@ -62,21 +62,10 @@ public class Slime : BaseSlime
 
     #region properties & variables
     [Header("Slime")]
+    public GameObject defeatVFX;
     [SerializeField]
     private bool isAlive;
     public bool IsAlive { get { return isAlive; } }
-
-    private CaptureBehavior myCaptureBehavior;
-    public CaptureBehavior MyCaptureBehavior
-    {
-        get
-        {
-            if (myCaptureBehavior == null)
-                myCaptureBehavior = GetComponent<CaptureBehavior>();
-
-            return myCaptureBehavior;
-        }
-    }
 
     private StatusController myStatusControls;
     public StatusController MyStatusControls
@@ -222,12 +211,6 @@ public class Slime : BaseSlime
             healthRadialObj.color = Color.Lerp(EmptyColor, FullColor, t);
         }
     }
-
-    public void PassiveEnergyRegen()
-    {
-        if(CurrentEnergy < maxEnergy)
-            CurrentEnergy += Time.deltaTime * energyRegenSpeed;
-    }
     public void DrainEnergy(int _drainAmt)
     {
         CurrentEnergy -= _drainAmt;
@@ -276,7 +259,9 @@ public class Slime : BaseSlime
         MyCombatCanvas.SetEnergyFillMeter(1, 1);
 
         ResetPooledAbilityObjs();
-        MyCaptureBehavior.RemoveFromCombat();
+
+        defeatVFX.SetActive(true);
+        MyStatusControls.SlimeLocomotion.visualOrientation.gameObject.SetActive(false);
 
         Invoke("DelayedResponse", 1.5f);
         //Played Knocked out vfx/sfx

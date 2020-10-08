@@ -83,8 +83,43 @@ public class StatusController : MonoBehaviour
     }
     #endregion
 
+    #region Heal Methods
+    public float HotIntensity { get; set; }
+    public bool ApplyHot { get; set; }
+    private float hotDuration;
+    private float HotDuration
+    {
+        get { return hotDuration; }
+        set
+        {
+            hotDuration = value;
+
+            if (hotDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.healthStatusUI, 1);
+                ApplyHot = true;
+            }
+            if (hotDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.healthStatusUI.Reset();
+                ApplyHot = false;
+            }
+        }
+    }
+    private void HotTimer()
+    {
+        if (ApplyHot)
+            HotDuration -= Time.deltaTime;
+    }
+    public void SetHotDuration(float _duration, float _intensity)
+    {
+        HotIntensity = _intensity;
+        HotDuration += _duration;
+    }
+    #endregion
+
     #region Channeling Methods 
-    private bool applyChannel;
+    public bool ApplyChannel { get; set; }
     private float channelDuration;
     public float ChannelDuration
     {
@@ -97,18 +132,18 @@ public class StatusController : MonoBehaviour
             if (channelDuration > 0)
             {
                 SlimeController.RestrictCasting = true;
-                applyChannel = true;
+                ApplyChannel = true;
             }
             if(channelDuration <= 0)
             {
                 SlimeController.RestrictCasting = false;
-                applyChannel = false;
+                ApplyChannel = false;
             }
         }
     }
     private void ChannelTimer()
     {
-        if (applyChannel)
+        if (ApplyChannel)
             ChannelDuration -= Time.deltaTime;
     }
     public void SetChannelDuration(float _duration)
@@ -118,7 +153,7 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Silence Methods
-    private bool applySilence;
+    public bool ApplySilence { get; set; }
     private float silenceDuration;
     public float SilenceDuration
     {
@@ -132,18 +167,18 @@ public class StatusController : MonoBehaviour
             {
                 SlimeController.CancelToggledAbility();
                 SlimeController.RestrictCasting = true;
-                applySilence = true;
+                ApplySilence = true;
             }
             if (silenceDuration <= 0)
             {
                 SlimeController.RestrictCasting = false;
-                applySilence = false;
+                ApplySilence = false;
             }
         }
     }
     private void SilenceTimer()
     {
-        if (applySilence)
+        if (ApplySilence)
             SilenceDuration -= Time.deltaTime;
     }
     public void SetSilenceDuration(float _duration)
@@ -153,7 +188,7 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Stun Methods
-    private bool applyStun;
+    public bool ApplyStun { get; set; }
     private float stunDuration;
     public float StunDuration
     {
@@ -169,21 +204,21 @@ public class StatusController : MonoBehaviour
                 SlimeController.RestrictCasting = true;
                 SlimeLocomotion.enableMovement = false;
                 SetStatusUI(MySlime.MyCombatCanvas.stunStatusUI, -1);
-                applyStun = true;
+                ApplyStun = true;
             }
             if (stunDuration <= 0)
             {
-                if(!applyRoot)
+                if(!ApplyRoot)
                     SlimeLocomotion.enableMovement = true;
                 MySlime.MyCombatCanvas.stunStatusUI.Reset();
                 SlimeController.RestrictCasting = false;
-                applyStun = false;
+                ApplyStun = false;
             }
         }
     }
     private void StunTimer()
     {
-        if (applyStun)
+        if (ApplyStun)
             StunDuration -= Time.deltaTime;
     }
     public void SetStunDuration(float _duration)
@@ -193,7 +228,7 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Rooted Methods
-    private bool applyRoot;
+    public bool ApplyRoot { get; set; }
     private float rootDuration;
     public float RootDuration
     {
@@ -207,21 +242,21 @@ public class StatusController : MonoBehaviour
             {
                 SlimeLocomotion.enableMovement = false;
                 SetStatusUI(MySlime.MyCombatCanvas.rootStatusUI, -1);
-                applyRoot = true;
+                ApplyRoot = true;
             }
             if (rootDuration <= 0)
             {
-                if(!applyStun)
+                if(!ApplyStun)
                     SlimeLocomotion.enableMovement = true;
                 MySlime.MyCombatCanvas.rootStatusUI.Reset();
-                applyRoot = false;
+                ApplyRoot = false;
             }
 
         }
     }
     private void RootTimer()
     {
-        if (applyRoot)
+        if (ApplyRoot)
             RootDuration -= Time.deltaTime;
     }
     public void SetRootDuration(float _duration)
@@ -233,7 +268,7 @@ public class StatusController : MonoBehaviour
     #region Slow Methods
     public float DefaultSpeed { get; set; }
     public float SlowIntensity { get; set; }
-    private bool applySlow;
+    public bool ApplySlow { get; set; }
     private float slowDuration;
     public float SlowDuration
     {
@@ -247,20 +282,20 @@ public class StatusController : MonoBehaviour
             {
                 SetStatusUI(MySlime.MyCombatCanvas.speedStatusUI, -1);
                 SlimeLocomotion.acceleration = SlowIntensity;
-                applySlow = true;
+                ApplySlow = true;
             }
             if (slowDuration <= 0)
             {
                 MySlime.MyCombatCanvas.speedStatusUI.Reset();
                 SlimeLocomotion.acceleration = DefaultSpeed;
-                applySlow = false;
+                ApplySlow = false;
             }
 
         }
     }
     private void SlowTimer()
     {
-        if (applySlow)
+        if (ApplySlow)
             SlowDuration -= Time.deltaTime;
     }
     public void SetSlowDuration(float _duration, float _intensity)
@@ -284,8 +319,25 @@ public class StatusController : MonoBehaviour
     }  
     void Update()
     {
+        UpdateStatusTimers();
+        PassiveEnergyRegen();
+        SetHealthRegen();
+    }
+    private void PassiveEnergyRegen()
+    {
+        if (MySlime.CurrentEnergy < MySlime.maxEnergy)
+            MySlime.CurrentEnergy += Time.deltaTime * MySlime.energyRegenSpeed;       
+    }
+    private void SetHealthRegen()
+    {
+        if (ApplyHot)
+            MySlime.CurrentHealth += Time.deltaTime * HotIntensity;
+    }
+    private void UpdateStatusTimers()
+    {
         PowerTimer();
         ProtectionTimer();
+        HotTimer();
         ChannelTimer();
         SilenceTimer();
         StunTimer();

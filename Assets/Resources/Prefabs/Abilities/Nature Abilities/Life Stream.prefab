@@ -48,21 +48,26 @@ MonoBehaviour:
   path: 2
   id: 1
   anchor: 1
+  projections: []
   module:
-    behaviors: 01000000
+    behaviors: 0600000005000000
     tickDamageAmt: 0
-    healthRegenSpeed: 5
     rootDuration: 0
     stunDuration: 0
     slowDuration: 0
     slowIntensity: 0
     pullForce: 0
+    overTimeHealAmt: 2
+    overTimeHealDuration: 8
+    burstHealAmt: 20
+    silenceDuration: 0
   castPositions:
   - {fileID: 469679269041220943}
+  radiusIndex:
+  - 4.46
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  radius: 4.68
   duration: 8
   tickDelay: 0.15
   checkMethod: 0

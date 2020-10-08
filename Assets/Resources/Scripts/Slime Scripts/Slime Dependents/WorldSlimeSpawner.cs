@@ -43,16 +43,24 @@ public class WorldSlimeSpawner : MonoBehaviour
     public Vector3 RelativeRandomPosition()
     {//World slime method call
         Vector3 pos = Random.insideUnitSphere * unitSphereRadius;
-        pos += transform.position;
+        //pos += transform.position;
         pos.y = transform.position.y;//Helps us have fewer calls in long run
         return pos;
     }
 
     public void SpawnSlime(NavMeshAgent _agent)
     {
+        int testBreak = 0;
         bool successful = false;
         while(!successful)
         {
+            testBreak++;
+            if (testBreak >= 25)
+            {
+                Debug.LogError("Break");
+                successful = true;
+            }
+
             spawnPos = RelativeRandomPosition() + transform.position;
 
             if (NavMesh.SamplePosition(spawnPos, out navHit, 20, 1))
@@ -96,6 +104,9 @@ public class WorldSlimeSpawner : MonoBehaviour
 
         for (int i = 0; i < abilitySlotCount; i++)
             slime.data.abilities.Add(AbilityManager.Instance.AbilityMapRequest(slime.data));
+
+        SlimeAppearanceControls appearance = slime.GetComponent<SlimeAppearanceControls>();
+        appearance.SetAppearance(slime.data);//appearance set at spawn
 
         SpawnSlime(slime.agent);
         newSlime.transform.parent = transform;

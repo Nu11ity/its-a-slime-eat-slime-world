@@ -32,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
         _input = GetComponent<PlayerInputMap>();
         _myController = GetComponent<CharacterController>();
         _canMove = true;
-
-        //Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {

@@ -16,9 +16,19 @@ public class AILocomotion : BaseLocomotion
         get
         {//read only
             if (EnemySlime != null)
+            {
                 if (EnemySlime.CurrentHealth <= 0)
+                {
+                    EnemySlime = null;
                     return false;
+                }
+                return true;
+            }
+            UpdateTarget();
+            if (EnemySlime == null)
+                return false;
 
+            controlledState = ControlledState.Aggressive;
             return true;
         }
     }
@@ -47,16 +57,16 @@ public class AILocomotion : BaseLocomotion
     {
         get
         {//read only
-            if (targetSlime == null)
-            {
-                targetSlime = FindObjectOfType<PlayerLocomotion>();
-                EnemySlime = targetSlime.GetComponent<Slime>();
-            }
-
+            if(targetSlime == null)
+                UpdateTarget();
             return targetSlime;
         }
     }
-
+    private void UpdateTarget()
+    {
+        targetSlime = FindObjectOfType<PlayerLocomotion>();
+        EnemySlime = targetSlime.GetComponent<Slime>();
+    }
 
     public Transform projectileSpawner;
     public bool hasMovePoint;
@@ -178,6 +188,7 @@ public class AILocomotion : BaseLocomotion
     }
     void Update()
     {
+        //Debug.LogError("Grounded State is -> " + Controller.isGrounded);
         if (DisableBehavior)
         {
             Controller.enabled = false;

@@ -93,7 +93,7 @@ public class BaseInstantCast : PooledAbilityObject
         if (module.behaviors.Contains(InstantCastBehaviorModule.Behaviors.burstHeal))
             MySlime.HealDamage(module.burstHealAmt);
         if (module.behaviors.Contains(InstantCastBehaviorModule.Behaviors.overTimeHeal))
-            Debug.Log("Would give a over time heal to slime");
+            MySlime.MyStatusControls.SetHotDuration(module.overTimeHealDuration, module.overTimeHealAmt);
         if (module.behaviors.Contains(InstantCastBehaviorModule.Behaviors.MoveSpeed))
             Debug.Log("Would give a movement speed buff");
     }

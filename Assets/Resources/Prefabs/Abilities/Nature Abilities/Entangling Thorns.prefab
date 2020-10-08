@@ -13927,22 +13927,26 @@ MonoBehaviour:
     friendly: {fileID: 2100000, guid: 971ac7fd177556847a8c23a976fe635b, type: 2}
     damaging: {fileID: 2100000, guid: 29e8d6ea82a1e0742a0b866448401cf1, type: 2}
   module:
-    behaviors: 0000000002000000
-    tickDamageAmt: 3
-    healthRegenSpeed: 0
+    behaviors: 0000000001000000
+    tickDamageAmt: 2
     rootDuration: 7
     stunDuration: 0
     slowDuration: 0
     slowIntensity: 0
     pullForce: 0
+    overTimeHealAmt: 0
+    overTimeHealDuration: 0
+    burstHealAmt: 0
+    silenceDuration: 0
   castPositions:
   - {fileID: 8889491852745516908}
+  radiusIndex:
+  - 3.39
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  radius: 3.5
   duration: 7.25
-  tickDelay: 0.1
+  tickDelay: 0.15
   checkMethod: 1
   psIndex: 0
   ps: []

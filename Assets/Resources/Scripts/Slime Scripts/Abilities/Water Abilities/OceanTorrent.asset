@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexID: 3
   abilityName: Ocean Torrent
-  abilityIcon: {fileID: 21300000, guid: fccc7156f5a20d847b6f18880c73d76d, type: 3}
+  abilityIcon: {fileID: 21300000, guid: 67e817009b7b8444ba0615404d734939, type: 3}
   abilityCost: 10
   abilityFunctions: 010000000500000002000000
   affinityBonus: 3

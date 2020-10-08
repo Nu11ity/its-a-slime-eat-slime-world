@@ -368,6 +368,33 @@ public class @SlimeInputs : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""menu"",
+            ""id"": ""5e0c7644-fcef-4b9a-afb2-3d24c6ccd028"",
+            ""actions"": [
+                {
+                    ""name"": ""cursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""05c93170-f933-4ebd-96c1-7237305165b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""aaab5287-f6ed-4750-8054-a48630aa5cba"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""cursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -384,6 +411,9 @@ public class @SlimeInputs : IInputActionCollection, IDisposable
         m_combat_ability01 = m_combat.FindAction("ability01", throwIfNotFound: true);
         m_combat_ability02 = m_combat.FindAction("ability02", throwIfNotFound: true);
         m_combat_ability03 = m_combat.FindAction("ability03", throwIfNotFound: true);
+        // menu
+        m_menu = asset.FindActionMap("menu", throwIfNotFound: true);
+        m_menu_cursor = m_menu.FindAction("cursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -543,6 +573,39 @@ public class @SlimeInputs : IInputActionCollection, IDisposable
         }
     }
     public CombatActions @combat => new CombatActions(this);
+
+    // menu
+    private readonly InputActionMap m_menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_menu_cursor;
+    public struct MenuActions
+    {
+        private @SlimeInputs m_Wrapper;
+        public MenuActions(@SlimeInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @cursor => m_Wrapper.m_menu_cursor;
+        public InputActionMap Get() { return m_Wrapper.m_menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @cursor.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @cursor.started += instance.OnCursor;
+                @cursor.performed += instance.OnCursor;
+                @cursor.canceled += instance.OnCursor;
+            }
+        }
+    }
+    public MenuActions @menu => new MenuActions(this);
     public interface ILocomotionActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -556,5 +619,9 @@ public class @SlimeInputs : IInputActionCollection, IDisposable
         void OnAbility01(InputAction.CallbackContext context);
         void OnAbility02(InputAction.CallbackContext context);
         void OnAbility03(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnCursor(InputAction.CallbackContext context);
     }
 }

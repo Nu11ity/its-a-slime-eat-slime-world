@@ -15,7 +15,7 @@ MonoBehaviour:
   indexID: 2
   abilityName: Entangling Thorns
   abilityIcon: {fileID: 21300000, guid: f4bd00fc89b7e9c47bb5ba47bd782e30, type: 3}
-  abilityCost: 60
+  abilityCost: 100
   abilityFunctions: 0100000003000000
   affinityBonus: 5
   globalCD: 13

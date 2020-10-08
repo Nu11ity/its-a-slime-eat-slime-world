@@ -53,6 +53,31 @@ public class SlimeManager : MonoBehaviour
         DeallocateBehavior();
         SceneManager.UnloadSceneAsync(ArenaSceneName);
         AbilityManager.Instance.SetCanvas = false;
+        for (int i = 0; i < AbilityManager.Instance.pathOfFire.AbilityObjects.Count; i++)
+        {
+            for (int j = 0; j < AbilityManager.Instance.pathOfFire.AbilityObjects[i].objectPool.Count; j++)
+            {
+                AbilityManager.Instance.pathOfFire.AbilityObjects[i].objectPool[j].gameObject.SetActive(false);
+            }
+        }
+        for (int i = 0; i < AbilityManager.Instance.pathOfWater.AbilityObjects.Count; i++)
+        {
+            for (int j = 0; j < AbilityManager.Instance.pathOfWater.AbilityObjects[i].objectPool.Count; j++)
+            {
+                AbilityManager.Instance.pathOfWater.AbilityObjects[i].objectPool[j].gameObject.SetActive(false);
+            }
+        }
+        for (int i = 0; i < AbilityManager.Instance.pathOfNature.AbilityObjects.Count; i++)
+        {
+            for (int j = 0; j < AbilityManager.Instance.pathOfNature.AbilityObjects[i].objectPool.Count; j++)
+            {
+                AbilityManager.Instance.pathOfNature.AbilityObjects[i].objectPool[j].gameObject.SetActive(false);
+            }
+        }
+        AbilityManager.Instance.playerCombatCanvas.ClearDefeatedSlimeData();
+        AbilityManager.Instance.playerCombatCanvas.ResetStatusUIObjs();
+        AbilityManager.Instance.enemyCombatCanvas.ClearDefeatedSlimeData();
+        AbilityManager.Instance.enemyCombatCanvas.ResetStatusUIObjs();
     }
     void AddCombatScene()
     {

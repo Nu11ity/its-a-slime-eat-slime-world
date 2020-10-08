@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 4703533785572876307}
   - component: {fileID: 707918828253818253}
   - component: {fileID: 1079850967}
+  - component: {fileID: -8660765972037519603}
   m_Layer: 11
   m_Name: Slime AI(World)
   m_TagString: Untagged
@@ -193,6 +194,7 @@ MonoBehaviour:
   interactVisual: {fileID: 7703455774522882032}
   unconciousVFX: {fileID: 6348447914975104114}
   agent: {fileID: 4703533785572876307}
+  anim: {fileID: 4369857418284454363}
   intervalCheck: 4
   allyCallRange: 2
   desiredLayer:
@@ -279,6 +281,25 @@ MonoBehaviour:
     defaultTexture: {fileID: 2800000, guid: 8edb2c4b2fc39974189a4323261df1df, type: 3}
   animMaterial: {fileID: 2100000, guid: 7b5f4ab4f5be49c439e968c4e0897c6d, type: 2}
   myRenderer: {fileID: 7798073320404882769}
+--- !u!114 &-8660765972037519603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703533785572876306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ffb9bd0a77cff74abc33aac9c5f4e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeMesh: {fileID: 3194592947921998637}
+  fireModule:
+    mat: {fileID: 2100000, guid: a43d966414a2bd445b5b771713b80bb5, type: 2}
+  waterModule:
+    mat: {fileID: 2100000, guid: 2647cd6f48b86cc45bc931aa8b78d622, type: 2}
+  natureModule:
+    mat: {fileID: 2100000, guid: cf9d0b74cd4d3c940bd5c493c8661d3a, type: 2}
 --- !u!1 &4703533785865645187
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +723,7 @@ PrefabInstance:
     - target: {fileID: 8820348630489115647, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.032
       objectReference: {fileID: 0}
     - target: {fileID: 8820348630489115647, guid: e87f4fd347c3dd24aaacb117b1d8092c,
         type: 3}
@@ -784,9 +805,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4703533785613908412}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &4369857418284454363 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9070976588298053735, guid: e87f4fd347c3dd24aaacb117b1d8092c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4703533785613908412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &7798073320404882769 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3278089811222572269, guid: e87f4fd347c3dd24aaacb117b1d8092c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4703533785613908412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3194592947921998637 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7859685502759955089, guid: e87f4fd347c3dd24aaacb117b1d8092c,
     type: 3}
   m_PrefabInstance: {fileID: 4703533785613908412}
   m_PrefabAsset: {fileID: 0}

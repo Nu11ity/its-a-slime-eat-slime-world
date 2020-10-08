@@ -18,10 +18,11 @@ public class WorldSlime : MonoBehaviour, IInteractable
     public GameObject interactVisual;
     public GameObject unconciousVFX;
     public NavMeshAgent agent;
+    public Animator anim;
     public float intervalCheck;
     public float allyCallRange;
     public LayerMask desiredLayer;//interactable
-    public enum States { Wander, Idle }
+    public enum States { Wander, Idle, Unconcious }
     public States currentState;
 
     [Header("SlimeData module")]
@@ -69,9 +70,12 @@ public class WorldSlime : MonoBehaviour, IInteractable
     public void ConvertToCaptureReady()
     {
         Debug.Log(this.name + " is in a capture ready state");
+        //agent.enabled = false;
         unconciousVFX.SetActive(true);
         FaceControl.FacialBehavior = SlimeFaceControls.FacialBehaviors.Unconcious;
-        //slimeAnim.CrossFade("Unconcious", .5f);
+        currentState = States.Unconcious;
+        agent.speed = 0;
+        anim.CrossFade("Unconcious", .5f);
     }
     public void OnHoverEnter()
     {
@@ -108,6 +112,9 @@ public class WorldSlime : MonoBehaviour, IInteractable
     #region States Behavior
     private void DetermineStates()
     {
+        if (currentState == States.Unconcious)
+            return;
+
         interval -= Time.deltaTime;
         if (interval <= 0)
         {
@@ -156,8 +163,8 @@ public class WorldSlime : MonoBehaviour, IInteractable
                 safetyNet++;
                 if (safetyNet > 25)
                     successful = true;               
-                //randomPoint = Spawner.RelativeRandomPosition() + transform.position;
-                randomPoint = Spawner.RelativeRandomPosition();
+                randomPoint = Spawner.RelativeRandomPosition() + Spawner.transform.position;
+                //randomPoint = Spawner.RelativeRandomPosition();
                 if (NavMesh.SamplePosition(randomPoint, out hit, 2, 1))
                 {
                     successful = true;

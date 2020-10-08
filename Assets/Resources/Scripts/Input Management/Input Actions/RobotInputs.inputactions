@@ -210,6 +210,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "menu",
+            "id": "ad9e3445-277c-474d-9977-08611251e92f",
+            "actions": [
+                {
+                    "name": "cursor",
+                    "type": "Button",
+                    "id": "737bb51a-8064-4658-87eb-02d108340abb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0b902e09-45fb-4f5c-b740-7963de7d8428",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

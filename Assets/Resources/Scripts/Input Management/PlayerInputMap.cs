@@ -22,14 +22,13 @@ public class PlayerInputMap : MonoBehaviour
     public bool Jump { get; set; }
     public bool Sprint { get; set; }
 
-    public bool Interact
-    {
-        get
-        {
-            return PlayerInput.interaction.Interact.triggered;
-        }
-    }
+    public bool Interact { get; set; }
+    public bool CursorAction { get; set; }
 
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     void OnEnable()
     {
         PlayerInput.Enable();
@@ -45,5 +44,16 @@ public class PlayerInputMap : MonoBehaviour
 
         Jump = PlayerInput.locomotion.jump.triggered;
         Sprint = PlayerInput.locomotion.sprint.triggered;
+        Interact = PlayerInput.interaction.Interact.triggered;
+
+        //lock cursor
+        CursorAction = PlayerInput.menu.cursor.triggered;
+        if (CursorAction)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+                Cursor.lockState = CursorLockMode.Confined;
+            else
+                Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }

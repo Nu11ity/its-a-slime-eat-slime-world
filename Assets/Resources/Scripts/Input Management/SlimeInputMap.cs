@@ -17,9 +17,13 @@ public class SlimeInputMap : MonoBehaviour
     public float OnActionHit { get; set; }
     public float OnCancelHit { get; set; }
 
+    public bool CursorAction { get; set; }
+
+
     void Awake()
     {
         SlimeInput = new SlimeInputs();
+        Cursor.lockState = CursorLockMode.Locked;
     }
     void OnEnable()
     {
@@ -43,5 +47,15 @@ public class SlimeInputMap : MonoBehaviour
 
         OnActionHit = SlimeInput.combat.action.ReadValue<float>();
         OnCancelHit = SlimeInput.combat.cancel.ReadValue<float>();
+
+        //lock cursor
+        CursorAction = SlimeInput.menu.cursor.triggered;
+        if(CursorAction)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+                Cursor.lockState = CursorLockMode.Confined;
+            else
+                Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }

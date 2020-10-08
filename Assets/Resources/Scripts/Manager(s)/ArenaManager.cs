@@ -36,7 +36,7 @@ public class ArenaManager : MonoBehaviour
     public Vector3 RelativeRandomPosition()
     {
         Vector3 pos = Random.insideUnitSphere * arenaRadius;
-        pos += transform.position;
+        //pos += transform.position;
         pos.y = transform.position.y;
         return pos;
     }
@@ -77,9 +77,12 @@ public class ArenaManager : MonoBehaviour
         for (int i = 0; i < _info.abilities.Count; i++)
             combatant.data.abilities.Add(_info.abilities[i]);
 
+        SlimeAppearanceControls appearance = combatant.GetComponent<SlimeAppearanceControls>();
+        appearance.SetAppearance(combatant.data);//appearance set at spawn
+
         newSlime.transform.parent = spawnA;
         newSlime.transform.position = spawnA.position;
-        newSlime.transform.rotation = spawnA.rotation;
+        newSlime.transform.rotation = spawnA.rotation;       
 
         combatant.OnSpawnToWorld();
         newSlime.SetActive(true);
@@ -99,9 +102,12 @@ public class ArenaManager : MonoBehaviour
         for (int i = 0; i < _info.abilities.Count; i++)
             combatant.data.abilities.Add(_info.abilities[i]);
 
+        SlimeAppearanceControls appearance = combatant.GetComponent<SlimeAppearanceControls>();
+        appearance.SetAppearance(combatant.data);//appearance set at spawn
+
         newSlime.transform.parent = spawnB;
         newSlime.transform.position = spawnB.position;
-        newSlime.transform.rotation = spawnB.rotation;
+        newSlime.transform.rotation = spawnB.rotation;        
 
         combatant.OnSpawnToWorld();
         newSlime.SetActive(true);
