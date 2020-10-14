@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(CharacterController))]
 public class AILocomotion : BaseLocomotion
@@ -15,9 +16,19 @@ public class AILocomotion : BaseLocomotion
         get
         {//read only
             if (EnemySlime != null)
+            {
                 if (EnemySlime.CurrentHealth <= 0)
+                {
+                    EnemySlime = null;
                     return false;
+                }
+                return true;
+            }
+            UpdateTarget();
+            if (EnemySlime == null)
+                return false;
 
+            controlledState = ControlledState.Aggressive;
             return true;
         }
     }
@@ -46,16 +57,16 @@ public class AILocomotion : BaseLocomotion
     {
         get
         {//read only
-            if (targetSlime == null)
-            {
-                targetSlime = FindObjectOfType<PlayerLocomotion>();
-                EnemySlime = targetSlime.GetComponent<Slime>();
-            }
-
+            if(targetSlime == null)
+                UpdateTarget();
             return targetSlime;
         }
     }
-
+    private void UpdateTarget()
+    {
+        targetSlime = FindObjectOfType<PlayerLocomotion>();
+        EnemySlime = targetSlime.GetComponent<Slime>();
+    }
 
     public Transform projectileSpawner;
     public bool hasMovePoint;
@@ -80,62 +91,82 @@ public class AILocomotion : BaseLocomotion
         aim.y = 0;
         projectileSpawner.transform.rotation = Quaternion.LookRotation(aim);
     }
-    
-    public void OnDrawGizmos()
-    {
-        Vector3 nodeFront = transform.position + (transform.forward) * 10f;
-        Vector3 nodeBack = transform.position + (-transform.forward) * 10f;
-        Vector3 nodeRight = transform.position + (transform.right) * 10f;
-        Vector3 nodeLeft = transform.position + (-transform.right) * 10f;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(nodeFront, 1f);
-        Gizmos.DrawSphere(nodeBack, 1f);
-        Gizmos.DrawSphere(nodeRight, 1f);
-        Gizmos.DrawSphere(nodeLeft, 1f);
+    //public void OnDrawGizmos()
+    //{
+    //    Vector3 nodeFront = transform.position + (transform.forward) * 10f;
+    //    Vector3 nodeBack = transform.position + (-transform.forward) * 10f;
+    //    Vector3 nodeRight = transform.position + (transform.right) * 10f;
+    //    Vector3 nodeLeft = transform.position + (-transform.right) * 10f;
+
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawSphere(nodeFront, 1f);
+    //    Gizmos.DrawSphere(nodeBack, 1f);
+    //    Gizmos.DrawSphere(nodeRight, 1f);
+    //    Gizmos.DrawSphere(nodeLeft, 1f);
+    //}
+    //private void SpawnSphere(Vector3 _pos)
+    //{
+    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //    sphere.transform.position = _pos;
+    //}
+
+    //private NavMeshAgent agent;
+    //public NavMeshAgent Agent
+    //{
+    //    get
+    //    {
+    //        if (agent == null)
+    //            agent = GetComponent<NavMeshAgent>();
+    //        return agent;
+    //    }
+    //}
+    private Vector3 randomPoint;
+    private Vector3 finalPos;
+    private bool positionSet;
+    private NavMeshHit navHit;
+    private float defensiveTimer;
+    bool CheckRefresh()
+    {
+        if(positionSet)
+        {
+            float dist = (finalPos - transform.position).magnitude;
+            if (dist <= 2.5f)
+                return true;
+            else
+                return false;
+        }
+        return false;
     }
-    private Vector3 RandomPos { get; set; }
-    private float atNewPos;
-    private bool foundPosition;
-    private int layerIndex = 8; 
     public Vector3 DefensivePositioning()
     {
-        if(!foundPosition)
+        defensiveTimer -= Time.deltaTime;
+        
+        if (defensiveTimer <= 0 || CheckRefresh())
         {
-            bool locationSafe = false;
-            while(!locationSafe)
-            {
-                List<bool> safe = new List<bool>();
-                Vector3 randomPos = Random.insideUnitSphere * 45f;
-                randomPos.y = 0;
-                RandomPos = randomPos;
-                Collider[] safetyCheck = Physics.OverlapSphere(RandomPos, 3f);
-                if (safetyCheck.Length > 0)
-                {
-                    for (int i = 0; i < safetyCheck.Length; i++)
-                    {
-                        //Debug.Log("Inside unit sphere -> " + safetyCheck[i].name + ", Surface angle = " + safetyCheck[i].transform.eulerAngles.y);
-                        if (safetyCheck[i].gameObject.layer != layerIndex)//the issue is here!!!!!!!!!!!!!!!!!!!!!!!!!!!! <-----
-                            safe.Add(false);
-                        else
-                            safe.Add(true);
-                    }
-                }
+            //set speed
+            bool successful = false;
 
-                if (safe.Contains(false))
-                    locationSafe = false;
-                else
-                    locationSafe = true;
+            int safetyNet = 0;
+            while(!successful)
+            {
+                safetyNet++;
+                if (safetyNet > 20)
+                    successful = true;
+
+                randomPoint = ArenaManager.instance.RelativeRandomPosition();
+                if(NavMesh.SamplePosition(randomPoint, out navHit, 2, 1))
+                {
+                    successful = true;
+                    finalPos = navHit.position;
+                    //Agent.SetDestination(finalPos);
+                    //SpawnSphere(finalPos);
+                    positionSet = true;
+                }
             }
-            foundPosition = true;        
+            defensiveTimer = 5;
         }
-        if (foundPosition)
-        {
-            atNewPos = (transform.position - RandomPos).magnitude;
-            if (atNewPos <= 1.5f)
-                foundPosition = false;
-        }
-        return RandomPos;
+        return finalPos;
     }
     public void DistanceChecks()
     {
@@ -157,6 +188,7 @@ public class AILocomotion : BaseLocomotion
     }
     void Update()
     {
+        //Debug.LogError("Grounded State is -> " + Controller.isGrounded);
         if (DisableBehavior)
         {
             Controller.enabled = false;

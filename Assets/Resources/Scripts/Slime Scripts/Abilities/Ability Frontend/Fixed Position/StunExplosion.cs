@@ -24,14 +24,14 @@ public class StunExplosion : BaseExplosion
                             if (!hitTargets.Contains(targets[j].gameObject))
                             {
                                 hitTargets.Add(targets[j].gameObject);
-                                hitSlime.TakeDamage(damage);
+                                hitSlime.TakeDamage(10);
                                 hitSlime.MyStatusControls.SetStunDuration(stunDuration);
                             }
                         }
                         else
                         {
                             hitTargets.Add(targets[j].gameObject);
-                            hitSlime.TakeDamage(damage);
+                            hitSlime.TakeDamage(10);
                             hitSlime.MyStatusControls.SetStunDuration(stunDuration);
                         }
                     }

@@ -8,7 +8,7 @@ public class KnockbackProjectile : BaseProjectile
     public float knockbackForce;
     private float mass = 3;
 
-    public override void DamageCast()
+    public override void OnCastBehavior()
     {
         Vector3 offset = transform.position - transform.forward * castOffset;
         targets = Physics.OverlapSphere(offset, radius, desiredLayers);
@@ -21,7 +21,7 @@ public class KnockbackProjectile : BaseProjectile
                     if (targets[i].gameObject.layer == slimeLayer)
                     {
                         Slime hitSlime = targets[i].GetComponent<Slime>();
-                        hitSlime.TakeDamage(damage);
+                        hitSlime.TakeDamage(10);
                         Vector3 dir = targets[i].transform.position - offset;
                         float force = Mathf.Clamp(knockbackForce / mass, 0, knockbackForce);
                         hitSlime.MyStatusControls.RequestImpact(dir, force);

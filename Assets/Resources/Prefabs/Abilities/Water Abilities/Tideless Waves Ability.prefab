@@ -13870,8 +13870,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c48753e09bd89dd499a6b737fd37151f, type: 2}
-  - {fileID: 2100000, guid: c48753e09bd89dd499a6b737fd37151f, type: 2}
+  - {fileID: 2100000, guid: 54ee19565981e8648ae9a9d37cd6adaa, type: 2}
+  - {fileID: 2100000, guid: 54ee19565981e8648ae9a9d37cd6adaa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18395,7 +18395,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 4a901d6ca82a2b64584c774a4715feb4, type: 2}
-  - {fileID: 2100000, guid: 4a901d6ca82a2b64584c774a4715feb4, type: 2}
+  - {fileID: 2100000, guid: d09016732d438a245af5e9a36b259d0c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23013,7 +23013,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 0}
-  - {fileID: 2100000, guid: 1548f3a2244f9f14f9695b7efaf1011c, type: 2}
+  - {fileID: 2100000, guid: 103e13b7cbeae404d925c6ce3463e38e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23344,8 +23344,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.85
-      minScalar: 1.35
+      scalar: 0.925
+      minScalar: 0.675
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -23379,8 +23379,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.85
-      minScalar: 1.35
+      scalar: 0.925
+      minScalar: 0.675
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -23414,8 +23414,8 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.85
-      minScalar: 1.35
+      scalar: 0.925
+      minScalar: 0.675
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -23552,7 +23552,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 200
+    maxNumParticles: 400
     size3D: 1
     rotation3D: 0
     gravityModifier:
@@ -23870,7 +23870,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 40
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -27526,8 +27526,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b5ed58feac3ac04886334f1e1bc7b5f, type: 2}
-  - {fileID: 2100000, guid: 9b5ed58feac3ac04886334f1e1bc7b5f, type: 2}
+  - {fileID: 2100000, guid: 5f03732a58b905241977bbdd97f8814c, type: 2}
+  - {fileID: 2100000, guid: 5f03732a58b905241977bbdd97f8814c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27614,7 +27614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5620424798127034663}
-  - component: {fileID: 4341873304863935255}
+  - component: {fileID: -1710914404442248154}
   m_Layer: 0
   m_Name: Tideless Waves Ability
   m_TagString: Untagged
@@ -27629,7 +27629,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5620424798127034662}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -27638,7 +27638,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4341873304863935255
+--- !u!114 &-1710914404442248154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27647,13 +27647,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5620424798127034662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd1b91f031087174fad0c6d65d8145d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 4897e8fe593d37548b866157e6c114cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   registerMethod: 0
   path: 1
   id: 1
   anchor: 0
+  module:
+    behaviors: 000000000500000004000000
+    damageAmt: 45
+    healAmt: 0
+    rootDuration: 0
+    stunDuration: 0
+    slowDuration: 6
+    slowIntensity: 0.25
+    KnockbackForce: 120
   impactObject: {fileID: 4341873305072970102}
   allowCasting: 1
   lifeTime: 3
@@ -27662,13 +27671,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   slimeLayer: 9
-  damage: 60
   radius: 1.7
   disableOnImpact:
   - {fileID: 9064878134070739767}
-  showGizmos: 0
   castOffset: 1.7
-  knockbackForce: 120
+  showGizmos: 0
 --- !u!1 &5620424798180503243
 GameObject:
   m_ObjectHideFlags: 0
@@ -32920,8 +32927,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a901d6ca82a2b64584c774a4715feb4, type: 2}
-  - {fileID: 2100000, guid: 4a901d6ca82a2b64584c774a4715feb4, type: 2}
+  - {fileID: 2100000, guid: e38246ebc64d39148862f879b230749e, type: 2}
+  - {fileID: 2100000, guid: e38246ebc64d39148862f879b230749e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

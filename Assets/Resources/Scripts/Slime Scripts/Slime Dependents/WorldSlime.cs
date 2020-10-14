@@ -14,22 +14,23 @@ public class WSlimeBehavior
 
 public class WorldSlime : MonoBehaviour, IInteractable
 {
-    public SlimeData data;
-
     [Header("Control Behavior")]
+    public GameObject interactVisual;
+    public GameObject unconciousVFX;
     public NavMeshAgent agent;
-    public enum States { Wander, Idle }
+    public Animator anim;
+    public float intervalCheck;
+    public float allyCallRange;
+    public LayerMask desiredLayer;//interactable
+    public enum States { Wander, Idle, Unconcious }
     public States currentState;
 
+    [Header("SlimeData module")]
+    public SlimeData data;
+
+    [Header("Behavior modules")]
     public WSlimeBehavior wander;
     public WSlimeBehavior idle;
-
-    public float intervalCheck;
-    private float interval;
-
-    private Vector3 randomPoint;
-    private Vector3 finalPos;
-    private NavMeshHit hit;
 
     private WorldSlimeSpawner spawner;
     public WorldSlimeSpawner Spawner
@@ -42,37 +43,78 @@ public class WorldSlime : MonoBehaviour, IInteractable
             return spawner;
         }
     }
+    private SlimeFaceControls faceControl;
+    public SlimeFaceControls FaceControl
+    {
+        get
+        {
+            if (faceControl == null)
+                faceControl = GetComponent<SlimeFaceControls>();
+
+            return faceControl;
+        }
+    }
+
+    private float interval;
+    private Vector3 randomPoint;
+    private Vector3 finalPos;
+    private NavMeshHit hit;
+
 
     public void Update()
     {
         DetermineStates();
     }
-    private void SpawnSphere(Vector3 _pos)
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = _pos;
-    }
 
     #region IInteractable Behavior
+    public void ConvertToCaptureReady()
+    {
+        Debug.Log(this.name + " is in a capture ready state");
+        //agent.enabled = false;
+        unconciousVFX.SetActive(true);
+        FaceControl.FacialBehavior = SlimeFaceControls.FacialBehaviors.Unconcious;
+        currentState = States.Unconcious;
+        agent.speed = 0;
+        anim.CrossFade("Unconcious", .5f);
+    }
     public void OnHoverEnter()
     {
         Debug.Log("OnHoverEnter thru -> " + transform.name);
-        //
+        interactVisual.SetActive(true);
     }
     public void OnHoverExit()
     {
         Debug.Log("OnHoverExit thru -> " + transform.name);
-        //
+        interactVisual.SetActive(false);
     }
+
+    private Collider[] allies;
     public void Interact()
     {
-        //
+        Debug.Log("Interacted with -> " + transform.name);
+        AbilityManager.Instance.slimeManager.automatedSlimes.Add(this);
+        allies = Physics.OverlapSphere(transform.position, allyCallRange, desiredLayer);
+        if(allies.Length > 0)
+        {
+            for (int i = 0; i < allies.Length; i++)
+            {
+                if(allies[i].GetComponent<WorldSlime>() && allies[i].gameObject != this.gameObject)
+                {
+                    Debug.Log("Found an ally in -> " + allies[i].transform.name);
+                    AbilityManager.Instance.slimeManager.automatedSlimes.Add(allies[i].GetComponent<WorldSlime>());
+                }
+            }
+        }
+        AbilityManager.Instance.slimeManager.InitializedCombat = true;
     }
     #endregion  
 
     #region States Behavior
     private void DetermineStates()
     {
+        if (currentState == States.Unconcious)
+            return;
+
         interval -= Time.deltaTime;
         if (interval <= 0)
         {
@@ -114,23 +156,32 @@ public class WorldSlime : MonoBehaviour, IInteractable
         {
             agent.speed = wander.speed;
             bool successful = false;
+            
+            int safetyNet = 0;
             while(!successful)
-            {
-                randomPoint = Spawner.RelativeRandomPosition() + transform.position;
-
-                if (NavMesh.SamplePosition(randomPoint, out hit, 20, 1))
+            {               
+                safetyNet++;
+                if (safetyNet > 25)
+                    successful = true;               
+                randomPoint = Spawner.RelativeRandomPosition() + Spawner.transform.position;
+                //randomPoint = Spawner.RelativeRandomPosition();
+                if (NavMesh.SamplePosition(randomPoint, out hit, 2, 1))
                 {
                     successful = true;
                     finalPos = hit.position;
                     agent.SetDestination(finalPos);
 
-                    SpawnSphere(finalPos);
+                    //SpawnSphere(finalPos);
                 }
             }           
-
             wander.Timer = wander.duration;
         }      
     }
+    //private void SpawnSphere(Vector3 _pos)
+    //{
+    //    GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+    //    sphere.transform.position = _pos;
+    //}
     private void Idle()
     {
         idle.Timer -= Time.deltaTime;

@@ -7065,51 +7065,6 @@ Transform:
   m_Father: {fileID: 8889491852058160158}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -6.2791, y: 11.446199, z: 30.3259}
---- !u!1 &8889491851922142901
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8889491851922142900}
-  - component: {fileID: 8889491851922142899}
-  m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8889491851922142900
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8889491851922142901}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8889491853360808125}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8889491851922142899
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8889491851922142901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8889491851939876706
 GameObject:
   m_ObjectHideFlags: 0
@@ -13926,7 +13881,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8889491852745516908}
-  - component: {fileID: 8889491852745516907}
+  - component: {fileID: 4873466517618173436}
   m_Layer: 0
   m_Name: Entangling Thorns
   m_TagString: Untagged
@@ -13951,7 +13906,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8889491852745516907
+--- !u!114 &4873466517618173436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13960,27 +13915,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 8889491852745516909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d620ffafc4a1d1344a6d6e36570bf50e, type: 3}
+  m_Script: {fileID: 11500000, guid: e75648efebdc566428cf5b5c8f7e6365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   registerMethod: 0
   path: 2
   id: 2
   anchor: 0
+  projections:
+  - projectionMesh: {fileID: 8889491851638137691}
+    friendly: {fileID: 2100000, guid: 971ac7fd177556847a8c23a976fe635b, type: 2}
+    damaging: {fileID: 2100000, guid: 29e8d6ea82a1e0742a0b866448401cf1, type: 2}
+  module:
+    behaviors: 0000000001000000
+    tickDamageAmt: 2
+    rootDuration: 7
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    pullForce: 0
+    overTimeHealAmt: 0
+    overTimeHealDuration: 0
+    burstHealAmt: 0
+    silenceDuration: 0
   castPositions:
   - {fileID: 8889491852745516908}
+  radiusIndex:
+  - 3.39
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  damage: 7
-  radius: 3.5
   duration: 7.25
-  tickDelay: 0.1
+  tickDelay: 0.15
   checkMethod: 1
   psIndex: 0
   ps: []
   showGizmos: 0
-  rootDuration: 7
 --- !u!1 &8889491852760221220
 GameObject:
   m_ObjectHideFlags: 0
@@ -20271,7 +20241,6 @@ Transform:
   m_LocalScale: {x: 0.75, y: 1, z: 0.75}
   m_Children:
   - {fileID: 8889491851638137692}
-  - {fileID: 8889491851922142900}
   m_Father: {fileID: 8889491852745516908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

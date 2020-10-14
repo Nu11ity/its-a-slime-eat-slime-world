@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class SlimeFaceTestScript : MonoBehaviour
 {
-    public TextureSheetAnimator faceAnimator;
-    public TextureSheetAnimation blinkAnim;
+    //public TextureSheetAnimator faceAnimator;
+    //public TextureSheetAnimation blinkAnim;
+    //public TextureSheetAnimation unconciousAnim;
 
-    private void Update()
-    {
-        if (TempInputManager.Instance.Space_Key)
-            faceAnimator.animateTextureSheet(blinkAnim);
-    }
+    //public WorldSlime slime;
+
+    //private void Update()
+    //{
+    //    if (TempInputManager.Instance.Space_Key)
+    //    {
+    //        slime.ConvertToCaptureReady();
+    //        faceAnimator.animateTextureSheet(unconciousAnim);
+    //    }
+    //}
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexID: 1
   abilityName: Enveloping Blossoms
-  abilityIcon: {fileID: 21300000, guid: eeff49e051316944dad15296f8e68e1b, type: 3}
-  abilityCost: 70
+  abilityIcon: {fileID: 21300000, guid: 2dc2b43380eb2ac4f8dde949727d4abc, type: 3}
+  abilityCost: 40
   abilityFunctions: 0100000007000000
   affinityBonus: 5
   globalCD: 16
@@ -23,7 +23,5 @@ MonoBehaviour:
     moduleData:
     - name: Radius
       modifier: 4.5
-    name: Radius
-    modifier: 4.5
     projection: 1
     projectionScale: {x: 1, y: 1, z: 1}

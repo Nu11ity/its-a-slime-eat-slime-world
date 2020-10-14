@@ -17,9 +17,32 @@ public class PooledAbilityObject : MonoBehaviour
 
     public int id;
     public bool anchor;
-    public Transform MyParent { get; set; }
-    public Slime MySlime { get; set; }
+    public List<ProjectionModuleData> projections = new List<ProjectionModuleData>();
 
+    public Transform MyParent { get; set; }
+    private Slime mySlime;
+    public Slime MySlime
+    {
+        get { return mySlime; }
+        set
+        {
+            mySlime = value;
+            SetProjectionMat();
+        }
+    }
+    private void SetProjectionMat()
+    {
+        if (projections.Count == 0 || mySlime == null)
+            return;
+
+        for (int i = 0; i < projections.Count; i++)
+        {
+            if (mySlime.slimeControlType == Slime.SlimeControlType.Player)
+                projections[i].projectionMesh.material = projections[i].friendly;
+            else
+                projections[i].projectionMesh.material = projections[i].damaging;
+        }
+    }
     public virtual void SetSlime(Slime _caller)
     {
         MySlime = _caller;

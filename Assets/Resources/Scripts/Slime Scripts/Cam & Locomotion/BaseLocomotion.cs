@@ -61,9 +61,13 @@ public class BaseLocomotion : MonoBehaviour
         impact += _dir.normalized * _force / mass;
         moveThrottle.y += Mathf.Sqrt(jumpForce / 3);
     }
-    public void AddSlow(float _duration, float _slowPwr)
+    public void ContinuousForce(Vector3 _dir, float _force)
     {
-        //during duration, speed / slow amt
+        _dir.Normalize();
+        _dir.y = 0;
+        //Stop();
+        impact -= _dir.normalized * _force / mass;
+        //moveThrottle.y += Mathf.Sqrt(jumpForce / 3);
     }
     public void Stop()
     {

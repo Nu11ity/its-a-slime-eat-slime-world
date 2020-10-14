@@ -63,6 +63,17 @@ public class StatMapping
 
         SetStats();
     }
+    public void ReadThruStats(SlimeData _info)
+    {
+        currentLevel = _info.levelMapping.level;
+        currentMaxLevel = GenerationDefinedLevelCap();
+
+        strength.CurrentStatValue = _info.statMapping.strength.CurrentStatValue;
+        agility.CurrentStatValue = _info.statMapping.agility.CurrentStatValue;
+        intellect.CurrentStatValue = _info.statMapping.intellect.CurrentStatValue;
+        endurance.CurrentStatValue = _info.statMapping.endurance.CurrentStatValue;
+        spirit.CurrentStatValue = _info.statMapping.spirit.CurrentStatValue;
+    }
     public void SetStats(int _level)
     {
         currentLevel = _level;

@@ -17,7 +17,7 @@ public class CombatCanvas : MonoBehaviour
     public StatusEffectUI poisonStatusUI;
     public StatusEffectUI burnStatusUI;
     public StatusEffectUI powerStatusUI;
-    public StatusEffectUI defenseStatusUI;
+    public StatusEffectUI protectionStatusUI;
 
 
     [Header("Ability Icons")]
@@ -63,7 +63,7 @@ public class CombatCanvas : MonoBehaviour
         poisonStatusUI.Reset();
         burnStatusUI.Reset();
         powerStatusUI.Reset();
-        defenseStatusUI.Reset();
+        protectionStatusUI.Reset();
     }
     public void SetAbilityFillMeter(float _value, float _max, int _index)
     {

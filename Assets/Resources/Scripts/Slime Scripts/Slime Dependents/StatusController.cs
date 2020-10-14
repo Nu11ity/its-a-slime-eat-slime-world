@@ -10,11 +10,150 @@ public class StatusController : MonoBehaviour
     public BaseLocomotion SlimeLocomotion { get; set; }
     public BaseAbilityController SlimeController { get; set; }
     public Slime MySlime { get; set; }
+    private float maxDuration = 10f;
+
+    //Abilities in world will reference slime's status controls thru the myslime property set when ability is initialized.
+    //Ability checks if ApplyPower is set to true/false, and fixes it's damage value based off this information. 
+    //Percentage value should follow the protections value percentage.
+    #region Power Methods
+    public bool ApplyPower { get; set; }
+    private float powerDuration;
+    public float PowerDuration
+    {
+        get { return powerDuration; }
+        set
+        {
+            powerDuration = value;
+            powerDuration = Mathf.Clamp(powerDuration, 0, maxDuration);
+
+            if (powerDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.powerStatusUI, 1);
+                ApplyPower = true;
+            }
+            if(powerDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.powerStatusUI.Reset();
+                ApplyPower = false;
+            }
+        }
+    }
+    private void PowerTimer()
+    {
+        if (ApplyPower)
+            PowerDuration -= Time.deltaTime;
+    }
+    public void SetPowerDuration(float _duration)
+    {
+        PowerDuration += _duration;
+    }
+    #endregion
+
+    #region Protections Methods
+    public bool ApplyProtection { get; set; }
+    private float protectionDuration;
+    public float ProtectionDuration
+    {
+        get { return protectionDuration; }
+        set
+        {
+            protectionDuration = value;
+            protectionDuration = Mathf.Clamp(protectionDuration, 0, maxDuration);
+
+            if (protectionDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.protectionStatusUI, 1);
+                ApplyProtection = true;
+            }
+            if (protectionDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.protectionStatusUI.Reset();
+                ApplyProtection = false;
+            }
+        }
+    }
+    private void ProtectionTimer()
+    {
+        if (ApplyProtection)
+            ProtectionDuration -= Time.deltaTime;
+    }
+    public void SetProtectionDuration(float _duration)
+    {
+        ProtectionDuration += _duration;
+    }
+    #endregion
+
+    #region Heal Methods
+    public float HotIntensity { get; set; }
+    public bool ApplyHot { get; set; }
+    private float hotDuration;
+    private float HotDuration
+    {
+        get { return hotDuration; }
+        set
+        {
+            hotDuration = value;
+
+            if (hotDuration > 0)
+            {
+                SetStatusUI(MySlime.MyCombatCanvas.healthStatusUI, 1);
+                ApplyHot = true;
+            }
+            if (hotDuration <= 0)
+            {
+                MySlime.MyCombatCanvas.healthStatusUI.Reset();
+                ApplyHot = false;
+            }
+        }
+    }
+    private void HotTimer()
+    {
+        if (ApplyHot)
+            HotDuration -= Time.deltaTime;
+    }
+    public void SetHotDuration(float _duration, float _intensity)
+    {
+        HotIntensity = _intensity;
+        HotDuration += _duration;
+    }
+    #endregion
+
+    #region Channeling Methods 
+    public bool ApplyChannel { get; set; }
+    private float channelDuration;
+    public float ChannelDuration
+    {
+        get { return channelDuration; }
+        set
+        {
+            channelDuration = value;
+            channelDuration = Mathf.Clamp(channelDuration, 0, maxDuration);
+
+            if (channelDuration > 0)
+            {
+                SlimeController.RestrictCasting = true;
+                ApplyChannel = true;
+            }
+            if(channelDuration <= 0)
+            {
+                SlimeController.RestrictCasting = false;
+                ApplyChannel = false;
+            }
+        }
+    }
+    private void ChannelTimer()
+    {
+        if (ApplyChannel)
+            ChannelDuration -= Time.deltaTime;
+    }
+    public void SetChannelDuration(float _duration)
+    {
+        ChannelDuration += _duration;
+    }
+    #endregion
 
     #region Silence Methods
-    [Header("Silence data")]
-    public float maxSilencedDuration;
-    private bool applySilence;
+    public bool ApplySilence { get; set; }
     private float silenceDuration;
     public float SilenceDuration
     {
@@ -22,22 +161,24 @@ public class StatusController : MonoBehaviour
         set
         {
             silenceDuration = value;
-            if(silenceDuration > 0)
+            silenceDuration = Mathf.Clamp(silenceDuration, 0, maxDuration);
+
+            if (silenceDuration > 0)
             {
                 SlimeController.CancelToggledAbility();
                 SlimeController.RestrictCasting = true;
-                applySilence = true;
+                ApplySilence = true;
             }
             if (silenceDuration <= 0)
             {
                 SlimeController.RestrictCasting = false;
-                applySilence = false;
+                ApplySilence = false;
             }
         }
     }
     private void SilenceTimer()
     {
-        if (applySilence)
+        if (ApplySilence)
             SilenceDuration -= Time.deltaTime;
     }
     public void SetSilenceDuration(float _duration)
@@ -47,9 +188,7 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Stun Methods
-    [Header("Stun data")]
-    public float maxStunDuration;
-    private bool applyStun;
+    public bool ApplyStun { get; set; }
     private float stunDuration;
     public float StunDuration
     {
@@ -57,7 +196,7 @@ public class StatusController : MonoBehaviour
         set
         {
             stunDuration = value;
-            stunDuration = Mathf.Clamp(stunDuration, 0, maxStunDuration);
+            stunDuration = Mathf.Clamp(stunDuration, 0, maxDuration);
 
             if (stunDuration > 0)
             {
@@ -65,21 +204,21 @@ public class StatusController : MonoBehaviour
                 SlimeController.RestrictCasting = true;
                 SlimeLocomotion.enableMovement = false;
                 SetStatusUI(MySlime.MyCombatCanvas.stunStatusUI, -1);
-                applyStun = true;
+                ApplyStun = true;
             }
             if (stunDuration <= 0)
             {
-                if(!applyRoot)
+                if(!ApplyRoot)
                     SlimeLocomotion.enableMovement = true;
                 MySlime.MyCombatCanvas.stunStatusUI.Reset();
                 SlimeController.RestrictCasting = false;
-                applyStun = false;
+                ApplyStun = false;
             }
         }
     }
     private void StunTimer()
     {
-        if (applyStun)
+        if (ApplyStun)
             StunDuration -= Time.deltaTime;
     }
     public void SetStunDuration(float _duration)
@@ -89,9 +228,7 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Rooted Methods
-    [Header("Root data")]
-    public float maxRootDuration;
-    private bool applyRoot;
+    public bool ApplyRoot { get; set; }
     private float rootDuration;
     public float RootDuration
     {
@@ -99,27 +236,27 @@ public class StatusController : MonoBehaviour
         set
         {
             rootDuration = value;
-            rootDuration = Mathf.Clamp(rootDuration, 0f, maxRootDuration);
+            rootDuration = Mathf.Clamp(rootDuration, 0f, maxDuration);
 
             if (rootDuration > 0)
             {
                 SlimeLocomotion.enableMovement = false;
                 SetStatusUI(MySlime.MyCombatCanvas.rootStatusUI, -1);
-                applyRoot = true;
+                ApplyRoot = true;
             }
             if (rootDuration <= 0)
             {
-                if(!applyStun)
+                if(!ApplyStun)
                     SlimeLocomotion.enableMovement = true;
                 MySlime.MyCombatCanvas.rootStatusUI.Reset();
-                applyRoot = false;
+                ApplyRoot = false;
             }
 
         }
     }
     private void RootTimer()
     {
-        if (applyRoot)
+        if (ApplyRoot)
             RootDuration -= Time.deltaTime;
     }
     public void SetRootDuration(float _duration)
@@ -129,11 +266,9 @@ public class StatusController : MonoBehaviour
     #endregion
 
     #region Slow Methods
-    [Header("Slow data")]
-    public float maxSlowDuration;
     public float DefaultSpeed { get; set; }
     public float SlowIntensity { get; set; }
-    private bool applySlow;
+    public bool ApplySlow { get; set; }
     private float slowDuration;
     public float SlowDuration
     {
@@ -141,26 +276,26 @@ public class StatusController : MonoBehaviour
         set
         {
             slowDuration = value;
-            slowDuration = Mathf.Clamp(slowDuration, 0f, maxSlowDuration);
+            slowDuration = Mathf.Clamp(slowDuration, 0f, maxDuration);
 
             if (slowDuration > 0)
             {
                 SetStatusUI(MySlime.MyCombatCanvas.speedStatusUI, -1);
                 SlimeLocomotion.acceleration = SlowIntensity;
-                applySlow = true;
+                ApplySlow = true;
             }
             if (slowDuration <= 0)
             {
                 MySlime.MyCombatCanvas.speedStatusUI.Reset();
                 SlimeLocomotion.acceleration = DefaultSpeed;
-                applySlow = false;
+                ApplySlow = false;
             }
 
         }
     }
     private void SlowTimer()
     {
-        if (applySlow)
+        if (ApplySlow)
             SlowDuration -= Time.deltaTime;
     }
     public void SetSlowDuration(float _duration, float _intensity)
@@ -184,6 +319,26 @@ public class StatusController : MonoBehaviour
     }  
     void Update()
     {
+        UpdateStatusTimers();
+        PassiveEnergyRegen();
+        SetHealthRegen();
+    }
+    private void PassiveEnergyRegen()
+    {
+        if (MySlime.CurrentEnergy < MySlime.maxEnergy)
+            MySlime.CurrentEnergy += Time.deltaTime * MySlime.energyRegenSpeed;       
+    }
+    private void SetHealthRegen()
+    {
+        if (ApplyHot)
+            MySlime.CurrentHealth += Time.deltaTime * HotIntensity;
+    }
+    private void UpdateStatusTimers()
+    {
+        PowerTimer();
+        ProtectionTimer();
+        HotTimer();
+        ChannelTimer();
         SilenceTimer();
         StunTimer();
         RootTimer();
@@ -192,6 +347,10 @@ public class StatusController : MonoBehaviour
     public void RequestImpact(Vector3 _dir, float _force)
     {
         SlimeLocomotion.AddImpact(_dir, _force);
+    }
+    public void RequestContinousForce(Vector3 _dir, float _force)
+    {
+        SlimeLocomotion.ContinuousForce(_dir, _force);
     }
     public void StopController()
     {

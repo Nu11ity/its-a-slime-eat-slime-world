@@ -7,9 +7,20 @@ public class GizmosDemo : MonoBehaviour
     public float size;
     public Color color;
 
+    void OnEnable()
+    {
+
+    }
+    void OnDisable()
+    {
+
+    }
     public void OnDrawGizmos()
     {
-        Gizmos.color = color;
-        Gizmos.DrawSphere(transform.position, size);
+        if(enabled)
+        {
+            Gizmos.color = color;
+            Gizmos.DrawSphere(transform.position, size);
+        }     
     }
 }

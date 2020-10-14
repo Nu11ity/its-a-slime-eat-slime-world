@@ -42,12 +42,12 @@ public class BaseSlime : MonoBehaviour
 
     public virtual void OnSpawnToWorld()
     {
-        data.levelMapping.LevelToExperience();
-        data.statMapping.GenerateStats(data.levelMapping.level, data.levelMapping.levelFlux);
-        data.TrackedLevel = data.levelMapping.level;
+        //data.levelMapping.LevelToExperience();
+        //data.statMapping.GenerateStats(data.levelMapping.level, data.levelMapping.levelFlux);
+        //data.TrackedLevel = data.levelMapping.level;
         CurrentHealth = MaxHealth;
 
-        for (int i = 0; i < 3; i++)
-            data.abilities.Add(AbilityManager.Instance.AbilityMapRequest(data));
+        //for (int i = 0; i < 3; i++)
+        //    data.abilities.Add(AbilityManager.Instance.AbilityMapRequest(data));
     }
 }

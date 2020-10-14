@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 469679269041220943}
-  - component: {fileID: 469679269041220940}
+  - component: {fileID: 6350922787276664515}
   m_Layer: 0
   m_Name: Life Stream
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &469679269041220940
+--- !u!114 &6350922787276664515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,20 +41,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 469679269041220941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b110415f27e83cd4f922595c178dc63c, type: 3}
+  m_Script: {fileID: 11500000, guid: e75648efebdc566428cf5b5c8f7e6365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   registerMethod: 0
   path: 2
   id: 1
   anchor: 1
+  projections: []
+  module:
+    behaviors: 0600000005000000
+    tickDamageAmt: 0
+    rootDuration: 0
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    pullForce: 0
+    overTimeHealAmt: 2
+    overTimeHealDuration: 8
+    burstHealAmt: 20
+    silenceDuration: 0
   castPositions:
   - {fileID: 469679269041220943}
+  radiusIndex:
+  - 4.46
   desiredLayers:
     serializedVersion: 2
     m_Bits: 512
-  damage: 5
-  radius: 4.68
   duration: 8
   tickDelay: 0.15
   checkMethod: 0
@@ -65,7 +78,6 @@ MonoBehaviour:
   - {fileID: 1857517143130476753}
   - {fileID: 1857517144379752656}
   showGizmos: 0
-  healthRegenSpeed: 4
 --- !u!1 &1857517143130476764
 GameObject:
   m_ObjectHideFlags: 0

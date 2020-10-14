@@ -7,8 +7,6 @@ public class AIAbilityController : BaseAbilityController
     public AILocomotion Locomotion { get; set; }
     public bool AbilityToggled { get; set; }
 
-    public bool Tracker { get; set; }
-
     private int currentIndex;
     public int CurrentIndex
     {
@@ -53,8 +51,6 @@ public class AIAbilityController : BaseAbilityController
     }
     private void AbilityUpdater()
     {
-        Tracker = Locomotion.EnemyActive;
-
         if (!Locomotion.EnemyActive)
         {
             Locomotion.controlledState = AILocomotion.ControlledState.Waiting;
@@ -97,10 +93,8 @@ public class AIAbilityController : BaseAbilityController
 
         AbilityUpdater();
         AbilityCDVisuals();
-        MySlime.PassiveEnergyRegen();
         AbilityInputsCheck();
     }
-
     private void CheckAbilityInput(bool _decision, int _index)
     {
         if (_decision && !MySlime.AbilityTimers[_index].OnCooldown)

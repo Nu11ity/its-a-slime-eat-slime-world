@@ -191,7 +191,7 @@ public class @RobotInputs : IInputActionCollection, IDisposable
             ""id"": ""c26748bc-a5cb-4911-b7e7-ff68b03bf30d"",
             ""actions"": [
                 {
-                    ""name"": ""action"",
+                    ""name"": ""Interact"",
                     ""type"": ""Value"",
                     ""id"": ""b1f5554b-07bd-42cc-a1e1-25e67ed7993a"",
                     ""expectedControlType"": ""Axis"",
@@ -203,11 +203,49 @@ public class @RobotInputs : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""507026a1-b6f0-4225-a1ee-abf6757943d1"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""action"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cba75cb5-cf8c-4140-b59a-0325e955231e"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""menu"",
+            ""id"": ""ad9e3445-277c-474d-9977-08611251e92f"",
+            ""actions"": [
+                {
+                    ""name"": ""cursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""737bb51a-8064-4658-87eb-02d108340abb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0b902e09-45fb-4f5c-b740-7963de7d8428"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -224,7 +262,10 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         m_locomotion_sprint = m_locomotion.FindAction("sprint", throwIfNotFound: true);
         // interaction
         m_interaction = asset.FindActionMap("interaction", throwIfNotFound: true);
-        m_interaction_action = m_interaction.FindAction("action", throwIfNotFound: true);
+        m_interaction_Interact = m_interaction.FindAction("Interact", throwIfNotFound: true);
+        // menu
+        m_menu = asset.FindActionMap("menu", throwIfNotFound: true);
+        m_menu_cursor = m_menu.FindAction("cursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -331,12 +372,12 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     // interaction
     private readonly InputActionMap m_interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
-    private readonly InputAction m_interaction_action;
+    private readonly InputAction m_interaction_Interact;
     public struct InteractionActions
     {
         private @RobotInputs m_Wrapper;
         public InteractionActions(@RobotInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @action => m_Wrapper.m_interaction_action;
+        public InputAction @Interact => m_Wrapper.m_interaction_Interact;
         public InputActionMap Get() { return m_Wrapper.m_interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -346,20 +387,53 @@ public class @RobotInputs : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_InteractionActionsCallbackInterface != null)
             {
-                @action.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
-                @action.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
-                @action.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAction;
+                @Interact.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @action.started += instance.OnAction;
-                @action.performed += instance.OnAction;
-                @action.canceled += instance.OnAction;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
     public InteractionActions @interaction => new InteractionActions(this);
+
+    // menu
+    private readonly InputActionMap m_menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_menu_cursor;
+    public struct MenuActions
+    {
+        private @RobotInputs m_Wrapper;
+        public MenuActions(@RobotInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @cursor => m_Wrapper.m_menu_cursor;
+        public InputActionMap Get() { return m_Wrapper.m_menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @cursor.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+                @cursor.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnCursor;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @cursor.started += instance.OnCursor;
+                @cursor.performed += instance.OnCursor;
+                @cursor.canceled += instance.OnCursor;
+            }
+        }
+    }
+    public MenuActions @menu => new MenuActions(this);
     public interface ILocomotionActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -369,6 +443,10 @@ public class @RobotInputs : IInputActionCollection, IDisposable
     }
     public interface IInteractionActions
     {
-        void OnAction(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnCursor(InputAction.CallbackContext context);
     }
 }

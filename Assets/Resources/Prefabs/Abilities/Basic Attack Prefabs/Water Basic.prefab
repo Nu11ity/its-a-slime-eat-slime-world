@@ -4742,6 +4742,16 @@ MonoBehaviour:
   path: 1
   id: 0
   anchor: 0
+  projections: []
+  module:
+    behaviors: 00000000
+    damageAmt: 10
+    healAmt: 0
+    rootDuration: 0
+    stunDuration: 0
+    slowDuration: 0
+    slowIntensity: 0
+    KnockbackForce: 0
   impactObject: {fileID: 513315176713102408}
   allowCasting: 1
   lifeTime: 3
@@ -4750,13 +4760,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 769
   slimeLayer: 9
-  damage: 10
   radius: 0.5
   disableOnImpact:
   - {fileID: 176631699267841737}
   - {fileID: 176257667805678577}
-  showGizmos: 0
   castOffset: 0
+  showGizmos: 0
 --- !u!1 &176412809348233927
 GameObject:
   m_ObjectHideFlags: 0
@@ -5018,7 +5027,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4c247fd1ef77f2245b4a5e04837df292, type: 2}
+  - {fileID: 2100000, guid: 003629e10c9ec644ea96309c528930be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
