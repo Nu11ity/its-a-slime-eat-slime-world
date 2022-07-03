@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Resources/_Scenes/Demo Scene.unity
+    path: Assets/_Scenes/Demo Scene.unity
     guid: 598ce8479fd2dce4e8bac58628495ebf
   - enabled: 1
-    path: Assets/Resources/_Scenes/_Combat Arena.unity
+    path: Assets/_Scenes/_Combat Arena.unity
     guid: 76102355d8225d34abb2d1aab05b094b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 052f2a046fd566b44925d806c3b0b640,
