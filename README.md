@@ -6,3 +6,11 @@ Trinity Experiences last in-development title, before the studio closed in late 
 ## Summary
 
 https://www.youtube.com/watch?v=4U0OmyKFsXE
+
+## Clips
+
+![its-a-slime-eat-slime-world](https://media.giphy.com/media/lkmg9ql8ntVXw7Td3b/giphy.gif)
+![its-a-slime-eat-slime-world](https://media.giphy.com/media/94aUuruHPWtslPyW3k/giphy.gif) 
+![its-a-slime-eat-slime-world](https://media.giphy.com/media/mCpONYmohLxSWQbd1T/giphy.gif) 
+![its-a-slime-eat-slime-world](https://media.giphy.com/media/QvmLaSvtXukO1rt6O9/giphy.gif) 
+![its-a-slime-eat-slime-world](https://media.giphy.com/media/q3JZcYDyZC1agCATal/giphy.gif) 
